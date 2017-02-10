@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-LOCAL_SECRET_KEY = ''
+LOCAL_SECRET_KEY = '1f&q2(jbq))@w6r&ybj_vk@t9dh@uw9rf*roq-+&$mjmf9=xjl'
 LOCAL_ALLOWED_HOSTS = []
 LOCAL_DEBUG = True
 
