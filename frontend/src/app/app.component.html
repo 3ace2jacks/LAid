@@ -1,3 +1,34 @@
-<h1>
-  {{title}}
-</h1>
+<div id="wrapper">
+	<div class="course">
+		<div class="course-header">{{courseName}}</div>
+		<div class="course-info"><Course-Box></Course-Box></div>
+	</div>
+</div>
+
+<h1>{{title}}</h1>
+  <br>
+  <label>Select a Table</label>
+  <br>
+  <select [(ngModel)]="selectedTable" (change)="tableChanged()">
+    <option *ngFor="let sel_table of availableTables" [value]="sel_table">{{sel_table}}</option>
+  </select>
+  <br>
+  <br>
+  <label>Select Columns</label>
+  <br>
+  <select *ngIf="selectedTable" [(ngModel)]="selectedColumns" (change)="columnsChanged()" multiple>
+    <option *ngFor="let sel_column of availableColumns" [value]="sel_column">{{sel_column}}</option>
+  </select>
+  <br>
+  <br>
+  <button *ngIf="selectedTable && selectedColumns" (click)="dataButtonClicked()">Get [{{selectedTable}}] Data</button>
+  <br>
+  <br>
+  <table *ngIf="selectedTable && selectedColumns">
+    <tr>
+      <th *ngFor="let column of selectedColumns">{{ column }}</th>
+    </tr>
+    <tr *ngFor="let row of tableData">
+      <td *ngFor="let column of selectedColumns">{{ row[column] }}</td>
+    </tr>
+  </table>
