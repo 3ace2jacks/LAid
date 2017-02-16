@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+    'course'
 ]
 
 MIDDLEWARE = [
@@ -67,9 +68,9 @@ REST_FRAMEWORK = {
             'rest_framework.authentication.TokenAuthentication',
             'rest_framework.authentication.BasicAuthentication',
        ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser',
-    ]
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
 }
 
 ROOT_URLCONF = 'backend.urls'
