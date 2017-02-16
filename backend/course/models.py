@@ -13,12 +13,12 @@ class Course(models.Model):
     name = models.CharField(max_length=128)
 
     # What users are connected to the course. Students and staff.
-    members = models.ManyToManyField(User, through='CourseMembership')
+    members = models.ManyToManyField(User, through='CourseMembership', related_name='courses')
     year = models.IntegerField()
     term = models.CharField(max_length=16, choices=TERMS)
 
     def __str__(self):
-        return format("{} - {}", self.code, self.name)
+        return "{} - {}".format(self.code, self.name)
 
 
 class Lecture(models.Model):
