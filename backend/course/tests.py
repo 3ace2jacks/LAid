@@ -1,6 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.utils.timezone import now
 from course.models import Course, Lecture, CourseMembership
+from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class CourseTestCase(TestCase):
@@ -36,3 +38,73 @@ class LectureTestCase(TestCase):
         self.assertEqual(ad.__str__(), 'Architectural Design')
         self.assertEqual(t.__str__(), 'Taylor')
 
+
+class UrlCoursesTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create(username='user', password="user")
+
+    def test_url_courses(self):
+        """URL input gives right HTTP response for '/courses/'"""
+
+        url = reverse('course')
+        self.assertEqual(url, '/courses/')
+
+        response = self.client.post('/courses/')
+        self.assertEqual(response.status_code, 403)
+
+        response = self.client.post('/api-auth/login/', {'username': 'user1', 'password': 'user'})
+        self.client.get('/courses/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.user.delete()
+        self.client.logout()
+
+
+class UrlLectureListCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create(username='user', password="user")
+
+    def test_url_lectures(self):
+        """URL input gives right HTTP response for '/courses/<int>/lectures/'"""
+
+        url = reverse('lectureList', args=[100])
+        self.assertEqual(url, '/courses/100/lectures/')
+
+        response = self.client.get('/courses/100/lectures/')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post('/api-auth/login/', {'username': 'user1', 'password': 'user'})
+        self.client.get('/courses/100/lectures/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.user.delete()
+        self.client.logout()
+
+
+class UrlCourseDeitalTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create(username='user', password="user")
+
+    def test_url_coursedetail(self):
+        """URL input gives right HTTP response for '/courses/<int>'"""
+        url = reverse('courseDetail', args=[100])
+        self.assertEqual(url, '/courses/100/')
+
+        response = self.client.post('/courses/100/')
+        self.assertEqual(response.status_code, 403)
+
+        response = self.client.post('/api-auth/login/', {'username': 'user1', 'password': 'user'})
+        self.client.get('/courses/100/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.user.delete()
+        self.client.logout()
+
+
+# api test: http://www.django-rest-framework.org/api-guide/testing/
