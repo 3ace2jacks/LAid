@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 TERMS = (('fall', 'Fall'), ('spring', 'Spring'))
 
+
 class Course(models.Model):
     """Represents a course found in a university"""
 
@@ -34,6 +35,7 @@ class Lecture(models.Model):
 
 # Roles for CourseMembership
 MEMBERSHIP_ROLES = (('staff', 'Staff'), ('student', 'Student'))
+
 
 class CourseMembership(models.Model):
     course = models.ForeignKey(Course)
