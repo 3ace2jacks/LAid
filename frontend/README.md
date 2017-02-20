@@ -1,8 +1,5 @@
 # Frontend
 
-## Develop
-To get started with the development you need [Node.js](https://nodejs.org/en/) installed on your machine. You also need [angular-cli](https://cli.angular.io/), install this with `npm install -g angular-cli`. When you have cloned the repo navigate to the frontend-directory and run `npm install` to install the dependencies. 
-
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
 
 ## Development server

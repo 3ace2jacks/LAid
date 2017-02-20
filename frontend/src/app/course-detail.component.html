@@ -1,0 +1,17 @@
+<div class="container">
+  <div *ngIf="course != null" class="row">
+    <div class="col-xs-12">
+      <h1>{{course.name}}</h1>
+      <p>{{course.code}} | {{course.term}} {{course.year}}</p>
+      <h2>Lectures</h2>
+      <div class="list-group">
+        <a *ngFor="let lecture of lectures" class="list-group-item">
+          <h4 class="list-group-item-heading">{{lecture.title}}</h4>
+          <p class="list-group-item-text">{{lecture.start_time}} - {{lecture.end_time}}</p>
+        </a>
+      </div>
+      <button class="btn btn-default" (click)="goBack()">Back</button>
+    </div>
+
+  </div>
+</div>
