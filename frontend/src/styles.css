@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    background-color: #222;
+    color: #fff;
+    padding-top: 70px;
+}
+
+.course-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #424242;
+  border: 5px solid #222;
+  height: 160px;
+}
+
+.course-box:hover {
+    background-color: #EF3C5C;
+}
+
+.selected {
+    background-color: #EF3C5C !important;
+}
+
+.selected2 {
+    background-color: #F3A51E !important;
+}
+
+.navbar-static-top {
+  color: #fff;
+}
+
+a, a:hover, a:active {
+    color: inherit;
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand {
+    color: #fff;
+}

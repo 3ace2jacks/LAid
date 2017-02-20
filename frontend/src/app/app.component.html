@@ -1,34 +1,26 @@
-<div id="wrapper">
-	<div class="course">
-		<div class="course-header">{{courseName}}</div>
-		<div class="course-info"><Course-Box></Course-Box></div>
-	</div>
-</div>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/">LAid</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+          <li><a routerLink="/dashboard">Dashboard</a></li>
+        <li><a routerLink="/courses">Courses</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a>oleaho</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
 
-<h1>{{title}}</h1>
-  <br>
-  <label>Select a Table</label>
-  <br>
-  <select [(ngModel)]="selectedTable" (change)="tableChanged()">
-    <option *ngFor="let sel_table of availableTables" [value]="sel_table">{{sel_table}}</option>
-  </select>
-  <br>
-  <br>
-  <label>Select Columns</label>
-  <br>
-  <select *ngIf="selectedTable" [(ngModel)]="selectedColumns" (change)="columnsChanged()" multiple>
-    <option *ngFor="let sel_column of availableColumns" [value]="sel_column">{{sel_column}}</option>
-  </select>
-  <br>
-  <br>
-  <button *ngIf="selectedTable && selectedColumns" (click)="dataButtonClicked()">Get [{{selectedTable}}] Data</button>
-  <br>
-  <br>
-  <table *ngIf="selectedTable && selectedColumns">
-    <tr>
-      <th *ngFor="let column of selectedColumns">{{ column }}</th>
-    </tr>
-    <tr *ngFor="let row of tableData">
-      <td *ngFor="let column of selectedColumns">{{ row[column] }}</td>
-    </tr>
-  </table>
+
+<router-outlet></router-outlet>
