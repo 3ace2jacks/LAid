@@ -16,7 +16,9 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string): Observable<boolean> {
-        return this.http.post(this.Url, JSON.stringify({ username: username, password: password }))
+        let headers = new Headers();
+        headers.set('Content-Type', 'application/json');
+        return this.http.post(this.Url, JSON.stringify({ username: username, password: password }), { headers })
             .map((response: Response) => {
                 console.log(this.http.post(this.Url, JSON.stringify({ username: username, password: password })));
 
