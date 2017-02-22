@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'course',
     'corsheaders',
+    'accounts'
 ]
 
 
@@ -138,8 +139,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Static files (CSS, JavaScript, Images)

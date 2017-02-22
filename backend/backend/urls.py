@@ -22,13 +22,14 @@ from rest_framework_jwt.views import verify_jwt_token
 
 urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token, name="api-token-auth"),
-    url(r'^courses/', include('course.urls'), name="courses"),
-    url(r'^admin/', admin.site.urls, name="admin"),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'), name="api-"),
-    url(r'^rest-auth/', include('rest_auth.urls'), name="rest-auth"),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls'), name="rest-auth/registration/"),
-    url(r'^api-token-auth/$', obtain_jwt_token),     
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
+
+    url(r'^admin/', admin.site.urls, name="admin"),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'), name="api-"),
+
+
+    url(r'^courses/', include('course.urls'), name="courses"),
+    url(r'^user/', include('accounts.urls'), name="accounts"),
 ]
 
