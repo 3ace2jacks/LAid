@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../../app.component';
+import { User } from '../_models/index';
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class AuthenticationService {
     public token: string;
+    public user: string;
     private Url = 'http://localhost:8000/api-token-auth/';
 
     constructor(private http: Http) {
@@ -21,11 +23,13 @@ export class AuthenticationService {
         return this.http.post(this.Url, JSON.stringify({ username: username, password: password }), { headers })
             .map((response: Response) => {
                     // login succ   essful if there's a jwt token in the response
+                let user = response.json().user as User;
+                console.log(response);
                 let token = response.json() && response.json().token;
                 if (token) {
                     // set token property
                     this.token = token;
-
+                    
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
 

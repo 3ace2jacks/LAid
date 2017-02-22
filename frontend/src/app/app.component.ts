@@ -3,6 +3,7 @@ import { HomeComponent } from './auth/home/index';
 import { User } from './auth/_models/index';
 import { UserService } from './auth/_services/index';
 import { AuthenticationService } from './auth/_services/index';
+import { AuthGuard } from './auth/_guards/index';
 
 @Component({
     selector: 'app-root',
