@@ -20,9 +20,7 @@ export class AuthenticationService {
         headers.set('Content-Type', 'application/json');
         return this.http.post(this.Url, JSON.stringify({ username: username, password: password }), { headers })
             .map((response: Response) => {
-                console.log(this.http.post(this.Url, JSON.stringify({ username: username, password: password })));
-
-                // login succ   essful if there's a jwt token in the response
+                    // login succ   essful if there's a jwt token in the response
                 let token = response.json() && response.json().token;
                 if (token) {
                     // set token property
