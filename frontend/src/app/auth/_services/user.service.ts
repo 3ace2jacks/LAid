@@ -13,9 +13,17 @@ export class UserService {
         private authenticationService: AuthenticationService) {
     }
 
+    getCurrentUser(): User {
+        if (localStorage.getItem('currentUser')) {
+            return JSON.parse(localStorage.getItem('currentUser')).user as User;
+        } else {
+            return null;
+        }
+    }
+
     getUsers(): Observable<User[]> {
         // add authorization header with jwt token
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.getToken() });
         let options = new RequestOptions({ headers: headers });
 
         // get users from api

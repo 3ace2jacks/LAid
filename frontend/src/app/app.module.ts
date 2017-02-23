@@ -12,11 +12,13 @@ import { DashboardComponent } from './dashboard.component';
 // import { LoginComponent } from './login.component';
 import { AppRoutingModule } from './app-routing.module';
 
-
+import { NewCourseComponent } from './new-course.component';
 import { AuthGuard } from './auth/_guards/index';
-import { AuthenticationService, UserService } from './auth/_services/index';
-import { LoginComponent } from './auth/login/index';
-import { HomeComponent } from './auth/home/index';
+import { AuthenticationService, UserService } from './auth/_services';
+import { LoginComponent } from './auth/login';
+import { RegisterComponent } from './auth/register';
+import { HomeComponent } from './home';
+import { CourseJoinComponent } from './course-join.component';
 
 
 
@@ -27,7 +29,10 @@ import { HomeComponent } from './auth/home/index';
     CourseDetailComponent,
     DashboardComponent,
     LoginComponent,
-    HomeComponent
+    RegisterComponent,
+    HomeComponent,
+    NewCourseComponent,
+    CourseJoinComponent,
 
   ],
   imports: [
