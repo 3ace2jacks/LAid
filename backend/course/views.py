@@ -1,20 +1,35 @@
-from course.models import Course, Lecture
+from course.models import Course, Lecture, CourseMembership
 from course.serializers import CourseSerializer, LectureSerializer, CourseMembershipSerializer
 from rest_framework import generics
 from rest_framework import permissions
 
 
-class CourseList(generics.ListCreateAPIView):
+class MemberCourseList(generics.ListCreateAPIView):
     """Return a list of all the courses the current user is connected to, as staff or student.
 
     Authentication is required"""
     serializer_class = CourseSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        course = serializer.save()
+        cm = CourseMembership.objects.create(course=course, user=self.request.user, role='staff')
+        cm.save()
+
+
 
     def get_queryset(self):
         return self.request.user.courses
+
+
+class CourseList(generics.ListAPIView):
+    """Return all courses.
+
+    Authentication is required"""
+    serializer_class = CourseSerializer
+
+
+    def get_queryset(self):
+        return Course.objects.all()
 
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -24,11 +39,21 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+
+
 class JoinCourse(generics.CreateAPIView):
-    """Adds a user to a course as staff or student. Course id is retrieved form the url. Post should include username and role, either \"staff\" or \"student\""""
+    """Adds the request user as a student to the course. Course id is retreived from the url."""
     serializer_class = CourseMembershipSerializer
 
+    def perform_create(self, serializer):
+        cm = CourseMembership.objects.create(course=Course.objects.get(id=self.kwargs['pk']), user=self.request.user, role='student')
+        cm.save()
 
+class CourseAddMember(generics.CreateAPIView):
+    serializer_class = CourseMembershipSerializer
+
+    def perform_create(self, serializer):
+        pass
 
 class LectureList(generics.ListCreateAPIView):
     serializer_class = LectureSerializer

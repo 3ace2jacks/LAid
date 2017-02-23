@@ -18,6 +18,10 @@ class Course(models.Model):
     year = models.IntegerField()
     term = models.CharField(max_length=16, choices=TERMS)
 
+
+    # Password required to join the course.
+    #password = models.CharField(max_length=32, null=True, default=None)
+
     def __str__(self):
         return "{} - {}".format(self.code, self.name)
 

@@ -155,5 +155,5 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'accounts.jwt_handler.jwt_response_payload_handler',
 
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(weeks=4),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=4),
 }

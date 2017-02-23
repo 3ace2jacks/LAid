@@ -8,6 +8,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = ('id', 'code', 'name', 'year', 'term')
 
 
+
 class LectureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
@@ -16,4 +17,4 @@ class LectureSerializer(serializers.ModelSerializer):
 class CourseMembershipSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseMembership
-        fields = ('course', 'user', 'role')
+        fields = ()
