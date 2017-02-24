@@ -22,14 +22,14 @@ class MemberCourseList(generics.ListCreateAPIView):
 
 
 class CourseList(generics.ListAPIView):
-    """Return all courses.
+    """Return all courses that the student is not connected to.
 
     Authentication is required"""
     serializer_class = CourseSerializer
 
 
     def get_queryset(self):
-        return Course.objects.all()
+        return Course.objects.exclude(id__in=self.request.user.courses.values_list('id', flat=True))
 
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
