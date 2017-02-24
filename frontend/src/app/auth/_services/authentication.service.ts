@@ -5,13 +5,14 @@ import { AppComponent } from '../../app.component';
 import { User } from '../_models/index';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
+import { apiUrl } from '../../local-settings';
 
 @Injectable()
 export class AuthenticationService {
   private token: string;
   private user: User;
-  private loginUrl = 'http://localhost:8000/api-token-auth/';
-  private registerUrl = 'http://localhost:8000/user/register/';
+  private loginUrl = apiUrl + '/api-token-auth/';
+  private registerUrl = apiUrl + '/user/register/';
   private headers = new Headers();
 
   constructor(private http: Http) {
