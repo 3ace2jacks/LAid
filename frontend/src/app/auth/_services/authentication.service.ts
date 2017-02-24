@@ -3,76 +3,82 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../../app.component';
 import { User } from '../_models/index';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AuthenticationService {
-    private token: string;
-    private user: User;
-    private loginUrl = 'http://localhost:8000/api-token-auth/';
-    private registerUrl = 'http://localhost:8000/user/register/';
+  private token: string;
+  private user: User;
+  private loginUrl = 'http://localhost:8000/api-token-auth/';
+  private registerUrl = 'http://localhost:8000/user/register/';
+  private headers = new Headers();
 
-    constructor(private http: Http) {
-        // set token if saved in local storage
-        if (localStorage.getItem('currentUser')) {
-            var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            this.token = currentUser.token;
-            this.user = currentUser.user;
-        }
+  constructor(private http: Http) {
+    // set the login state if the data is already in localStorage
+    if (localStorage.getItem('currentUser')) {
+      var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.token = currentUser.token;
+      this.user = currentUser.user;
     }
+    this.headers.set('Content-Type', 'application/json');
+  }
 
-    getToken():string {
-        return this.token;
-    }
+  // return the JWT-token used for sending authenticated requests to the server
+  getToken(): string {
+    return this.token;
+  }
 
-    getCurrentUser(): User {
-        return this.user;
-    }
+  // return the currently logged in user
+  // return null if the user is not logged in
+  getCurrentUser(): User {
+    return this.user;
+  }
 
-    loggedIn(): boolean {
-        return this.user != null;
-    }
+  // returns true if the user is authenticated
+  loggedIn(): boolean {
+    // the user is authenticated if there is a user object stored in this service
+    return this.user != null;
+  }
 
-    register(username: string, password: string, email: string, first_name: string, last_name:string) : Observable<boolean> {
-        let headers = new Headers();
-        headers.set('Content-Type', 'application/json');
-        return this.http.post(this.registerUrl, JSON.stringify({username, password, email, first_name, last_name}), { headers }).
-        map((response: Response) => {
-            return true;
-        })
-    }
+  // will handle any error in the requests to the server
+  private handleError(error: any): Promise<any> {
+    return Promise.reject(error.message || error);
+  }
 
-    login(username: string, password: string): Observable<boolean> {
-        let headers = new Headers();
-        headers.set('Content-Type', 'application/json');
-        return this.http.post(this.loginUrl, JSON.stringify({ username: username, password: password }), { headers })
-            .map((response: Response) => {
-                    // login succ   essful if there's a jwt token in the response
+  // register a new user with the given parameters
+  register(username: string, password: string, email: string, first_name: string, last_name: string): Promise<void> {
+    return this.http.post(this.registerUrl, JSON.stringify({ username, password, email, first_name, last_name }), { headers: this.headers })
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
 
-                let token = response.json() && response.json().token;
-                if (token) {
-                    let user = response.json().user as User;
-                    // set token property
-                    this.token = token;
-                    this.user = user;
 
-                    // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
+  // log in the user, and set the login state if successful
+  login(username: string, password: string): Promise<void> {
+    return this.http.post(this.loginUrl, JSON.stringify({ username: username, password: password }), { headers: this.headers })
+      .toPromise()
+      .then((response: Response) => {
+        let token = response.json() && response.json().token;
+        let user = response.json().user as User;
 
-                    // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
-                }
-            });
-    }
+        // set token property
+        this.token = token;
+        this.user = user;
 
-    logout(): void {
-        // clear token remove user from local storage to log user out
-        this.token = null;
-        this.user = null;
-        localStorage.removeItem('currentUser');
-    }
+        // store username and jwt token in local storage to keep user logged in between page refreshes
+        localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
+      })
+      .catch(this.handleError);
+
+  }
+
+  // set the state as not authenticated
+  logout(): void {
+    // clear token remove user from local storage to log user out
+    this.token = null;
+    this.user = null;
+    localStorage.removeItem('currentUser');
+  }
 }

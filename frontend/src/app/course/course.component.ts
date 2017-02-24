@@ -7,13 +7,12 @@ import { CourseService } from './course.service';
 @Component({
   selector: 'courses',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css'],
   providers: [],
 })
 export class CourseComponent implements OnInit {
   title = "Your courses";
   courses: Course[];
-  selectedCourse: Course;
+  error: string = "";
 
   constructor(private courseService: CourseService, private router: Router) {}
 
@@ -22,18 +21,12 @@ export class CourseComponent implements OnInit {
   }
 
   getCourses(): void {
-      this.courseService.getCourses().then(courses => this.courses = courses);
+      this.courseService.getCourses()
+      .then(courses => this.courses = courses)
+      .catch(error => this.error="Something went wrong.");
   }
 
   goToDetail(course: Course): void {
       this.router.navigate(['/course', course.id]);
     }
-
-  selectCourse(course: Course) {
-      this.selectedCourse = course;
-  }
-
-  deselectCourse() {
-      this.selectedCourse = null;
-  }
 }

@@ -10,7 +10,7 @@ import { CourseService } from './course.service';
   providers: [],
 })
 export class CourseJoinComponent implements OnInit {
-  title = "All courses";
+  title = "Available courses";
   courses: Course[];
 
   constructor(private courseService: CourseService, private router: Router) {}
