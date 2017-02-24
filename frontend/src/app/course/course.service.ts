@@ -3,6 +3,7 @@ import { Course, Lecture } from './models';
 import { Headers, Http, Response} from '@angular/http';
 import { AuthenticationService } from '../auth/_services';
 import { Observable } from 'rxjs';
+import { apiUrl } from '../local-settings';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
@@ -10,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CourseService {
 
-    private courseUrl = 'http://localhost:8000/courses/';
+    private courseUrl = apiUrl + '/courses/';
     private headers = new Headers();
 
     constructor(private http: Http, private authenticationService:AuthenticationService) {
