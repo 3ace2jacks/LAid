@@ -4,21 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { CourseComponent } from './course.component';
-import { CourseDetailComponent} from './course-detail.component';
-import { CourseService } from './course.service';
+import { CourseComponent } from './course/course.component';
+import { CourseDetailComponent} from './course/course-detail.component';
+import { CourseService } from './course/course.service';
 // import { UserService } from './user.service';
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 // import { LoginComponent } from './login.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { NewCourseComponent } from './new-course.component';
+import { CourseCreateComponent } from './course/course-create.component';
 import { AuthGuard } from './auth/_guards/index';
 import { AuthenticationService, UserService } from './auth/_services';
 import { LoginComponent } from './auth/login';
 import { RegisterComponent } from './auth/register';
 import { HomeComponent } from './home';
-import { CourseJoinComponent } from './course-join.component';
+import { CourseJoinComponent } from './course/course-join.component';
 
 
 
@@ -31,7 +31,7 @@ import { CourseJoinComponent } from './course-join.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NewCourseComponent,
+    CourseCreateComponent,
     CourseJoinComponent,
 
   ],

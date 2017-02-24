@@ -10,7 +10,9 @@ import { AuthenticationService } from '../_services/index';
 })
 
 export class LoginComponent implements OnInit {
+    // Binds data to the form
     model: any = {};
+    // Set the error message if request is not successful
     error = '';
 
     constructor(
@@ -23,13 +25,10 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
+        // Use authenticationService to login the user and set the login state.
+        // The service will store the user and token in localStorage.
         this.authenticationService.login(this.model.username, this.model.password)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['/courses']);
-                } else {
-                    this.error = 'Username or password is incorrect';
-                }
-            });
+            .then(() => this.router.navigate(['/courses']))
+            .catch(error => this.error = "Wrong username or password.");
     }
 }

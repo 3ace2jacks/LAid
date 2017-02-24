@@ -11,12 +11,4 @@ export class Course {
     name: string;
     year: number;
     term: string;
-
-    constructor(id, code, name, year, term, lectures) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.year = year;
-        this.term = term;
-    }
 }
