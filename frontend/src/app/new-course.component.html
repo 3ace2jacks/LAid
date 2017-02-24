@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+    <form name="form" (ngSubmit)="f.form.valid && create()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !code.valid }">
+            <label for="code">Course code</label>
+            <input type="text" class="form-control" name="code" [(ngModel)]="model.code" #code="ngModel" required />
+            <div *ngIf="f.submitted && !code.valid" class="help-block">Course code is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+            <label for="name">Course name</label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" required />
+            <div *ngIf="f.submitted && !name.valid" class="help-block">Course name is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !year.valid }">
+            <label for="year">Year</label>
+            <input type="number" class="form-control" name="year" [(ngModel)]="model.year" #year="ngModel" required />
+            <div *ngIf="f.submitted && !year.valid" class="help-block">Year is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !term.valid }">
+            <label for="term">Term</label>
+            <input type="text" class="form-control" name="term" [(ngModel)]="model.term" #term="ngModel" required />
+            <div *ngIf="f.submitted && !term.valid" class="help-block">Term is required</div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Create course</button>
+        </div>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </form>
+</div>
+</div>
