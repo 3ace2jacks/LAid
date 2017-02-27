@@ -30,6 +30,7 @@ urlpatterns = [
 
 
     url(r'^courses/', include('course.urls'), name="courses"),
+    url(r'^quiz/', include('quiz.urls'), name="quiz"),
     url(r'^user/', include('accounts.urls'), name="accounts"),
 ]
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from quiz.models import Quiz
 
 TERMS = (('fall', 'Fall'), ('spring', 'Spring'))
 
@@ -32,6 +33,8 @@ class Lecture(models.Model):
     course = models.ForeignKey(Course)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    pre_quiz = models.ForeignKey(Quiz, null=True, related_name="pre_quiz")
+    post_quiz = models.ForeignKey(Quiz, null=True, related_name="post_quiz")
 
     def __str__(self):
         return self.title

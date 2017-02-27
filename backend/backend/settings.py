@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'course',
     'corsheaders',
-    'accounts'
+    'accounts',
+    'quiz'
 ]
 
 
