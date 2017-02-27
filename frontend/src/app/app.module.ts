@@ -19,6 +19,8 @@ import { LoginComponent } from './auth/login';
 import { RegisterComponent } from './auth/register';
 import { HomeComponent } from './home';
 import { CourseJoinComponent } from './course/course-join.component';
+import {QuizStudentComponent } from './quiz/quiz-student.component';
+import {QuizService } from './quiz/quiz.service';
 
 
 
@@ -33,6 +35,7 @@ import { CourseJoinComponent } from './course/course-join.component';
     HomeComponent,
     CourseCreateComponent,
     CourseJoinComponent,
+    QuizStudentComponent,
 
   ],
   imports: [
@@ -41,7 +44,7 @@ import { CourseJoinComponent } from './course/course-join.component';
     HttpModule,
     AppRoutingModule,
   ],
-  providers: [ CourseService, UserService,  AuthGuard, AuthenticationService ],
+  providers: [ CourseService, UserService,  AuthGuard, AuthenticationService, QuizService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

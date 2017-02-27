@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnChanges } from '@angular/core';
 import { Course, Lecture } from './models';
 import { Headers, Http, Response} from '@angular/http';
 import { AuthenticationService } from '../auth/_services';
@@ -12,9 +12,15 @@ import 'rxjs/add/operator/map';
 export class CourseService {
 
     private courseUrl = apiUrl + '/courses/';
-    private headers = new Headers();
+    private headers:Headers;
 
     constructor(private http: Http, private authenticationService:AuthenticationService) {
+        this.updateHeaders();
+    }
+
+    updateHeaders() {
+        console.log("Token changed");
+        this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Authorization', 'JWT ' + this.authenticationService.getToken());
     }

@@ -1,0 +1,9 @@
+<div class="container" *ngIf="quiz">
+    <h1>{{quiz.title}}</h1>
+    <div class="col-xs-12" *ngFor="let question of quiz.questions">
+        <h4>{{question.question}}</h4>
+        <ul>
+            <li *ngFor="let option of question.options">{{option.text}}</li>
+        </ul>
+    </div>
+</div>

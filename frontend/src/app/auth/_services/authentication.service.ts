@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import { AppComponent } from '../../app.component';
 import { User } from '../_models/index';
 import 'rxjs/add/operator/toPromise';
@@ -10,6 +10,7 @@ import { apiUrl } from '../../local-settings';
 @Injectable()
 export class AuthenticationService {
   private token: string;
+  private tokenObs: Observable<string>;
   private user: User;
   private loginUrl = apiUrl + '/api-token-auth/';
   private registerUrl = apiUrl + '/user/register/';
@@ -81,5 +82,6 @@ export class AuthenticationService {
     this.token = null;
     this.user = null;
     localStorage.removeItem('currentUser');
+    localStorage.clear();
   }
 }
