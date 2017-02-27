@@ -37,3 +37,11 @@ a, a:hover, a:active {
 .navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand {
     color: #fff;
 }
+
+.questionBox {
+  margin-bottom: 10px;
+}
+
+.answerBox {
+  margin-bottom: 15px;
+}

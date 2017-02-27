@@ -12,18 +12,25 @@ const OPTIONS: Option[] = [
     {text: "No", correct: false},
 ];
 
+const OPTIONS2: Option[] = [
+    {text: "42", correct: true },
+    {text: "Live, Love, Sleep", correct: false },
+    {text: "Sex, drugs and Rock'n Roll", correct: true }
+]
+
 const QUESTIONS: Question[] = [
-    {question: "What is the answer to the ultimate question, of life, the universe and everything?", answer_description: "This is obvious.", options: OPTIONS},
+    {question: "What is the answer to the ultimate question, of life, the universe and everything?", answer_description: "This is obvious.", options: OPTIONS2},
     {question: "What is the airspeed velocity of an unladen swallow?", answer_description: "This is obvious.", options: OPTIONS},
     {question: "Is this a question?", answer_description: "This is obvious.", options: OPTIONS},
     {question: "Is this not a question?", answer_description: "This is obvious.", options: OPTIONS},
     {question: "Is this the real life?", answer_description: "This is obvious.", options: OPTIONS},
     {question: "Is this just fantasy?", answer_description: "This is obvious.", options: OPTIONS},
+    {question: "Caught in a landslide?", answer_description: "This is obvious.", options: OPTIONS},
 ];
 
 
 const QUIZ: Quiz = {
-    title: "hello2",
+    title: "quiz2",
     description: "this is a quiz",
     start_time: "onsdag 1900",
     end_time: "torsdag 2000",
