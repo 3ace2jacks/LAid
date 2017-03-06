@@ -3,27 +3,37 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 import django
 django.setup()
 
-from django.contrib.auth.models import User
-from quiz.models import Quiz, Question, Option, QuestionAnswer
+from course.models import Lecture, Course
 from django.utils.timezone import now
+from quiz.serializers import QuizSerializer
 
+course = Course.objects.create(code="TDT4140", name="Sofwaw", year=2016, term='fall')
+course.save()
 
-quiz = Quiz(title="Quiz 1", description="desc", start_time=now(), end_time=now())
-quiz.save()
-question = Question(quiz=quiz, question="Is this a question?", answer_description="Obviously")
-question.save()
-yes = Option(question=question, text="Yes", correct=True)
-yes.save()
-no = Option(question=question, text="No", correct=False)
-no.save()
+lecture = Lecture.objects.create(title="Lecture one", course=course, start_time=now(), end_time=now())
+lecture.save()
 
-user = User.objects.get(username="admin")
-
-answer = QuestionAnswer(question=question, user=user, choice=yes)
-answer.save()
-
-print(answer.choice.question.quiz)
-for question in quiz.questions.all():
-    print(question)
-    for answer in question.answers.all():
-        print(answer.user, answer.choice, answer.choice.correct)
+data = {
+    'title': 'Quiz 1',
+    'description' : 'desc',
+    'start_time': '1990-03-13T00:00',
+    'end_time': '1990-03-14T00:00',
+    'lectureID': lecture.id,
+    'lectureQuiz': 'pre_quiz',
+    'questions': [
+        {
+            'question': "What is this?",
+            'answer_description': "Description",
+            'options' : [
+                {
+                    'text': "Option text",
+                    'correct': True,
+                }
+            ]
+        }
+    ]
+}
+serializer = QuizSerializer(data=data)
+print(serializer.is_valid())
+print(serializer.validated_data)
+serializer.save()

@@ -1,5 +1,6 @@
 .idea/
 db.sqlite3
+quiz/test.py
 backend/local_settings.py
 *.egg-info
 *.pot
