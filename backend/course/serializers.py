@@ -5,9 +5,14 @@ from quiz.models import Quiz
 from quiz.serializers import QuestionSerializer
 
 class CourseSerializer(serializers.ModelSerializer):
+    staff = serializers.SerializerMethodField()
+
     class Meta:
         model = Course
-        fields = ('id', 'code', 'name', 'year', 'term')
+        fields = ('id', 'code', 'name', 'year', 'term', 'staff')
+
+    def get_staff(self, obj):
+        return obj.is_staff(self.context['request'].user)
 
 
 class LectureSerializer(serializers.ModelSerializer):

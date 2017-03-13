@@ -26,6 +26,9 @@ class Course(models.Model):
     def __str__(self):
         return "{} - {}".format(self.code, self.name)
 
+    def is_staff(self, user):
+        return CourseMembership.objects.filter(course=self, user=user, role="staff").exists()
+
 
 class Lecture(models.Model):
     """Represents a lecture in a course"""
