@@ -1,8 +1,11 @@
 from course.models import Course, Lecture, CourseMembership
 from course.serializers import CourseSerializer, LectureSerializer, CourseMembershipSerializer, \
-    CourseUserSerializer
+    CourseUserSerializer, QuizSerializer
 from rest_framework import generics
 from rest_framework import permissions
+
+from quiz.serializers import AnswerSerializer
+from rest_framework.exceptions import APIException
 
 
 
@@ -67,3 +70,33 @@ class CourseUserList(generics.ListAPIView):
     serializer_class = CourseUserSerializer
     def get_queryset(self):
         return Course.objects.get(id=self.kwargs['pk']).members
+
+
+class PreQuiz(generics.RetrieveAPIView):
+    serializer_class = QuizSerializer
+    def get_object(self):
+        return Lecture.objects.get(id=self.kwargs['lk']).pre_quiz
+
+
+class PostQuiz(generics.RetrieveAPIView):
+    serializer_class = QuizSerializer
+    def get_object(self):
+        return Lecture.objects.get(id=self.kwargs['lk']).post_quiz
+
+
+class AnswerPreList(generics.ListAPIView):
+    serializer_class = AnswerSerializer
+    def get_queryset(self):
+        try:
+            return Lecture.objects.get(id=self.kwargs['lk']).pre_quiz.questions.all()
+        except:
+            raise APIException("No PRE_QUIZ found..")
+
+class AnswerPostList(generics.ListAPIView):
+    serializer_class = AnswerSerializer
+    def get_queryset(self):
+        try:
+            return Lecture.objects.get(id=self.kwargs['lk']).post_quiz.questions.all()
+        except:
+            raise APIException("No POST_QUIZ found..")
+

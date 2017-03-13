@@ -11,7 +11,7 @@ class OptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Option
-        fields = ['text', 'correct']
+        fields = ['id', 'text', 'correct']
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -54,6 +54,19 @@ class QuizSerializer(serializers.ModelSerializer):
 
         return quiz
 
+
+class QuestionAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionAnswer
+        fields = ['question', 'choice', 'user']
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    answers = QuestionAnswerSerializer(many=True)
+    options = OptionSerializer(many=True)
+    class Meta:
+        model = Question
+        fields = ['id', 'quiz', 'question', 'answer_description', 'options', 'answers']
 
 
 

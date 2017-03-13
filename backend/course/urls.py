@@ -10,6 +10,17 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/join/$', views.JoinCourse.as_view(), name='courseJoin'),
     url(r'^(?P<pk>[0-9]+)/lectures/$', views.LectureList.as_view(), name='lectureList'),
 
+    url(r'^lectures/(?P<lk>[0-9]+)/pre_quiz/$', views.PreQuiz.as_view(),
+        name='lecture-pre_quiz'),
+    url(r'^lectures/(?P<lk>[0-9]+)/pre_quiz/answers/$',
+        views.AnswerPreList.as_view(),
+        name='lecture-pre_quiz-answers'),
+    url(r'^lectures/(?P<lk>[0-9]+)/post_quiz/$', views.PostQuiz.as_view(),
+        name='lecture-post_quiz'),
+    url(r'^lectures/(?P<lk>[0-9]+)/post_quiz/answers/$',
+        views.AnswerPostList.as_view(),
+        name='lecture-post_quiz-answers'),
+
     url(r'^(?P<pk>[0-9]+)/students/$', views.CourseUserList.as_view(), name='courseUserList'),
 ]
 
