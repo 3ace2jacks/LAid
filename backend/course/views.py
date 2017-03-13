@@ -4,15 +4,6 @@ from course.serializers import CourseSerializer, LectureSerializer, CourseMember
 from rest_framework import generics
 from rest_framework import permissions
 
-import pusher
-
-pusher_client = pusher.Pusher(
-  app_id='306834',
-  key='24e1ae04e2c67d323ec5',
-  secret='ed9fc1f76ede8d2b96a8',
-  cluster='eu',
-  ssl=True
-)
 
 
 class MemberCourseList(generics.ListCreateAPIView):
@@ -25,7 +16,6 @@ class MemberCourseList(generics.ListCreateAPIView):
         course = serializer.save()
         cm = CourseMembership.objects.create(course=course, user=self.request.user, role='staff')
         cm.save()
-        pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
 
     def get_queryset(self):
         return self.request.user.courses
