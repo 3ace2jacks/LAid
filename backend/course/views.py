@@ -108,3 +108,9 @@ class AnswerPostList(generics.ListAPIView):
         except:
             raise APIException("No POST_QUIZ found..")
 
+
+class LectureView(generics.RetrieveAPIView):
+    serializer_class = LectureSerializer
+    def get_object(self):
+        return Lecture.objects.get(id=self.kwargs['pk'])
+

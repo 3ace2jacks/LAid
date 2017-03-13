@@ -21,6 +21,8 @@ urlpatterns = [
         views.AnswerPostList.as_view(),
         name='lecture-post_quiz-answers'),
 
+    url(r'^lecture/(?P<pk>[0-9]+)/$', views.LectureView.as_view(), name='lecture'),
+
     url(r'^(?P<pk>[0-9]+)/students/$', views.CourseUserList.as_view(), name='courseUserList'),
 ]
 
