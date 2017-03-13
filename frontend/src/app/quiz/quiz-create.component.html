@@ -1,0 +1,58 @@
+<div class="container">
+
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Create quiz</h1>
+    <p>Type: Pre-quiz<br /> Course: TDT4140 Software Engineering<br /> Lecture: Introduction to software engineering</p>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <form name="form" (ngSubmit)="f.form.valid && create()" #f="ngForm" novalidate>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+        <label for="title">Quiz title</label>
+        <input type="text" class="form-control" name="title" [(ngModel)]="quiz.title" #title="ngModel" required />
+        <div *ngIf="f.submitted && !title.valid" class="help-block">Title is required</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+        <label for="description">Description</label>
+        <textarea type="text" class="form-control" name="description" [(ngModel)]="quiz.description" #description="ngModel"></textarea>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !startTime.valid }">
+        <label for="startTime">Start time</label>
+        <input type="datetime-local" class="form-control" name="startTime"  [(ngModel)]="quiz.startTime" #startTime="ngModel"  />
+        <div *ngIf="f.submitted && !startTime.valid" class="help-block">Start time is required.</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !deadline.valid }">
+        <label for="deadline">Deadline</label>
+        <input type="datetime-local" class="form-control" name="deadline" [(ngModel)]="quiz.deadline" #deadline="ngModel" />
+        <div *ngIf="f.submitted && !deadline.valid" class="help-block">Deadline is reqired.</div>
+      </div>
+
+      <div class="form-group">
+          <h3>Questions</h3>
+      </div>
+      <div *ngIf="quiz.questions.length">
+          awdwad
+          <div *ngFor="let question of quiz.questions; let i = index; trackBy:customTrackBy"class="form-group">
+              <label for="year">Question</label>
+              <input type="text" class="form-control" name="question">
+              <!-- <div *ngFor="let option of question.options; let j = index;"class="form-group">
+                  {{i}}{{j}}
+                  <input type="text" class="form-control" name="option" [(ngModel)]="questions[i].options[j].text" #code="ngModel" required="">
+              </div> -->
+              <a (click)="removeQuestion(question)" class="btn btn-danger">Delete question</a>
+          </div>
+      </div>
+
+
+
+      <a (click)="addQuestion()" class="btn btn-info">Add new question</a>
+
+      <div class="form-group">
+        <button class="btn btn-primary">Create quiz</button>
+      </div>
+
+    </form>
+  </div>
+</div>

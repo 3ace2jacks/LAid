@@ -20,9 +20,11 @@ import { RegisterComponent } from './auth/register';
 import { HomeComponent } from './home';
 import { CourseJoinComponent } from './course/course-join.component';
 import {QuizStudentComponent } from './quiz/quiz-student.component';
+
+import {QuizCreateComponent } from './quiz/quiz-create.component';
 import {QuizService } from './quiz/quiz.service';
 
-
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {QuizService } from './quiz/quiz.service';
     CourseCreateComponent,
     CourseJoinComponent,
     QuizStudentComponent,
+    QuizCreateComponent,
 
   ],
   imports: [
@@ -43,6 +46,7 @@ import {QuizService } from './quiz/quiz.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    ChartsModule,
   ],
   providers: [ CourseService, UserService,  AuthGuard, AuthenticationService, QuizService ],
   bootstrap: [ AppComponent ]

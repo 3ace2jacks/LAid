@@ -6,6 +6,8 @@ import { CourseComponent }      from './course/course.component';
 import { CourseCreateComponent } from './course/course-create.component';
 import { CourseDetailComponent }  from './course/course-detail.component';
 import { QuizStudentComponent }  from './quiz/quiz-student.component';
+
+import { QuizCreateComponent }  from './quiz/quiz-create.component';
 import { LoginComponent } from './auth/login';
 import { RegisterComponent } from './auth/register';
 
@@ -22,6 +24,7 @@ const routes: Routes = [
   { path: 'courses/join',     component: CourseJoinComponent },
   { path: 'courses',     component: CourseComponent },
   { path: 'quiz',     component: QuizStudentComponent },
+  { path: 'quiz/create',     component: QuizCreateComponent },
   { path: 'login',     component: LoginComponent },
   { path: 'register',     component: RegisterComponent },
   { path: 'courses/create',     component: CourseCreateComponent },

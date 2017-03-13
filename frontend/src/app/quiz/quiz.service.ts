@@ -34,6 +34,8 @@ const QUIZ: Quiz = {
     description: "this is a quiz",
     start_time: "onsdag 1900",
     end_time: "torsdag 2000",
+    lectureID:null,
+    lectureQuiz:null,
     questions: QUESTIONS,
 };
 
@@ -43,7 +45,7 @@ const QUIZ: Quiz = {
 @Injectable()
 export class QuizService {
 
-    private courseUrl = apiUrl + '/courses/';
+    private createQuizUrl = apiUrl + '/quiz/';
     private headers:Headers;
 
     constructor(private http: Http, private authenticationService:AuthenticationService) {
@@ -62,6 +64,14 @@ export class QuizService {
         .catch(this.handleError);
     }
 
+
+    createQuiz(quiz:Quiz) : Promise<void> {
+        console.log(quiz);
+        return this.http.post(this.createQuizUrl, JSON.stringify(quiz), { headers : this.headers })
+        .toPromise()
+        .then(() => null)
+        .catch(this.handleError);
+    }
 
     private handleError(error: any): Promise<any> {
 
