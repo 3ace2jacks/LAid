@@ -16,6 +16,8 @@ import { CourseJoinComponent } from './course/course-join.component';
 import { HomeComponent } from './home';
 import { AuthGuard } from './auth/_guards/index';
 
+import { StudentView } from './live/view.student.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,6 +30,7 @@ const routes: Routes = [
   { path: 'login',     component: LoginComponent },
   { path: 'register',     component: RegisterComponent },
   { path: 'courses/create',     component: CourseCreateComponent },
+  { path: 'live/studentView',     component: StudentView },
   { path: '**', redirectTo: '' }
 ];
 
