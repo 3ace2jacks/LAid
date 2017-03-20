@@ -1,34 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
 from course.models import Lecture
-from django.utils.timezone import now
 
 
 TERMS = (('slow', 'Slow'), ('fast', 'Fast'))
 VOTES = (('up', 'Up'), ('down', 'Down'))
 
+
 class LectureFlow(models.Model):
     """Represents a Users input on the flow of the lecture"""
-
-    # The User
     user = models.ForeignKey(User)
-
-    # The id for the lecture
     lecture = models.ForeignKey(Lecture)
-
-    # When the user submitted
     time_stamp = models.DateTimeField(auto_now=True)
-
-    # What the user submitted
+    # What the user submitted either slow or fast
     flow = models.CharField(max_length=16, choices=TERMS)
 
     def __str__(self):
         return "{} - {}".format(self.lecture_id, self.flow)
 
 
-
-
-class Question(models.Model):
+class LectureQuestion(models.Model):
+    '''Represent a student question in a lecture'''
     user = models.ForeignKey(User)
     lecture = models.ForeignKey(Lecture)
     time_stamp = models.DateTimeField(auto_now=True)
@@ -39,8 +31,9 @@ class Question(models.Model):
 
 
 class Vote(models.Model):
+    '''Represent a students vote on a LectureQuestion'''
     user = models.ForeignKey(User)
-    question = models.ForeignKey(Question, related_name='votes')
+    question = models.ForeignKey(LectureQuestion, related_name='votes')
     lecture = models.ForeignKey(Lecture)
     time_stamp = models.DateTimeField(auto_now=True)
     vote = models.CharField(max_length=10, choices=VOTES)
