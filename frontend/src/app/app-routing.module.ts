@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'login',     component: LoginComponent },
   { path: 'register',     component: RegisterComponent },
   { path: 'courses/create',     component: CourseCreateComponent },
-  { path: 'live/studentView',     component: StudentView },
+  { path: 'lecture/:id/live',     component: StudentView },
   { path: '**', redirectTo: '' }
 ];
 

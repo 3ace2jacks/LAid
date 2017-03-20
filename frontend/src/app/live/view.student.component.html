@@ -1,2 +1,4 @@
-<a class="btn btn-default" (click)="slow()">Too slow</a>
-<a class="btn btn-default" (click)="fast()">Too fast</a>
+<div *ngIf="lecture">
+	<a class="btn btn-default" (click)="slow()">Too slow</a>
+	<a class="btn btn-default" (click)="fast()">Too fast</a>
+</div>
