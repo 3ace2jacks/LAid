@@ -72,4 +72,12 @@ export class CourseService {
     getTopCourses(number:number): Promise<Course[]> {
         return this.getCourses().then(courses => courses.slice(0, number));
     }
+
+    getLecture(id: number): Promise<Lecture> {
+        let Url = apiUrl + "/courses/lecture/" + id;
+        console.log(Url);
+        return this.http.get(Url + '.json', {headers : this.headers})
+        .toPromise().then(response => response.json() as Lecture)
+        .catch(this.handleError);
+    }
 }

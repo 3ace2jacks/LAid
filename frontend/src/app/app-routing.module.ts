@@ -16,9 +16,13 @@ import { CourseJoinComponent } from './course/course-join.component';
 import { HomeComponent } from './home';
 import { AuthGuard } from './auth/_guards/index';
 
+<<<<<<< HEAD
 import { StudentViewComponent } from './live/view.student.component'
 import { LecturerViewComponent } from './live/view.lecturer.component'
 
+=======
+import { StudentViewComponent } from './live/view.student.component';
+>>>>>>> bc146d956a500d98719eef06e25ea3679c89cf29
 
 
 const routes: Routes = [

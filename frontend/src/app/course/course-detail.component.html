@@ -11,6 +11,7 @@
               <td>{{lecture.start_time | date:'dd. MMM HH.mm'}} - {{lecture.end_time | date:'dd. MMM HH.mm'}}</td>
               <td *ngIf="!lecture.pre_quiz"><a class="btn btn-default">Create pre-quiz</a></td>
               <td *ngIf="lecture.pre_quiz"><a class="btn btn-default">Pre-quiz</a></td>
+              <td><a [routerLink]="['/lecture', lecture.id, 'live/student']" class="btn btn-default">Live View</a></td>
               <td *ngIf="!lecture.post_quiz"><a class="btn btn-default">Create post-quiz</a></td>
               <td *ngIf="lecture.post_quiz"><a class="btn btn-default">Post-quiz</a></td>
           </tr>

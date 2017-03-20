@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { AuthenticationService } from '../auth/_services';
 
 @Component({
-  selector: 'view.lecturer',
-  templateUrl: './view.lecturer.component.html',
-  providers: [],
+    moduleId: module.id,
+    templateUrl: 'view.lecturer.component.html'
 })
 
 export class LecturerViewComponent {

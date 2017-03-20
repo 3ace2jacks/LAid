@@ -1,4 +1,0 @@
-export const apiDomain = "api.laid.cool";
-export const  apiPort = "8000";
-export const protocol = "http";
-export const apiUrl = protocol + "://" + apiDomain + ":" + apiPort;

@@ -23,12 +23,14 @@ import { QuizStudentComponent } from './quiz/quiz-student.component';
 
 import { StudentViewComponent } from './live/view.student.component';
 import { LecturerViewComponent } from './live/view.lecturer.component';
-
+import { ViewService } from './live/view.service';
 
 import {QuizCreateComponent } from './quiz/quiz-create.component';
 import {QuizService } from './quiz/quiz.service';
 
 import { ChartsModule } from 'ng2-charts';
+
+
 
 @NgModule({
   declarations: [
@@ -43,8 +45,14 @@ import { ChartsModule } from 'ng2-charts';
     CourseJoinComponent,
     QuizStudentComponent,
     QuizCreateComponent,
+<<<<<<< HEAD
     StudentVotingComponent,
     LecturerVotingComponent
+=======
+    StudentViewComponent,
+
+
+>>>>>>> bc146d956a500d98719eef06e25ea3679c89cf29
   ],
   imports: [
     BrowserModule,
@@ -53,7 +61,7 @@ import { ChartsModule } from 'ng2-charts';
     AppRoutingModule,
     ChartsModule,
   ],
-  providers: [ CourseService, UserService,  AuthGuard, AuthenticationService, QuizService ],
+  providers: [ CourseService, UserService,  AuthGuard, AuthenticationService, QuizService, ViewService, ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
