@@ -27,7 +27,7 @@ class FlowList(generics.ListCreateAPIView):
 class FlowCount(APIView):
 
     def get(self, request, pk, tk=0, format=None):
-        if tk:
+        if int(tk):
             delta = datetime.now() - timedelta(minutes=int(tk))
         else:
             delta = datetime.now() - timedelta(days=1000)
