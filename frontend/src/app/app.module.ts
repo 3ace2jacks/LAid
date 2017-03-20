@@ -26,7 +26,7 @@ import {QuizService } from './quiz/quiz.service';
 
 import { ChartsModule } from 'ng2-charts';
 
-import { StudentView } from './live/view.student.component';
+import { StudentViewComponent } from './live/view.student.component';
 import { ViewService } from './live/view.service';
 
 @NgModule({
@@ -42,7 +42,7 @@ import { ViewService } from './live/view.service';
     CourseJoinComponent,
     QuizStudentComponent,
     QuizCreateComponent,
-    StudentView,
+    StudentViewComponent,
 
 
   ],

@@ -12,7 +12,7 @@ import { CourseService } from '../course/course.service';
 })
 
 
-export class StudentView  implements OnInit{
+export class StudentViewComponent  implements OnInit{
 
 	  constructor(private viewService: ViewService,
               private route: ActivatedRoute,

@@ -6,7 +6,7 @@ import { AuthenticationService } from '../auth/_services';
     templateUrl: 'view.lecturer.component.html'
 })
 
-export class LectureView{
+export class LecturerViewComponent{
 	
 
 }
