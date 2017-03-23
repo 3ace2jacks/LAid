@@ -2,7 +2,7 @@ from rest_framework.exceptions import APIException
 from lecture_feedback.serializers import FlowSerializer, FlowFilter, LectureQuestionSerializer, \
     VoteSerializer
 from rest_framework import generics
-from lecture_feedback.models import LectureFlow, LectureQuestion
+from lecture_feedback.models import LectureFlow, LectureQuestion, Vote
 from course.models import Lecture
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
@@ -62,3 +62,20 @@ class VoteList(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, question=LectureQuestion.objects.get(id=self.kwargs[
             'lk']), lecture=Lecture.objects.get(id=self.kwargs['pk']), )
+
+
+class VoteCount(APIView):
+
+    def get(self, request, pk, questionId, format=None):
+
+        up_votes = Vote.objects.filter(lecture=Lecture.objects.get(id=pk),
+                                       question=LectureQuestion.objects.get(id=questionId),
+                                       vote='up').count()
+        down_votes = Vote.objects.filter(lecture=Lecture.objects.get(id=pk),
+                                       question=LectureQuestion.objects.get(id=questionId),
+                                       vote='down').count()
+        flow = {
+            'up_votes': up_votes,
+            'down_votes': down_votes
+        }
+        return Response(flow)
