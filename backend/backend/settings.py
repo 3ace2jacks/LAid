@@ -14,6 +14,7 @@ import os
 import backend.local_settings as lc
 import datetime
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,7 +49,9 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'course',
     'corsheaders',
-    'accounts'
+    'accounts',
+    'quiz',
+    'lecture_feedback',
 ]
 
 
@@ -135,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'europe/oslo'
 
 USE_I18N = True
 
@@ -155,5 +158,5 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'accounts.jwt_handler.jwt_response_payload_handler',
 
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(weeks=4),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=4),
 }

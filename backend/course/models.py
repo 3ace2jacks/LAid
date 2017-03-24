@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from quiz.models import Quiz
 
 TERMS = (('fall', 'Fall'), ('spring', 'Spring'))
 
@@ -18,8 +19,15 @@ class Course(models.Model):
     year = models.IntegerField()
     term = models.CharField(max_length=16, choices=TERMS)
 
+
+    # Password required to join the course.
+    #password = models.CharField(max_length=32, null=True, default=None)
+
     def __str__(self):
         return "{} - {}".format(self.code, self.name)
+
+    def is_staff(self, user):
+        return CourseMembership.objects.filter(course=self, user=user, role="staff").exists()
 
 
 class Lecture(models.Model):
@@ -28,6 +36,8 @@ class Lecture(models.Model):
     course = models.ForeignKey(Course)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    pre_quiz = models.ForeignKey(Quiz, null=True, related_name="pre_quiz")
+    post_quiz = models.ForeignKey(Quiz, null=True, related_name="post_quiz")
 
     def __str__(self):
         return self.title
