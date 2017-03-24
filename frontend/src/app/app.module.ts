@@ -45,14 +45,9 @@ import { ChartsModule } from 'ng2-charts';
     CourseJoinComponent,
     QuizStudentComponent,
     QuizCreateComponent,
-<<<<<<< HEAD
-    StudentVotingComponent,
-    LecturerVotingComponent
-=======
+    LecturerViewComponent,
     StudentViewComponent,
 
-
->>>>>>> bc146d956a500d98719eef06e25ea3679c89cf29
   ],
   imports: [
     BrowserModule,
