@@ -6,6 +6,7 @@ import { ActivatedRoute, Params }   from '@angular/router';
 import { Lecture } from '../course/models';
 import { CourseService } from '../course/course.service';
 
+
 @Component({
     moduleId: module.id,
     templateUrl: 'view.student.component.html'
@@ -44,4 +45,3 @@ export class StudentViewComponent  implements OnInit{
            console.log(error+ "hello world")});
       })
     }
-}
