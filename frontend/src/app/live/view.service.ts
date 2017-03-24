@@ -3,7 +3,7 @@ import { Headers, Http, Response} from '@angular/http';
 import { AuthenticationService } from '../auth/_services';
 import { Observable } from 'rxjs';
 import { apiUrl } from '../local-settings';
-
+import { ButtonCount } from './view.models';
 
 
 
@@ -17,6 +17,7 @@ export class ViewService {
         private authenticationService:AuthenticationService) {
         this.updateHeaders();
     }
+
 
     updateHeaders() {
         console.log("Token changed");
@@ -39,6 +40,14 @@ export class ViewService {
     	return this.http.get(Url + '.json', {headers : this.headers})
         .toPromise()
         .then(response => response.json())
+        .catch(this.handleError);
+    }
+
+    getEvaluationCount(lectureID: number, minutesAgo: number): Promise<ButtonCount>{
+        let Url = apiUrl + '/lecture/' + lectureID + '/flow/count/' + minutesAgo; console.log(Url);
+        return this.http.get(Url + '.json', {headers : this.headers})
+        .toPromise()
+        .then(response => response.json() as ButtonCount)
         .catch(this.handleError);
     }
 

@@ -1,6 +1,12 @@
-<div>
-	<div style="display:  " class="feedBackChart">
-		<canvas baseChart
+
+	<div style=" max-width: 1000px" align="left">
+		<h4>Select duration of votes (default is 5 minutes)</h4>
+		<button class="btn btn-default" (click)="setMinutesAgo(2)">2 minutes</button>
+		<button class="btn btn-default" (click)="setMinutesAgo(5)">5 minutes</button>
+		<button class="btn btn-default" (click)="setMinutesAgo(10)">10 minutes</button>
+		<button class="btn btn-default" (click)="setMinutesAgo(15)">15 minutes</button>
+		<button class="btn btn-default" (click)="setMinutesAgo(30)">30 minutes</button>
+		<canvas baseChart width="10"
 		[datasets] = "barChartDataExample"
 		[labels] = "barChartLabels"
 		[options] = "barChartOptions"
@@ -8,5 +14,10 @@
 		[chartType] = "barChartType"
 
 		></canvas>
+
 	</div>
+<div >
+	<li *ngFor="let question of mockQuestions">
+		<p class="questionsFeed>{{question.question}}"></p>
+	</li> 
 </div>

@@ -61,7 +61,12 @@ a, a:hover, a:active {
   transform: translateY(4px);
 }
 
-.feedBackChart {
-  max-height: 40px;
-  max-width: auto;
+.questionsFeed {
+  background-color: grey;
+  float: right;
+  right: 30px;
+  border: 10px;
+  border-radius: 2px;
+  border-color: yellow;
+
 }
