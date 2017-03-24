@@ -16,7 +16,13 @@ import { CourseJoinComponent } from './course/course-join.component';
 import { HomeComponent } from './home';
 import { AuthGuard } from './auth/_guards/index';
 
+<<<<<<< HEAD
+import { StudentViewComponent } from './live/view.student.component'
+import { LecturerViewComponent } from './live/view.lecturer.component'
+
+=======
 import { StudentViewComponent } from './live/view.student.component';
+>>>>>>> bc146d956a500d98719eef06e25ea3679c89cf29
 
 
 const routes: Routes = [
@@ -30,7 +36,9 @@ const routes: Routes = [
   { path: 'login',     component: LoginComponent },
   { path: 'register',     component: RegisterComponent },
   { path: 'courses/create',     component: CourseCreateComponent },
-  { path: 'lecture/:id/live/student',     component: StudentViewComponent },
+  { path: 'student-voting',    component: StudentViewComponent},
+  { path: 'lecture/:id/live/lecturer',    component: LecturerViewComponent},
+  { path: 'lecture/:id/live/student', component: StudentViewComponent},
   { path: '**', redirectTo: '' }
 ];
 

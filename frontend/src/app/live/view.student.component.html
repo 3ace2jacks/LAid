@@ -1,4 +1,10 @@
-<div *ngIf="lecture">
-	<a class="btn btn-default" (click)="slow()">Too slow</a>
-	<a class="btn btn-default" (click)="fast()">Too fast</a>
-</div>
+<h2 align="center">{{title}}</h2>
+
+	<div align= "center">
+		<button class = "feedBackButton" style="background-color: #ef2d02" (onclick)="fast()">To fast</button>
+	</div>
+	<br/>
+	<br/>
+	<div align="center">
+		<button class="feedBackButton" style="background-color: #132ca5 " (onclick)="slow()">To slow</button>
+	</div>

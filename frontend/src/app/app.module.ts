@@ -19,15 +19,18 @@ import { LoginComponent } from './auth/login';
 import { RegisterComponent } from './auth/register';
 import { HomeComponent } from './home';
 import { CourseJoinComponent } from './course/course-join.component';
-import {QuizStudentComponent } from './quiz/quiz-student.component';
+import { QuizStudentComponent } from './quiz/quiz-student.component';
+
+import { StudentViewComponent } from './live/view.student.component';
+import { LecturerViewComponent } from './live/view.lecturer.component';
+import { ViewService } from './live/view.service';
 
 import {QuizCreateComponent } from './quiz/quiz-create.component';
 import {QuizService } from './quiz/quiz.service';
 
 import { ChartsModule } from 'ng2-charts';
 
-import { StudentViewComponent } from './live/view.student.component';
-import { ViewService } from './live/view.service';
+
 
 @NgModule({
   declarations: [
@@ -42,9 +45,14 @@ import { ViewService } from './live/view.service';
     CourseJoinComponent,
     QuizStudentComponent,
     QuizCreateComponent,
+<<<<<<< HEAD
+    StudentVotingComponent,
+    LecturerVotingComponent
+=======
     StudentViewComponent,
 
 
+>>>>>>> bc146d956a500d98719eef06e25ea3679c89cf29
   ],
   imports: [
     BrowserModule,
