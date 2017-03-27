@@ -1,0 +1,31 @@
+<div *ngIf="hasAccess()" class="container">
+    <div *ngIf="course">
+        <h1>{{course.code}} {{course.name}}</h1>
+    </div>
+    <h2>Lectures</h2>
+    <div *ngIf="lectures">
+
+      <table *ngIf="lectures != 0" class="table table-responsive table-striped">
+        <tr>
+          <th>Title</th>
+          <th>Start time</th>
+          <th>Live view</th>
+          <th>Pre quiz</th>
+          <th>Post quiz</th>
+      </tr>
+      <tr *ngFor="let lecture of lectures">
+        <td>{{lecture.title}}</td>
+        <td>{{lecture.date}} {{lecture.start_time}}</td>
+        <td><button type="button" [routerLink]="['/lecture', lecture.id, 'live', 'student']" class="btn btn-primary">Live view</button></td>
+        <td><button type="button" class="btn btn-primary" [disabled]="!lecture.pre_quiz" [routerLink]="['/quiz', lecture.pre_quiz, 'student']">View</button></td>
+        <td><button type="button" class="btn btn-primary" [disabled]="!lecture.post_quiz" [routerLink]="['/quiz', lecture.post_quiz, 'student']">View</button></td>
+      </tr>
+      </table>
+
+      <div *ngIf="lectures == 0">
+        There are no lectures in this course.
+      </div>
+
+    </div>
+
+</div>

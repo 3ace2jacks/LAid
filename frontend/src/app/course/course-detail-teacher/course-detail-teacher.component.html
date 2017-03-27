@@ -1,0 +1,94 @@
+<div *ngIf="hasAccess()" class="container">
+  <div *ngIf="course">
+    <h1>{{course.code}} {{course.name}}</h1>
+
+
+  </div>
+  <h2>Lectures</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <button (click)="createLectureModal.show()" type="button" class="btn btn-primary">New lecture</button>
+    </div>
+  </div>
+  <div *ngIf="lectures">
+
+    <table *ngIf="lectures != 0" class="table table-responsive table-striped">
+      <tr>
+        <th>Title</th>
+        <th>Start time</th>
+        <th>Live view</th>
+        <th>Pre quiz</th>
+        <th>Post quiz</th>
+      </tr>
+      <tr *ngFor="let lecture of lectures">
+        <td>{{lecture.title}}</td>
+        <td>{{lecture.date}} {{lecture.start_time}}</td>
+        <td><button type="button" [routerLink]="['/lecture', lecture.id, 'live', 'teacher']" class="btn btn-primary">Live view</button></td>
+
+        <td *ngIf="lecture.pre_quiz"><button type="button" class="btn btn-primary" [routerLink]="['/quiz', lecture.pre_quiz, 'teacher']">Results</button></td>
+        <td *ngIf="!lecture.pre_quiz"><button [routerLink]="['/quiz/create', course.id, lecture.id, 'pre_quiz']" type="button" class="btn btn-primary">Create</button></td>
+
+        <td *ngIf="lecture.post_quiz"><button type="button" class="btn btn-primary" [routerLink]="['/quiz', lecture.post_quiz, 'teacher']">Results</button></td>
+        <td *ngIf="!lecture.post_quiz"><button [routerLink]="['/quiz/create', course.id, lecture.id, 'post_quiz']" type="button" class="btn btn-primary">Create</button></td>
+      </tr>
+    </table>
+
+    <div *ngIf="lectures == 0">
+      There are no lectures in this course.
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div bsModal #createLectureModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Create a new lecture</h4>
+        <button type="button" class="close pull-right" (click)="createLectureModal.hide()" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+      </div>
+      <div class="modal-body">
+
+
+        <form>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title">
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="start_time">Date</label>
+              <input type="date" class="form-control" id="start_time">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="end_time">Start time</label>
+              <input type="time" class="form-control" id="end_time">
+            </div>
+            <div class="col-sm-6">
+              <label for="end_time">End time</label>
+              <input type="time" class="form-control" id="end_time">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+              <button (click)="createCourse()" type="submit" class="btn btn-primary">Create lecture</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

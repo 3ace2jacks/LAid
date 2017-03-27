@@ -1,0 +1,5 @@
+.course-row:hover {
+    background-color: #626262 !important;
+    color:#fff;
+    cursor: pointer;
+}
