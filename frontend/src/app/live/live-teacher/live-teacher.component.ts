@@ -1,24 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../auth/_services';
-import { ButtonCount, Question } from './view.models';
-import { Lecture } from '../course/models';
-import { CourseService } from '../course/course.service';
+import { ButtonCount  } from '../models';
+import { Lecture } from '../../course/models';
+import { CourseService } from '../../course/course.service';
 import { ActivatedRoute, Params }   from '@angular/router';
-import { ViewService } from './view.service';
+import { LiveService } from '../live.service';
 import {Observable} from 'rxjs/Rx';
 
-
-
-
 @Component({
-    moduleId: module.id,
-    selector: 'view/lecturer',
-    templateUrl: 'view.lecturer.component.html'
+  selector: 'app-live-teacher',
+  templateUrl: './live-teacher.component.html',
+  styleUrls: ['./live-teacher.component.css']
 })
-
-export class LecturerViewComponent {
-		  constructor(private viewService: ViewService,
+export class LiveTeacherComponent implements OnInit {
+		  constructor(private liveService: LiveService,
               private route: ActivatedRoute,
               private courseService: CourseService){}
 
@@ -27,11 +22,11 @@ export class LecturerViewComponent {
 
 	public toSlow: string = "too slow";
 	public toFast: string = "too fast";
-	public barChartLabels: String[] = [this.toSlow, this.toFast];
+	public barChartLabels: String[] = [this.toFast, this.toSlow];
 	public barChartType: string = 'bar';
 	public barChartLegend: boolean = true;
 	public barChartDataExample: any[] = [
-	{data: [this.buttonCount.to_fast, this.buttonCount.to_slow], label: 'eksampleSet1', 
+	{data: [this.buttonCount.to_fast, this.buttonCount.to_slow], label: '', 
         }]
 	public barChartOptions:any = {
     scaleShowVerticalLines: false,
@@ -47,14 +42,10 @@ export class LecturerViewComponent {
   	};
 	error: string = "";
 
-	public mockQuestions: Question[] =[
-	{question: "what", id:1},
-	{question: "how", id: 2}
-	];
 
 
 	public getButtonCount(): void {
-		this.viewService.getEvaluationCount(this.lecture.id, this.minutesAgo).then(d => {
+		this.liveService.getEvaluationCount(this.lecture.id, this.minutesAgo).then(d => {
 			this.buttonCount=d;
 			this.barChartDataExample = [
 	{data: [this.buttonCount.to_fast, this.buttonCount.to_slow], label: 'eksampleSet1', 
