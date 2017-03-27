@@ -1,30 +1,80 @@
 export class Quiz {
-    title:string;
-    description:string;
-    start_time:string;
-    end_time:string;
-    lectureID:number =null;
-    lectureQuiz:string = null;
-    questions:Question[];
-
-    constructor() {
-        this.title = "";
-        this.description = "";
-        this.start_time = "";
-        this.end_time = "";
-        this.lectureID = null;
-        this.lectureQuiz = "";
-        this.questions = [];
-    }
+    id: number;
+    title: string;
+    description: string;
+    finished: boolean;
+    answered: boolean;
+    questions: Question[];
 }
 
 export class Question {
-    question:string;
-    answer_description:string;
-    options:Option[];
+    id: number;
+    question: string;
+    options: Option[];
 }
 
 export class Option {
-    text:string;
-    correct:boolean;
+    id: number;
+    text: string;
+    correct: boolean;
+}
+
+
+/*
+* Models for creating new quizzes
+*/
+export class QuizCreateOption {
+    text = "";
+    correct = false;
+}
+
+export class QuizCreateQuestion {
+    text: string = "";
+    answer_description: string = "";
+    options: QuizCreateOption[] = [];
+}
+
+export class QuizCreate {
+    title: string = "";
+    description: string = "";
+    questions: QuizCreateQuestion[] = [new QuizCreateQuestion];
+}
+
+
+/*
+* Models for answering the quiz for the student.
+*/
+export class QuizAnswer {
+    quizID: number;
+    answers: QuestionAnswer[];
+}
+
+export class QuestionAnswer {
+    question:number;
+    choice:number;
+}
+
+
+
+/*
+*   Models for quiz results.
+*/
+export class OptionResults {
+    optionID: number;
+    text: string;
+    correct: boolean;
+    answers: number;
+}
+
+export class QuestionResults {
+    questionID: number;
+    question: string;
+    optionResults: OptionResults[]; 
+}
+
+export class QuizResults {
+    quizID: number;
+    title: string;
+    questionResults: QuestionResults[];
+
 }

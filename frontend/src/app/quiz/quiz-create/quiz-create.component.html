@@ -1,0 +1,65 @@
+<div class="container" *ngIf="hasAccess() && course && lecture && type">
+  <alert *ngIf="error" type="danger">
+    {{error}}
+  </alert>
+  <h1>Create new quiz</h1>
+  <strong>Course: </strong> {{course.name}}<br />
+  <strong>Lecture: </strong> {{lecture.title}}<br />
+  <strong>Type: </strong> <span *ngIf="type=='post_quiz'">Post quiz</span><span *ngIf="type=='pre_quiz'">Pre quiz</span>
+
+  <form *ngIf="lecture" [formGroup]="quizForm" novalidate>
+    <div class="form-group">
+      <label class="center-block">Title
+        <input class="form-control" formControlName="title">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="center-block">Description
+        <textarea class="form-control" formControlName="description"></textarea>
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="center-block">Deadline
+        <input type="datetime-local" class="form-control" formControlName="deadline">
+      </label>
+    </div>
+    <div formArrayName="questions" class="col-md-12">
+      <div *ngFor="let question of quizForm.controls.questions.controls; let i=index" class="well well-lg row" [formGroupName]="i">
+        <div class="form-group">
+          <label class="center-block">Question
+            <input class="form-control" formControlName="question">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="center-block">Answer description
+            <input class="form-control" formControlName="answer_description">
+          </label>
+        </div>
+        <div formArrayName="options">
+          <div *ngFor="let option of question.controls.options.controls; let j=index" [formGroupName]="j">
+            <div class="form-group col-md-offset-1 col-md-9">
+              <label *ngIf="j==0" class="center-block">Options</label>
+                <input class="form-control" formControlName="text">
+            </div>
+            <div class="form-group col-md-1">
+              <label *ngIf="j==0" class="center-block">Correct</label>
+                <input type="checkbox" class="form-control" formControlName="correct">
+            </div>
+            <div class="form-group col-md-1">
+                <span (click)="deleteOption(i, j)" *ngIf="j!=0 && j!=1" class="glyphicon glyphicon-remove" style="color:red; cursor: pointer; font-size: 30px;"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row col-md-12">
+
+          <button class="btn btn-success" (click)="newOption(i)">Add option</button>
+          <button *ngIf="i!=0" class="btn btn-danger" (click)="deleteQuestion(i)">Delete question</button>
+        </div>
+        
+      </div>
+    </div>
+    <button class="btn btn-success" (click)="newQuestion()">New question</button>
+    <button class="btn btn-primary" (click)="createQuiz()">Create quiz</button>
+  </form>
+</div>

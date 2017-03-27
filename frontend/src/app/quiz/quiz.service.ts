@@ -1,81 +1,78 @@
-import { Injectable, OnChanges } from '@angular/core';
-import { Quiz, Question, Option } from './models';
-import { Headers, Http, Response} from '@angular/http';
-import { AuthenticationService } from '../auth/_services';
-import { Observable } from 'rxjs';
-import { apiUrl } from '../local-settings';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+import { Injectable } from '@angular/core';
+import { Quiz, Question, Option, OptionResults, QuestionResults, QuizResults, QuestionAnswer } from './models';
+import { AuthHttpService } from '../auth/auth-http.service';
 
-const OPTIONS: Option[] = [
-    {text: "Yes", correct: true},
-    {text: "No", correct: false},
+const optionResults2: OptionResults[] = [
+  {
+    optionID: 1,
+    text: "The first option",
+    correct: false,
+    answers: 55,
+  },
+  {
+    optionID: 2,
+    text: "The lol option",
+    correct: false,
+    answers: 25,
+  },
+  {
+    optionID: 2,
+    text: "Caught in a landslide",
+    correct: true,
+    answers: 215,
+  },
 ];
 
-const OPTIONS2: Option[] = [
-    {text: "42", correct: true },
-    {text: "Live, Love, Sleep", correct: false },
-    {text: "Sex, drugs and Rock'n Roll", correct: true }
-]
+const questionResults: QuestionResults[] = [
+  {
+    questionID: 1,
+    question: "Is this the real life?",
+    optionResults: optionResults2,
+  },
+  {
+    questionID: 2,
+    question: "Is this just fantasy?",
+    optionResults: optionResults2,
+  },
 
-const QUESTIONS: Question[] = [
-    {question: "What is the answer to the ultimate question, of life, the universe and everything?", answer_description: "This is obvious.", options: OPTIONS2},
-    {question: "What is the airspeed velocity of an unladen swallow?", answer_description: "This is obvious.", options: OPTIONS},
-    {question: "Is this a question?", answer_description: "This is obvious.", options: OPTIONS},
-    {question: "Is this not a question?", answer_description: "This is obvious.", options: OPTIONS},
-    {question: "Is this the real life?", answer_description: "This is obvious.", options: OPTIONS},
-    {question: "Is this just fantasy?", answer_description: "This is obvious.", options: OPTIONS},
-    {question: "Caught in a landslide?", answer_description: "This is obvious.", options: OPTIONS},
 ];
 
-
-const QUIZ: Quiz = {
-    title: "quiz2",
-    description: "this is a quiz",
-    start_time: "onsdag 1900",
-    end_time: "torsdag 2000",
-    lectureID:null,
-    lectureQuiz:null,
-    questions: QUESTIONS,
+const quizResults: QuizResults = {
+  quizID: 1,
+  title: "A quiz about life",
+  questionResults: questionResults,
 };
-
-
 
 
 @Injectable()
 export class QuizService {
 
-    private createQuizUrl = apiUrl + '/quiz/';
-    private headers:Headers;
-
-    constructor(private http: Http, private authenticationService:AuthenticationService) {
-        this.updateHeaders();
-    }
-
-    updateHeaders() {
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
-        this.headers.append('Authorization', 'JWT ' + this.authenticationService.getToken());
-    }
+  constructor(private authHttp: AuthHttpService) { }
 
 
-    getQuiz(): Promise<Quiz> {
-        return Promise.resolve(QUIZ)
-        .catch(this.handleError);
-    }
+  createQuiz(quizData): Promise<void> {
+    return this.authHttp.post('/quiz/', quizData)
+      .toPromise()
+      .then(() => { })
+      .catch(error => error.json())
+  }
 
+  getQuiz(id: number): Promise<Quiz> {
+    return this.authHttp.get('/quiz/' + id + '/')
+      .toPromise()
+      .then(response => response.json() as Quiz)
+      .catch(error => error.json())
+  }
 
-    createQuiz(quiz:Quiz) : Promise<void> {
-        console.log(quiz);
-        return this.http.post(this.createQuizUrl, JSON.stringify(quiz), { headers : this.headers })
-        .toPromise()
-        .then(() => null)
-        .catch(this.handleError);
-    }
+  getQuizResults(id: number): Promise<QuizResults> {
+    return Promise.resolve(quizResults);
+  }
 
-    private handleError(error: any): Promise<any> {
-
-        return Promise.reject(error.message || error);
-    }
+  answerQuestion(answer: QuestionAnswer) : Promise<void> {
+    return this.authHttp.post('/quiz/answer/question/', answer)
+    .toPromise()
+    .then(() => {})
+    .catch(error => console.log(error.json()))
+  }
 
 }
