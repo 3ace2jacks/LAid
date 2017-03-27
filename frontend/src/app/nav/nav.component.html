@@ -1,0 +1,127 @@
+<nav class="navbar navbar-inverse bg-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a routerLink="/" class="navbar-brand">LAid</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/">Home</a></li>
+        <li *ngIf="authService.isLoggedIn()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/courses">Courses</a></li>
+      </ul>
+      <ul *ngIf="!authService.isLoggedIn()" class="nav navbar-nav navbar-right">
+        <li><a (click)="loginModal.show()">Sign in</a></li>
+        <li><a (click)="registerModal.show()">Register</a></li>
+      </ul>
+      <ul *ngIf="authService.isLoggedIn()" class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{authService.getUsername()}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a (click)="signOut()">Sign out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>
+
+
+<!-- Login form -->
+<div bsModal #loginModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Sign in</h4>
+        <button type="button" class="close pull-right" (click)="loginModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="loginForm">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" formControlName="username" id="username">
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" formControlName="password" id="password">
+            </div>
+          </div>
+          <alert *ngIf="loginError" class="row" type="danger">
+            {{loginError}}
+          </alert>
+          <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+              <button (click)="login()" type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Register form -->
+<div bsModal #registerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Register a new account</h4>
+
+        <button type="button" class="close pull-right" (click)="registerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" formControlName="username" id="username">
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" formControlName="email" id="email">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" formControlName="password" id="password">
+            </div>
+          </div>
+
+          <alert *ngIf="registerError" class="row" type="danger">
+            {{registerError}}
+          </alert>
+
+          <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+              <button (click)="register()" type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
