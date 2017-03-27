@@ -4,58 +4,88 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { CourseComponent } from './course/course.component';
-import { CourseDetailComponent} from './course/course-detail.component';
+import { NavComponent } from './nav/nav.component';
+
+// Import bootstrap
+import { AlertModule } from 'ng2-bootstrap';
+import { AccordionModule } from 'ng2-bootstrap/accordion';
+import { ModalModule } from 'ng2-bootstrap/modal';
+
+// Import charts
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
+// Import routing
+import { RouterModule, Routes } from '@angular/router';
+import { CourseListComponent } from './course/course-list/course-list.component';
+import { CourseDetailTeacherComponent } from './course/course-detail-teacher/course-detail-teacher.component';
+import { CourseDetailStudentComponent } from './course/course-detail-student/course-detail-student.component';
+import { HomeComponent } from './home/home.component';
+
 import { CourseService } from './course/course.service';
-// import { UserService } from './user.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
-// import { LoginComponent } from './login.component';
-import { AppRoutingModule } from './app-routing.module';
+import { QuizService } from './quiz/quiz.service';
+import { QuizCreateComponent } from './quiz/quiz-create/quiz-create.component';
+import { QuizStudentComponent } from './quiz/quiz-student/quiz-student.component';
+import { QuizTeacherComponent } from './quiz/quiz-teacher/quiz-teacher.component';
 
-import { CourseCreateComponent } from './course/course-create.component';
-import { AuthGuard } from './auth/_guards/index';
-import { AuthenticationService, UserService } from './auth/_services';
-import { LoginComponent } from './auth/login';
-import { RegisterComponent } from './auth/register';
-import { HomeComponent } from './home';
-import { CourseJoinComponent } from './course/course-join.component';
-import { QuizStudentComponent } from './quiz/quiz-student.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './auth/auth.service';
+import { AuthHttpService } from './auth/auth-http.service';
+import { LiveTeacherComponent } from './live/live-teacher/live-teacher.component';
+import { LiveStudentComponent } from './live/live-student/live-student.component';
+import { LiveService } from './live/live.service';
 
-import { StudentViewComponent } from './live/view.student.component';
-import { LecturerViewComponent } from './live/view.lecturer.component';
-import { ViewService } from './live/view.service';
 
-import {QuizCreateComponent } from './quiz/quiz-create.component';
-import {QuizService } from './quiz/quiz.service';
+// Define the routes used by the application. All the urls to components are created here
+const appRoutes:Routes = [
+    { path: 'courses', component: CourseListComponent },
+    { path: 'course/:id/teacher', component: CourseDetailTeacherComponent },
+    { path: 'course/:id/student', component: CourseDetailStudentComponent },
+    { path: 'quiz/create/:course_id/:lecture_id/:type', component: QuizCreateComponent },
 
-import { ChartsModule } from 'ng2-charts';
+    { path: 'quiz/:id/student', component: QuizStudentComponent },
+    { path: 'quiz/:id/teacher', component: QuizTeacherComponent },
 
+    { path: 'lecture/:id/live/student', component: LiveStudentComponent },
+    { path: 'lecture/:id/live/teacher', component: LiveTeacherComponent },
+    { path: '', component: HomeComponent },
+
+    // { path: '**', redirectTo: '' },
+];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CourseComponent,
-    CourseDetailComponent,
-    DashboardComponent,
-    LoginComponent,
-    RegisterComponent,
+    NavComponent,
+    CourseListComponent,
+    CourseDetailTeacherComponent,
     HomeComponent,
-    CourseCreateComponent,
-    CourseJoinComponent,
-    QuizStudentComponent,
+    CourseDetailStudentComponent,
     QuizCreateComponent,
-    StudentViewComponent,
-    LecturerViewComponent,
+    QuizStudentComponent,
+    QuizTeacherComponent,
+    LiveTeacherComponent,
+    LiveStudentComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule,
+    RouterModule,
     ChartsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes),
+    AlertModule.forRoot(),
+    AccordionModule.forRoot(),
+    ModalModule.forRoot(),
   ],
-  providers: [ CourseService, UserService,  AuthGuard, AuthenticationService, QuizService, ViewService, ],
-  bootstrap: [ AppComponent ]
+  providers: [
+      CourseService,
+      QuizService,
+      AuthService,
+      AuthHttpService,
+      LiveService,
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
