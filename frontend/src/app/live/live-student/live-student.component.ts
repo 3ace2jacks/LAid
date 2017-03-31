@@ -52,7 +52,7 @@ export class LiveStudentComponent implements OnInit {
       });
     }
     submitQuestion(){
-      this.liveService.submitQuestion(this.questionForm.value, this.lecture.id);
+      this.liveService.submitQuestion(this.questionForm.get("question").value, this.lecture.id);
     }
 
 
