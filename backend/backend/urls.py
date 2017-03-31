@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
 from quiz.views import QuizCreate, QuizDetail, AnswerQuestion
-from live.views import FlowList, FlowCount
+from live.views import FlowList, FlowCount, QuestionList, VoteList
 
 
 urlpatterns = [
@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^auth/', include('djoser.urls.authtoken')),
 
+    url(r'^lectures/(?P<pk>[0-9]+)/questions/$', QuestionList.as_view(), name='questionlist'),
+    url(r'^questions/(?P<pk>[0-9]+)/votes/$', VoteList.as_view(), name='vote'),
     url(r'^courses/(?P<pk>[0-9]+)/$', CourseDetail.as_view(), name="course_detail"),
 
     url(r'^courses/(?P<pk>[0-9]+)/join/$', JoinCourse.as_view(), name="join_course"),
@@ -44,5 +46,6 @@ urlpatterns = [
 
     url(r'^lectures/(?P<pk>[0-9]+)/flow/count/$', FlowCount.as_view(),
         name='flowCountDefault'),
+
 
 ]
