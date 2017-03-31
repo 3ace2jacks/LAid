@@ -60,7 +60,7 @@ class CourseMembership(models.Model):
 class Lecture(models.Model):
     """A lecture that is part of a course."""
     title = models.CharField(max_length=64)
-    course = models.ForeignKey(Course, related_name='lectures')
+    course = models.ForeignKey(Course, related_name='lectures', on_delete=models.CASCADE)
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()

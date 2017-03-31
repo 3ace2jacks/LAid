@@ -33,7 +33,7 @@ class AvailableCourseList(generics.ListAPIView):
 
 
 
-class CourseDetail(generics.RetrieveAPIView):
+class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     """Return the course information of the course with the id in the url."""
 
     permission_classes = (IsAuthenticated,)
