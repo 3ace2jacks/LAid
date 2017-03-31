@@ -1,11 +1,12 @@
 from django.test import TestCase, Client
-from django.utils.timezone import now
+from django.utils import timezone
 from course.models import Course, Lecture, CourseMembership
 from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory, APIClient
 import json
 from course.views import UserCourseList
+from datetime import date, time
 
 
 
@@ -61,55 +62,59 @@ class CourseTestCase(TestCase):
 
     def tearDown(self):
         self.client.logout()
-        self.user
 
 
-#
-# class LectureTestCase(TestCase):
-#     def setUp(self):
-#         date = now()
-#         Course.objects.create(id=1, code="TDT4140", name="Programvareutvikling",
-#                               year=2017)
-#         course_id = Course.objects.get(code="TDT4140")
-#         print(course_id)
-#         Lecture.objects.create(id=2, title="Architectural Design",
-#                                start_time=date,
-#                                end_time=date, course=course_id)
-#         Lecture.objects.create(title="Taylor", start_time=date,
-#                                end_time=date, course=course_id)
-#
-#     def test_course_str(self):
-#         """Lecture correct output __str__"""
-#         ad = Lecture.objects.get(title="Architectural Design")
-#         t = Lecture.objects.get(title="Taylor")
-#         self.assertEqual(ad.__str__(), 'Architectural Design')
-#         self.assertEqual(t.__str__(), 'Taylor')
-#
-#
-#
-# class UrlCoursesTestCase(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-#         self.user = User.objects.create_superuser(username='user',
-#                                                   email='laid@is.best', password="qwertyuiop")
-#
-#     def test_url_courses(self):
-#         """URL input gives right HTTP response for '/courses/'"""
-#
-#         url = reverse('course')
-#         self.assertEqual(url, '/courses/')
-#
-#         response = self.client.post('/courses/')
-#         self.assertEqual(response.status_code, 403)
-#
-#         self.client.login(username='user', password='qwertyuiop')
-#         response = self.client.get('/courses/')
-#         self.assertEqual(response.status_code, 200)
-#
-#     def tearDown(self):
-#         self.client.logout()
-#         self.user.delete()
-#
+
+class LectureTestCase(TestCase):
+    def setUp(self):
+        dato = date(2017, 5, 5)
+        print(dato)
+        tid = time()
+        self.pu = Course.objects.create(id=1, code="TDT4140", name="Programvareutvikling",
+                              year=2017, term='fall')
+        self.ad = Lecture.objects.create(id=2, title="Architectural Design",
+                                         date=dato, start_time=tid, end_time=tid, course=self.pu)
+        self.t = Lecture.objects.create(title="Taylor", date=dato, start_time=tid, end_time=tid,
+                                      course=self.pu)
+
+    def test_course_str(self):
+        """Lecture correct output __str__"""
+        self.assertEqual(self.ad.__str__(), 'Architectural Design')
+        self.assertEqual(self.t.__str__(), 'Taylor')
+
+
+
+class UrlCoursesTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_superuser(username='user',
+                                                  email='laid@is.best', password="qwertyuiop")
+
+    def test_url_courses(self):
+        """URL input gives right HTTP response for '/courses/'"""
+
+        url = reverse('member_course_list')
+        self.assertEqual(url, '/courses/member/')
+
+        response = self.client.post('/courses/member/')
+        self.assertEqual(response.status_code, 403)
+
+        url = reverse('available_course_list')
+        self.assertEqual(url, '/courses/available/')
+
+        response = self.client.post('/courses/available/')
+        self.assertEqual(response.status_code, 403)
+
+        self.client.login(username='user', password='qwertyuiop')
+        response = self.client.get('/courses/member/')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/courses/available/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.client.logout()
+        self.user.delete()
+
 #
 #
 # class UrlLectureListCase(TestCase):
