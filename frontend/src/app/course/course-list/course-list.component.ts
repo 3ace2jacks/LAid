@@ -49,6 +49,14 @@ export class CourseListComponent implements OnInit {
         
     }
 
+    creteCourse() {
+        this.courseService.createCourse()
+        .then(() => {
+
+        })
+        .catch(error => this.error = error);
+    }
+
     createCourse() {
         this.courseService.createCourse({ id: 9, role: "staff", code: "Code", name: "Naem", year: 2017, term: "spring" })
     }
