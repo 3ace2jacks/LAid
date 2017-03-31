@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttpService } from '../auth/auth-http.service';
 import { ButtonCount } from './models';
+import { Question } from '.models';
 
 @Injectable()
 export class LiveService {
@@ -33,5 +34,12 @@ export class LiveService {
       .toPromise()
       .then(response => console.log(response))
       .catch(error => console.log(error));
+  }
+
+  getQuestions(lectureID: number): Promise<Question[]> {
+    return this.authHttp.get('/lectures/' + lectureID + '/questions/')
+    .toPromise()
+    .then(response => response.json() as Question[])
+    .catch(error => console.log(error));
   }
 }
