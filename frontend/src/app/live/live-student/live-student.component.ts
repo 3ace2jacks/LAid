@@ -48,11 +48,11 @@ export class LiveStudentComponent implements OnInit {
     }
     createForm() {
       this.questionForm = this.formBuilder.group({
-        question: ['', Validators.required ],   
+        question: ['', Validators.required ],  
       });
     }
     submitQuestion(){
-      this.liveService.submitQuestion(this.questionForm.value);
+      this.liveService.submitQuestion(this.questionForm.value, this.lecture.id);
     }
 
 

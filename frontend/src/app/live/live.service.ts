@@ -27,8 +27,8 @@ export class LiveService {
       .then(response => response.json() as ButtonCount)
       .catch(error => console.log(error));
   }
-  submitQuestion(question: string): Promise<void> {
-    return this.authHttp('/lectures/' + lectureID + '/questions')
+  submitQuestion(question: string, lectureID: number): Promise<void> {
+    return this.authHttp.post('/lectures/' + lectureID + '/questions', JSON.stringify({ question: question }))
       .toPromise()
       .then(response => console.log(response))
       .catch(error => console.log(error));
