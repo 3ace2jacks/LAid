@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from lecture_feedback import views
+from live import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [

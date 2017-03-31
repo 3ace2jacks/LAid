@@ -1,8 +1,8 @@
 from rest_framework.exceptions import APIException
-from lecture_feedback.serializers import FlowSerializer, FlowFilter, LectureQuestionSerializer, \
+from live.serializers import FlowSerializer, FlowFilter, LectureQuestionSerializer, \
     VoteSerializer
 from rest_framework import generics
-from lecture_feedback.models import LectureFlow, LectureQuestion, Vote
+from live.models import LectureFlow, LectureQuestion, Vote
 from course.models import Lecture
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView

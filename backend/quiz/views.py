@@ -1,23 +1,21 @@
-from django.shortcuts import render
 from quiz.models import Quiz, QuestionAnswer
 from rest_framework import generics
-from quiz.serializers import QuizSerializer, AnswerSerializer
+from quiz.serializers import QuizSerializer, QuestionAnswerSerializer
 
-
-
-class QuizList(generics.ListCreateAPIView):
+class QuizCreate(generics.ListCreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
 
-class QuizStudentDetail(generics.RetrieveAPIView):
+class QuizDetail(generics.RetrieveAPIView):
+    """Return the course information of the course with the id in the url."""
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
 
-class AnswerQuiz(generics.ListCreateAPIView):
+class AnswerQuestion(generics.ListCreateAPIView):
+    queryset = QuestionAnswer.objects.all()
+    serializer_class = QuestionAnswerSerializer
 
-    serializer_class = AnswerSerializer
-
-    def get_queryset(self):
-        return QuestionAnswer.objects.all()
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

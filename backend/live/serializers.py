@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from lecture_feedback.models import LectureFlow, LectureQuestion, Vote
+from live.models import LectureFlow, LectureQuestion, Vote
 import django_filters
 from rest_framework import filters
 

@@ -2,52 +2,70 @@ from django.db import models
 from django.contrib.auth.models import User
 from quiz.models import Quiz
 
-TERMS = (('fall', 'Fall'), ('spring', 'Spring'))
+# The possible terms a course can be in
+# to distinguish courses with same name and course code
+TERMS = (
+    # The first name is the actual name, the second the human readable version
+    ('fall', 'Fall'),
+    ('spring', 'Spring'),
+    ('summer', 'Summer'),
+)
+
+# The roles a user can have in a course
+ROLES = (('INSTRUCTOR', 'Instructor'), ('STUDENT', 'Instructor'))
+
 
 
 class Course(models.Model):
-    """Represents a course found in a university"""
-
-    # The subject code, e.g. "TDT4140"
+    """A course is a continous set of lectures that last for some time"""
+    # The course code, e.g. TDT4140
     code = models.CharField(max_length=16)
-
-    # Name of course, e.g. "Software Engineering"
-    name = models.CharField(max_length=128)
-
-    # What users are connected to the course. Students and staff.
-    members = models.ManyToManyField(User, through='CourseMembership', related_name='courses')
+    # The course name, e.g. Software Engineering
+    name = models.CharField(max_length=64)
+    # The year the course takes place
     year = models.IntegerField()
+    # What term this course was held
     term = models.CharField(max_length=16, choices=TERMS)
-
-
-    # Password required to join the course.
-    #password = models.CharField(max_length=32, null=True, default=None)
+    # Users that are connected to the course as instructor or student
+    members = models.ManyToManyField(User, through='CourseMembership', related_name='courses')
 
     def __str__(self):
         return "{} - {}".format(self.code, self.name)
 
-    def is_staff(self, user):
-        return CourseMembership.objects.filter(course=self, user=user, role="staff").exists()
+    def get_role(self, user):
+        """
+        Return the role of the given user in the course
 
+        :param user: The user instance to get the role of
+        :return: The role of the user. Can be None, "INSTUCTOR" or "STUDENT"
+        """
 
-class Lecture(models.Model):
-    """Represents a lecture in a course"""
-    title = models.CharField(max_length=128)
-    course = models.ForeignKey(Course)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    pre_quiz = models.ForeignKey(Quiz, null=True, related_name="pre_quiz")
-    post_quiz = models.ForeignKey(Quiz, null=True, related_name="post_quiz")
-
-    def __str__(self):
-        return self.title
-
-
-# Roles for CourseMembership
-MEMBERSHIP_ROLES = (('staff', 'Staff'), ('student', 'Student'))
+        if CourseMembership.objects.filter(course=self, user=user).exists():
+            return CourseMembership.objects.get(course=self, user=user).role
+        return None
 
 
 class CourseMembership(models.Model):
+    """Define the roles of users in a course
+
+    Used as a many-to-many relationship between Course and User
+    """
     course = models.ForeignKey(Course)
     user = models.ForeignKey(User)
-    role = models.CharField(max_length=32, choices=MEMBERSHIP_ROLES)
+    # The role of the user in the course, instuctor or student
+    role = models.CharField(max_length=16, choices=ROLES)
+
+
+
+class Lecture(models.Model):
+    """A lecture that is part of a course."""
+    title = models.CharField(max_length=64)
+    course = models.ForeignKey(Course, related_name='lectures')
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    pre_quiz = models.ForeignKey(Quiz, related_name='pre_quiz', null=True)
+    post_quiz = models.ForeignKey(Quiz, related_name='post_quiz', null=True)
+
+    def __str__(self):
+        return self.title

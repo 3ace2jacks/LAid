@@ -1,11 +1,7 @@
 from rest_framework import serializers
 from quiz.models import Quiz, Question, Option, QuestionAnswer
 from course.models import Lecture
-
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = QuestionAnswer
-        fields = ['question', 'choice', 'user']
+from datetime import datetime
 
 class OptionSerializer(serializers.ModelSerializer):
 
@@ -18,18 +14,26 @@ class QuestionSerializer(serializers.ModelSerializer):
     options = OptionSerializer(many=True)
     class Meta:
         model = Question
-        fields = ['question', 'answer_description', 'options']
+        fields = ['id', 'question', 'answer_description', 'options']
 
 
 class QuizSerializer(serializers.ModelSerializer):
+    finished = serializers.SerializerMethodField(read_only=True)
+    answered = serializers.SerializerMethodField(read_only=True)
+
     questions = QuestionSerializer(many=True)
     lectureID = serializers.IntegerField(write_only=True)
     lectureQuiz = serializers.ChoiceField(choices=(('pre_quiz', 'pre_quiz'), ('post_quiz', 'post_quiz')), write_only=True)
 
+    def get_finished(self, obj):
+        return False
+
+    def get_answered(self, obj):
+        return False
 
     class Meta:
         model = Quiz
-        fields = ['id', 'title', 'description', 'start_time', 'end_time', 'questions', 'lectureID', 'lectureQuiz']
+        fields = ['id', 'title', 'description', 'deadline', 'questions', 'lectureID', 'lectureQuiz', 'finished', 'answered']
 
 
     def create(self, validated_data):
@@ -39,9 +43,7 @@ class QuizSerializer(serializers.ModelSerializer):
         quiz = Quiz.objects.create(**validated_data)
 
         for question_data in questions_data:
-            print(question_data)
             options_data = question_data.pop('options')
-            print(options_data)
             question = Question.objects.create(quiz=quiz, **question_data)
             for option_data in options_data:
                 Option.objects.create(question=question, **option_data)
@@ -55,24 +57,9 @@ class QuizSerializer(serializers.ModelSerializer):
         return quiz
 
 
+
 class QuestionAnswerSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = QuestionAnswer
         fields = ['question', 'choice', 'user']
-
-
-class AnswerSerializer(serializers.ModelSerializer):
-    answers = QuestionAnswerSerializer(many=True)
-    options = OptionSerializer(many=True)
-    class Meta:
-        model = Question
-        fields = ['id', 'quiz', 'question', 'answer_description', 'options', 'answers']
-
-
-
-
-
-
-
-
-

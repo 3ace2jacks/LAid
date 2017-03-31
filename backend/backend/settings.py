@@ -40,23 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
+    'djoser',
     'course',
-    'corsheaders',
-    'accounts',
     'quiz',
-    'lecture_feedback',
+    'live',
 ]
 
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,28 +60,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
+
 CORS_ORIGIN_ALLOW_ALL = True
-
-
-
-# Define site id for django rest auth
-SITE_ID = 1
 
 # Configuration for django rest framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.SessionAuthentication',
-            'rest_framework.authentication.TokenAuthentication',
-            'rest_framework.authentication.BasicAuthentication',
-            'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-       ),
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
+
+LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -152,11 +143,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'accounts.jwt_handler.jwt_response_payload_handler',
-
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=4),
-}

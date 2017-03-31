@@ -15,25 +15,34 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from rest_framework_jwt.views import obtain_jwt_token
-from rest_framework_jwt.views import refresh_jwt_token
-from rest_framework_jwt.views import verify_jwt_token
-
+from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
+from quiz.views import QuizCreate, QuizDetail, AnswerQuestion
+from live.views import FlowList, FlowCount
 
 
 urlpatterns = [
-    url(r'^api-token-auth/', obtain_jwt_token, name="api-token-auth"),
-    url(r'^api-token-refresh/', refresh_jwt_token),
-    url(r'^api-token-verify/', verify_jwt_token),
+    url(r'^admin/', admin.site.urls),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^auth/', include('djoser.urls.authtoken')),
 
-    url(r'^admin/', admin.site.urls, name="admin"),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'), name="api-"),
+    url(r'^courses/(?P<pk>[0-9]+)/$', CourseDetail.as_view(), name="course_detail"),
 
+    url(r'^courses/(?P<pk>[0-9]+)/join/$', JoinCourse.as_view(), name="join_course"),
+    url(r'^courses/(?P<pk>[0-9]+)/lectures/$', CourseLectureList.as_view(), name="course_lecture_list"),
+    url(r'^courses/member/', UserCourseList.as_view(), name="member_course_list"),
+    url(r'^courses/available/', AvailableCourseList.as_view(), name="available_course_list"),
+    url(r'^lectures/(?P<pk>[0-9]+)/$', LectureDetail.as_view(), name="lecture_detail"),
 
-    url(r'^courses/', include('course.urls'), name="courses"),
-    url(r'^quiz/', include('quiz.urls'), name="quiz"),
-    url(r'^user/', include('accounts.urls'), name="accounts"),
+    url(r'^quiz/answer/question/', AnswerQuestion.as_view(), name="answer_question_quiz"),
+    url(r'^quiz/(?P<pk>[0-9]+)/$', QuizDetail.as_view(), name="quiz_detail"),
+    url(r'^quiz/', QuizCreate.as_view(), name="quiz_create"),
 
-    url(r'^lecture/', include('lecture_feedback.urls'), name="lecture")
+    url(r'^lectures/(?P<pk>[0-9]+)/flow/$', FlowList.as_view(), name='flowlist'),
+
+    url(r'^lectures/(?P<pk>[0-9]+)/flow/count/(?P<tk>[0-9]+)$', FlowCount.as_view(),
+        name='flowCount'),
+
+    url(r'^lectures/(?P<pk>[0-9]+)/flow/count/$', FlowCount.as_view(),
+        name='flowCountDefault'),
+
 ]
-

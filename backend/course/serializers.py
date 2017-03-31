@@ -1,24 +1,15 @@
 from rest_framework import serializers
-from course.models import Course, Lecture, CourseMembership
-from django.contrib.auth.models import User
-from quiz.models import Quiz
-from quiz.serializers import QuestionSerializer
+from course.models import Course, CourseMembership, Lecture
 
 class CourseSerializer(serializers.ModelSerializer):
-    staff = serializers.SerializerMethodField()
+    role = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
-        fields = ('id', 'code', 'name', 'year', 'term', 'staff')
+        fields = ('id', 'code', 'name', 'year', 'term', 'role')
 
-    def get_staff(self, obj):
-        return obj.is_staff(self.context['request'].user)
-
-
-class LectureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lecture
-        fields = ('id', 'title', 'course', 'start_time', 'end_time', 'pre_quiz', 'post_quiz')
+    def get_role(self, obj):
+        return obj.get_role(self.context['request'].user)
 
 
 class CourseMembershipSerializer(serializers.ModelSerializer):
@@ -27,15 +18,11 @@ class CourseMembershipSerializer(serializers.ModelSerializer):
         fields = ()
 
 
-class CourseUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'date_joined',
-                  'last_login', 'is_active', 'password']
+class LectureSerializer(serializers.ModelSerializer):
+    course = serializers.PrimaryKeyRelatedField(read_only=True)
+    pre_quiz = serializers.PrimaryKeyRelatedField(read_only=True)
+    post_quiz = serializers.PrimaryKeyRelatedField(read_only=True)
 
-
-class QuizSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True)
     class Meta:
-        model = Quiz
-        fields = ['id', 'title', 'description', 'start_time', 'end_time', 'questions']
+        model = Lecture
+        fields = ('id', 'title', 'course', 'date', 'start_time', 'end_time', 'pre_quiz', 'post_quiz')

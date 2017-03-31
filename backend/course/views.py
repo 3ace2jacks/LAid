@@ -1,108 +1,70 @@
-from course.models import Course, Lecture, CourseMembership
-from course.serializers import CourseSerializer, LectureSerializer, CourseMembershipSerializer, \
-    CourseUserSerializer, QuizSerializer
+from course.serializers import CourseSerializer, CourseMembershipSerializer, LectureSerializer
 from rest_framework import generics
-from rest_framework import permissions
+from course.models import Course, CourseMembership, Lecture
+from rest_framework.permissions import IsAuthenticated
 
-from quiz.serializers import AnswerSerializer
-from rest_framework.exceptions import APIException
-
-
-
-class MemberCourseList(generics.ListCreateAPIView):
-    """Return a list of all the courses the current user is connected to, as staff or student.
+class UserCourseList(generics.ListCreateAPIView):
+    """Return a list of all the courses the current user is a member of.
 
     Authentication is required"""
+    permission_classes = (IsAuthenticated,)
     serializer_class = CourseSerializer
 
     def perform_create(self, serializer):
         course = serializer.save()
-        cm = CourseMembership.objects.create(course=course, user=self.request.user, role='staff')
+        cm = CourseMembership.objects.create(course=course, user=self.request.user, role='INSTRUCTOR')
         cm.save()
 
     def get_queryset(self):
         return self.request.user.courses
 
 
-class CourseList(generics.ListAPIView):
-    """Return all courses that the student is not connected to.
+
+class AvailableCourseList(generics.ListAPIView):
+    """Return a list of all the courses the current user is a member of.
 
     Authentication is required"""
+    permission_classes = (IsAuthenticated,)
     serializer_class = CourseSerializer
+
 
     def get_queryset(self):
         return Course.objects.exclude(id__in=self.request.user.courses.values_list('id', flat=True))
 
 
-class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
+
+class CourseDetail(generics.RetrieveAPIView):
     """Return the course information of the course with the id in the url."""
+
+    permission_classes = (IsAuthenticated,)
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
 
 class JoinCourse(generics.CreateAPIView):
     """Adds the request user as a student to the course. Course id is retreived from the url."""
+
+    permission_classes = (IsAuthenticated,)
     serializer_class = CourseMembershipSerializer
 
     def perform_create(self, serializer):
-        cm = CourseMembership.objects.create(course=Course.objects.get(id=self.kwargs['pk']), user=self.request.user, role='student')
+        cm = CourseMembership.objects.create(course=Course.objects.get(id=self.kwargs['pk']), user=self.request.user, role='STUDENT')
         cm.save()
 
 
-class CourseAddMember(generics.CreateAPIView):
-    serializer_class = CourseMembershipSerializer
+class CourseLectureList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
 
-    def perform_create(self, serializer):
-        pass
-
-
-class LectureList(generics.ListCreateAPIView):
     serializer_class = LectureSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(course=Course.objects.get(pk=self.kwargs['pk']))
 
     def get_queryset(self):
         return Lecture.objects.filter(course=self.kwargs['pk'])
 
 
-class CourseUserList(generics.ListAPIView):
-    serializer_class = CourseUserSerializer
-    def get_queryset(self):
-        return Course.objects.get(id=self.kwargs['pk']).members
-
-
-class PreQuiz(generics.RetrieveAPIView):
-    serializer_class = QuizSerializer
-    def get_object(self):
-        return Lecture.objects.get(id=self.kwargs['lk']).pre_quiz
-
-
-class PostQuiz(generics.RetrieveAPIView):
-    serializer_class = QuizSerializer
-    def get_object(self):
-        return Lecture.objects.get(id=self.kwargs['lk']).post_quiz
-
-
-class AnswerPreList(generics.ListAPIView):
-    serializer_class = AnswerSerializer
-    def get_queryset(self):
-        try:
-            return Lecture.objects.get(id=self.kwargs['lk']).pre_quiz.questions.all()
-        except:
-            raise APIException("No PRE_QUIZ found..")
-
-class AnswerPostList(generics.ListAPIView):
-    serializer_class = AnswerSerializer
-    def get_queryset(self):
-        try:
-            return Lecture.objects.get(id=self.kwargs['lk']).post_quiz.questions.all()
-        except:
-            raise APIException("No POST_QUIZ found..")
-
-
-class LectureView(generics.RetrieveAPIView):
+class LectureDetail(generics.RetrieveAPIView):
+    """Return the course information of the course with the id in the url."""
+    queryset = Lecture.objects.all()
     serializer_class = LectureSerializer
-    def get_object(self):
-        return Lecture.objects.get(id=self.kwargs['pk'])
-
