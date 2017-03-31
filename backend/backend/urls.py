@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
-from quiz.views import QuizCreate, QuizDetail, AnswerQuestion
+
+from quiz.views import QuizCreate, QuizDetail, AnswerQuestion, QuizResult
 from live.views import FlowList, FlowCount, QuestionList, VoteList
 
 
@@ -31,13 +32,14 @@ urlpatterns = [
 
     url(r'^courses/(?P<pk>[0-9]+)/join/$', JoinCourse.as_view(), name="join_course"),
     url(r'^courses/(?P<pk>[0-9]+)/lectures/$', CourseLectureList.as_view(), name="course_lecture_list"),
-    url(r'^courses/member/', UserCourseList.as_view(), name="member_course_list"),
-    url(r'^courses/available/', AvailableCourseList.as_view(), name="available_course_list"),
+    url(r'^courses/member/$', UserCourseList.as_view(), name="member_course_list"),
+    url(r'^courses/available/$', AvailableCourseList.as_view(), name="available_course_list"),
     url(r'^lectures/(?P<pk>[0-9]+)/$', LectureDetail.as_view(), name="lecture_detail"),
 
-    url(r'^quiz/answer/question/', AnswerQuestion.as_view(), name="answer_question_quiz"),
+    url(r'^quiz/answer/question/$', AnswerQuestion.as_view(), name="answer_question_quiz"),
     url(r'^quiz/(?P<pk>[0-9]+)/$', QuizDetail.as_view(), name="quiz_detail"),
-    url(r'^quiz/', QuizCreate.as_view(), name="quiz_create"),
+    url(r'^quiz/$', QuizCreate.as_view(), name="quiz_create"),
+    url(r'^quiz/(?P<pk>[0-9]+)/result$', QuizResult.as_view(), name="quiz_result"),
 
     url(r'^lectures/(?P<pk>[0-9]+)/flow/$', FlowList.as_view(), name='flowlist'),
 
