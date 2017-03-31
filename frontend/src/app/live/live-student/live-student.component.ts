@@ -73,6 +73,16 @@ export class LiveStudentComponent implements OnInit {
         if (this.lecture ) {
           this.getQuestions();
         }
-    });
+      });
+    }
+
+    upvote(id: number){
+      for (var i = 0; i < this.questions.length; i++) {
+        if(this.questions[i].id == id){
+          this.questions[i].upvotes++;
+          this.liveService.submitVote("up", id);          
+        }
+      }
+    }
 
 }

@@ -19,6 +19,10 @@
   	</form>
   	<div *ngIf="questions">
 	  	<div class="course-row" *ngFor="let question of questions" [class]>
-	  		<div class="course-row">{{question.question}}</div>
+	  		<div class="course-row">{{question.question}}, upvote: {{question.upvotes}}
+	  			<div>
+	  				<button class="btn btn-success" (click)="upvote(question.id)">upvote</button>
+	  			</div>
+	  		</div>
 	  	</div>	
   	</div>

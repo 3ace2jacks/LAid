@@ -42,4 +42,12 @@ export class LiveService {
     .then(response => response.json() as Question[])
     .catch(error => console.log(error));
   }
+
+  submitVote(vote: string, id: number): Promise<void>{
+    return this.authHttp.post('/questions/' + id + '/votes/', JSON.stringify({ vote: vote}))
+    .toPromise()
+    .catch(error => console.log(error));
+  }
+
+
 }
