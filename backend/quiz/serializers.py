@@ -2,6 +2,7 @@ from rest_framework import serializers
 from quiz.models import Quiz, Question, Option, QuestionAnswer
 from course.models import Lecture
 from datetime import datetime
+from django.utils import timezone
 
 class OptionSerializer(serializers.ModelSerializer):
 
@@ -26,10 +27,11 @@ class QuizSerializer(serializers.ModelSerializer):
     lectureQuiz = serializers.ChoiceField(choices=(('pre_quiz', 'pre_quiz'), ('post_quiz', 'post_quiz')), write_only=True)
 
     def get_finished(self, obj):
-        return False
+        return timezone.now() > obj.deadline
 
     def get_answered(self, obj):
-        return False
+        return QuestionAnswer.objects.filter(question=obj.questions.filter(),
+                                             user=self.context['request'].user).exists()
 
     class Meta:
         model = Quiz
