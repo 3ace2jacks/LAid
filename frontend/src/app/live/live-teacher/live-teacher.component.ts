@@ -6,10 +6,7 @@ import { CourseService } from '../../course/course.service';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { LiveService } from '../live.service';
 import { Observable } from 'rxjs/Rx';
-<<<<<<< HEAD
-=======
-import { Question } from '../models';
->>>>>>> 3fcde24de039217f8798026790871f2d962bf633
+
 
 @Component({
 	selector: 'app-live-teacher',
