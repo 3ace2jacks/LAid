@@ -19,11 +19,30 @@
 
 		</div>
 	</div>
-
-	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-2" >
-		
-		<pre *ngFor="let question of mockQuestions" >
-			{{question.question}}</pre>
-		
 	</div>
-</div>
+
+	<div *ngIf="questions">
+	  	<div class="course-row" *ngFor="let question of questions" [class]>
+	  		<div class="course-row" *ngIf="!question.answered">
+		  		<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}, answered: {{question.answered}}
+		  			<div>
+		  				<button class="btn btn-success" (click)="answered(question)">delete</button>
+		  			</div>
+		  		</div>
+	  		</div>
+	  	</div>
+	  	<br/>
+	  	#######################<br/>
+  		#<br/>
+  		#  These questions has been answered:<br/>
+  		#<br/>
+  		#######################<br/>
+  		<br/>
+	  	<div class="course-row" *ngFor="let question of questions" [class]>
+		  	<div class="course-row" *ngIf="question.answered">
+			  	<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}, answered: {{question.answered}}
+			  	</div>
+		  	</div>
+		</div>	
+  	</div>
+

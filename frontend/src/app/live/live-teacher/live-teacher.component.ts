@@ -6,6 +6,10 @@ import { CourseService } from '../../course/course.service';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { LiveService } from '../live.service';
 import { Observable } from 'rxjs/Rx';
+<<<<<<< HEAD
+=======
+import { Question } from '../models';
+>>>>>>> 3fcde24de039217f8798026790871f2d962bf633
 
 @Component({
 	selector: 'app-live-teacher',
@@ -27,6 +31,7 @@ export class LiveTeacherComponent implements OnInit {
 	public buttonCount: ButtonCount = {to_fast: 0, to_slow: 0};
 	minutesAgo: number = 5;
 
+	questions: Question[];
 	public toSlow: string = "too slow";
 	public toFast: string = "too fast";
 	public barChartLabels: String[] = [this.toFast, this.toSlow];
@@ -76,20 +81,41 @@ ngOnInit(): void {
 }
 
 
-getLecture(){
-	this.sub = this.route.params.subscribe(params =>{
-		this.courseService.getLecture(+params['id'])
-		.then(lecture => {this.lecture=lecture;})
-		.catch(error => {this.error=error;
-		});
-	})
-}
-refresh(){
-	Observable.interval(2000).subscribe(x => {
-		if (this.lecture ) {
-			this.getButtonCount();
-		}
+    getLecture(){
+      this.sub = this.route.params.subscribe(params =>{
+        this.courseService.getLecture(+params['id'])
+        .then(lecture => {this.lecture=lecture;})
+        .catch(error => {this.error=error;
+           });
+      })
+	}
 
-	});
-}
+	getQuestions(){
+      this.liveService.getQuestions(this.lecture.id).then(questions => {
+        this.questions = questions.sort(function(a,b){
+          if((a.upvotes - a.downvotes) < (b.upvotes - b.downvotes)){
+            return 1
+          }
+          return -1
+        });
+      })
+      .catch(error => console.log(error));
+
+    }
+    answered(q: Question){
+	    this.liveService.answered(q.id);     
+	    q.answered = true;    
+      	
+    }
+     
+	refresh(){
+		Observable.interval(2000).subscribe(x => {
+			if (this.lecture ) {
+				this.getButtonCount();
+				this.getQuestions();
+			}
+    
+  		});
+	}
+
 }

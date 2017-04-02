@@ -1,4 +1,3 @@
-
 <h2 align="center">{{title}}</h2>
 
 	<div align= "center">
@@ -9,3 +8,24 @@
 	<div align="center">
 		<button class="btn btn-success"  (click)="slow()">To slow</button>
 	</div>
+	<h2>Ask a question</h2>
+	<form [formGroup]="questionForm" novalidate>
+  		<div class="form-group">
+    		<label class="center-block">Question:
+      			<input class="form-control" formControlName="question">
+    		</label>
+  		</div>
+  		<button class="btn btn-success"  (click)="submitQuestion()" type="submit" >submit</button>
+  	</form>
+  	<div *ngIf="questions">
+	  	<div class="course-row" *ngFor="let question of questions" [class]>
+	  		<div class="course-row" *ngIf="!question.answered">
+		  		<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}
+		  			<div>
+		  				<button class="btn btn-success" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>
+		  				<button class="btn btn-success" [disabled]="question.has_voted" (click)="hasvoted(question)" (click)="downvote(question.id)">downvote</button>
+		  			</div>
+		  		</div>
+		  	</div>
+	  	</div>	
+  	</div>

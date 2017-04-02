@@ -4,6 +4,10 @@ export class ButtonCount {
 }
 
 export class Question {
+	id: number;
 	question: string;
-	votes: number;
+	upvotes: number;
+	downvotes: number;
+	has_voted: boolean;
+	answered: boolean;
 }
