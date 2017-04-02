@@ -39,12 +39,18 @@ class LectureQuestionSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     upvotes = serializers.SerializerMethodField(read_only=True)
     downvotes = serializers.SerializerMethodField(read_only=True)
+    has_voted = serializers.SerializerMethodField(read_only=True)
+
+
     class Meta:
         model = LectureQuestion
-        fields = ('id', 'user', 'time_stamp', 'question', 'upvotes', 'downvotes')
+        fields = ('id', 'user', 'time_stamp', 'question', 'upvotes', 'downvotes', 'has_voted')
 
     def get_upvotes(self, obj):
         return Vote.objects.filter(question=obj, vote="up").count()
 
     def get_downvotes(self, obj):
         return Vote.objects.filter(question=obj, vote="down").count()
+
+    def get_has_voted(self, obj):
+        return Vote.objects.filter(question=obj, user=self.context['request'].user).exists()
