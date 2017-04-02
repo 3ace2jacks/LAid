@@ -5,7 +5,8 @@ import { Lecture } from '../../course/models';
 import { CourseService } from '../../course/course.service';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { LiveService } from '../live.service';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
+import { Question } from '../models';
 
 @Component({
   selector: 'app-live-teacher',
@@ -20,6 +21,7 @@ export class LiveTeacherComponent implements OnInit {
 	public buttonCount: ButtonCount = {to_fast: 0, to_slow: 0};
 	minutesAgo: number = 5;
 
+	questions: Question[];
 	public toSlow: string = "too slow";
 	public toFast: string = "too fast";
 	public barChartLabels: String[] = [this.toFast, this.toSlow];
@@ -76,13 +78,28 @@ export class LiveTeacherComponent implements OnInit {
         .catch(error => {this.error=error;
            });
       })
-}
+	}
+
+	getQuestions(){
+      this.liveService.getQuestions(this.lecture.id).then(questions => {
+        this.questions = questions.sort(function(a,b){
+          if((a.upvotes - a.downvotes) < (b.upvotes - b.downvotes)){
+            return 1
+          }
+          return -1
+        });
+      })
+      .catch(error => console.log(error));
+
+    }
+     
 	refresh(){
 		Observable.interval(2000).subscribe(x => {
 			if (this.lecture ) {
 				this.getButtonCount();
+				this.getQuestions();
 			}
     
-  });
+  		});
 	}
 }

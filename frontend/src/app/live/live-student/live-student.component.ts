@@ -22,6 +22,8 @@ export class LiveStudentComponent implements OnInit {
     private sub:any;
     lecture: Lecture;
     questions: Question[];
+    voted: Boolean;
+
 
     questionForm = new FormGroup ({
       question: new FormControl()
@@ -47,7 +49,7 @@ export class LiveStudentComponent implements OnInit {
         this.courseService.getLecture(+params['id'])
         .then(lecture => {this.lecture=lecture; this.getQuestions(); this.refresh()})
         .catch(error => {this.error=error;
-           console.log(error+ "hello world")});
+           console.log(error)});
       })
     }
     createForm() {
@@ -55,19 +57,27 @@ export class LiveStudentComponent implements OnInit {
         question: ['', Validators.required ],  
       });
     }
+
     submitQuestion(){
       this.liveService.submitQuestion(this.questionForm.get("question").value, this.lecture.id);
       this.questionForm.setValue({
-        question: "";
+        question: "",
       })
     }
 
     getQuestions(){
       this.liveService.getQuestions(this.lecture.id).then(questions => {
-        this.questions = questions;
+        this.questions = questions.sort(function(a,b){
+          if((a.upvotes - a.downvotes) < (b.upvotes - b.downvotes)){
+            return 1
+          }
+          return -1
+        });
       })
       .catch(error => console.log(error));
+
     }
+
     refresh(){
       Observable.interval(2000).subscribe(x => {
         if (this.lecture ) {
@@ -81,6 +91,15 @@ export class LiveStudentComponent implements OnInit {
         if(this.questions[i].id == id){
           this.questions[i].upvotes++;
           this.liveService.submitVote("up", id);          
+        }
+      }
+    }
+
+     downvote(id: number){
+      for (var i = 0; i < this.questions.length; i++) {
+        if(this.questions[i].id == id){
+          this.questions[i].downvotes++;
+          this.liveService.submitVote("down", id);          
         }
       }
     }
