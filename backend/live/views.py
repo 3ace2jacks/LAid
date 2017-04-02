@@ -63,16 +63,10 @@ class VoteList(generics.CreateAPIView):
         serializer.save(user=self.request.user, question=LectureQuestion.objects.get(id=self.kwargs['pk']))
 
 
-class VoteCount(APIView):
+class AnswerLiveQuestion(APIView):
 
-    def get(self, request, pk, format=None):
-
-        up_votes = VoteList.objects.filter(question=LectureQuestion.objects.get(id=pk),
-                                           vote='up').count()
-        down_votes = VoteList.objects.filter(question=LectureQuestion.objects.get(id=questionId),
-                                             vote='down').count()
-        flow = {
-            'up_votes': up_votes,
-            'down_votes': down_votes
-        }
-        return Response(flow)
+    def post(self, request, pk, format=None):
+        lecture = LectureQuestion.objects.get(id=pk)
+        lecture.answered = True
+        lecture.save()
+        return Response()

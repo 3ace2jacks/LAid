@@ -41,10 +41,9 @@ class LectureQuestionSerializer(serializers.ModelSerializer):
     downvotes = serializers.SerializerMethodField(read_only=True)
     has_voted = serializers.SerializerMethodField(read_only=True)
 
-
     class Meta:
         model = LectureQuestion
-        fields = ('id', 'user', 'time_stamp', 'question', 'upvotes', 'downvotes', 'has_voted')
+        fields = ('id', 'user', 'time_stamp', 'question', 'upvotes', 'downvotes', 'has_voted', 'answered')
 
     def get_upvotes(self, obj):
         return Vote.objects.filter(question=obj, vote="up").count()
