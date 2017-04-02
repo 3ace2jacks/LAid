@@ -25,7 +25,7 @@ export class CourseListComponent implements OnInit {
         name: new FormControl(),
         year: new FormControl(),
         term: new FormControl(),
-    })
+    });
 
     constructor(private courseService: CourseService, private router: Router) { }
 
@@ -72,6 +72,7 @@ export class CourseListComponent implements OnInit {
         this.courseService.createCourse(this.createCourseForm.value as Course)
         .then(() =>{
             this.createCourseModal.hide();
+            this.createCourseForm.reset();
             this.getOwnCourses();
         })
         .catch(error => {
