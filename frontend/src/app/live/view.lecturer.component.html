@@ -20,10 +20,9 @@
 		</div>
 	</div>
 
-	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-2" >
-		
-		<pre *ngFor="let question of mockQuestions" >
-			{{question.question}}</pre>
-		
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
+		<li *ngFor="let question of mockQuestions">
+			<p class="questionsFeed">{{question.question}}</p>
+		</li> 
 	</div>
 </div>

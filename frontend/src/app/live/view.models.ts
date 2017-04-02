@@ -5,5 +5,5 @@ export class ButtonCount {
 
 export class Question {
 	question: string;
-	votes: number;
+	id: number;
 }
