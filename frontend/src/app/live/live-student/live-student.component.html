@@ -19,11 +19,13 @@
   	</form>
   	<div *ngIf="questions">
 	  	<div class="course-row" *ngFor="let question of questions" [class]>
-	  		<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}
-	  			<div>
-	  				<button class="btn btn-success" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>
-	  				<button class="btn btn-success" [disabled]="question.has_voted" (click)="hasvoted(question)" (click)="downvote(question.id)">downvote</button>
-	  			</div>
-	  		</div>
+	  		<div class="course-row" *ngIf="!question.answered">
+		  		<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}
+		  			<div>
+		  				<button class="btn btn-success" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>
+		  				<button class="btn btn-success" [disabled]="question.has_voted" (click)="hasvoted(question)" (click)="downvote(question.id)">downvote</button>
+		  			</div>
+		  		</div>
+		  	</div>
 	  	</div>	
   	</div>

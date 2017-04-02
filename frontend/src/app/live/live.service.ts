@@ -32,7 +32,6 @@ export class LiveService {
     console.log(question, lectureID)
     return this.authHttp.post('/lectures/' + lectureID + '/questions/', JSON.stringify({ question: question }))
       .toPromise()
-      .then(response => console.log(response))
       .catch(error => console.log(error));
   }
 
@@ -50,7 +49,7 @@ export class LiveService {
   }
 
   answered(id: number): Promise<void>{
-    return this.authHttp.post('/questions/' + id + '/answer/')
+    return this.authHttp.post('/questions/' + id + '/answer/', {})
     .toPromise()
     .catch(error => console.log(error));
   }

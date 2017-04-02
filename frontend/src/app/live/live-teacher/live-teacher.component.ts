@@ -92,13 +92,10 @@ export class LiveTeacherComponent implements OnInit {
       .catch(error => console.log(error));
 
     }
-    answer(id: number){
-    	for (var i = 0; i < this.questions.length; i++) {
-        if(this.questions[i].id == id){
-          this.questions[i].answer = true;
-          this.liveService.answered(id);         
-        }
-      }
+    answered(q: Question){
+	    this.liveService.answered(q.id);     
+	    q.answered = true;    
+      	
     }
      
 	refresh(){
