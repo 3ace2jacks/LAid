@@ -18,12 +18,7 @@ export class LiveTeacherComponent implements OnInit {
 		private route: ActivatedRoute,
 		private courseService: CourseService){}
 
-	public mockQuestions: Question[] = [
-	{question: 'heyesliknvorwihorhorhosrhvsejlrvsjrolrvhldsjvnsjldvndjslnjldsnvldjsnvsdljnvsdljvnsdljn', votes: 1},
-	{question: 'heeey', votes: 1},
-	{question: 'hhhey', votes: 1},
 
-	]
 
 	public buttonCount: ButtonCount = {to_fast: 0, to_slow: 0};
 	minutesAgo: number = 5;
