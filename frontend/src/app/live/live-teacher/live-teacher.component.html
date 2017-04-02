@@ -19,7 +19,7 @@
 	  	<div class="course-row" *ngFor="let question of questions" [class]>
 	  		<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}
 	  			<div>
-	  				<button class="btn btn-success">delete</button>
+	  				<button class="btn btn-success" (click)="answered(question.id)">delete</button>
 	  			</div>
 	  		</div>
 	  	</div>	

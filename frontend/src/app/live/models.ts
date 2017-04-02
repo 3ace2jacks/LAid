@@ -9,4 +9,5 @@ export class Question {
 	upvotes: number;
 	downvotes: number;
 	has_voted: boolean;
+	answered: boolean:
 }

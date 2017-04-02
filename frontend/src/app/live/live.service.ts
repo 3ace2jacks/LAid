@@ -49,5 +49,11 @@ export class LiveService {
     .catch(error => console.log(error));
   }
 
+  answered(id: number): Promise<void>{
+    return this.authHttp.post('/questions/' + id + '/answer/')
+    .toPromise()
+    .catch(error => console.log(error));
+  }
+
 
 }
