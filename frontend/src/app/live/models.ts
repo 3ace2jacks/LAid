@@ -8,5 +8,5 @@ export class Question {
 	question: string;
 	upvotes: number;
 	downvotes: number;
-	hasvoted: boolean;
+	has_voted: boolean;
 }

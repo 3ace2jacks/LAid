@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttpService } from '../auth/auth-http.service';
 import { ButtonCount } from './models';
-import { Question } from '.models';
+import { Question } from './models';
 
 @Injectable()
 export class LiveService {

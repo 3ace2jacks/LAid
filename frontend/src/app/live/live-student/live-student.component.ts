@@ -90,7 +90,7 @@ export class LiveStudentComponent implements OnInit {
       for (var i = 0; i < this.questions.length; i++) {
         if(this.questions[i].id == id){
           this.questions[i].upvotes++;
-          this.liveService.submitVote("up", id);          
+          this.liveService.submitVote("up", id);         
         }
       }
     }
@@ -99,9 +99,12 @@ export class LiveStudentComponent implements OnInit {
       for (var i = 0; i < this.questions.length; i++) {
         if(this.questions[i].id == id){
           this.questions[i].downvotes++;
-          this.liveService.submitVote("down", id);          
+          this.liveService.submitVote("down", id); 
         }
       }
+    }
+    hasvoted(q: Question){
+      q.has_voted = true;
     }
 
 }
