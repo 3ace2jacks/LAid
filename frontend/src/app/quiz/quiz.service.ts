@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Quiz, Question, Option, OptionResults, QuestionResults, QuizResults, QuestionAnswer } from './models';
+import { Quiz, Question, Option, OptionResults, QuestionResults, QuizResults, QuizAnswer } from './models';
 import { AuthHttpService } from '../auth/auth-http.service';
 
 
@@ -30,8 +30,8 @@ export class QuizService {
     .catch(error => error);
   }
 
-  answerQuestion(answer: QuestionAnswer) : Promise<void> {
-    return this.authHttp.post('/quiz/answer/question/', answer)
+  answerQuestion(answer: QuizAnswer) : Promise<void> {
+    return this.authHttp.post('/quiz/' + answer.quizID + '/answer/', answer)
     .toPromise()
     .then(() => {})
     .catch(error => console.log(error.json()))
