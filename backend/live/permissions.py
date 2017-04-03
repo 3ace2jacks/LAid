@@ -39,3 +39,13 @@ class IsLectureMember(permissions.BasePermission):
     def has_permission(self, request, view):
         return LectureQuestion.objects.get(id=view.kwargs['pk']).lecture.course.get_role(
             request.user)
+
+
+class IsQuestionInstructor(permissions.BasePermission):
+    """
+    Global permission check for blacklisted IPs.
+    """
+
+    def has_permission(self, request, view):
+        return LectureQuestion.objects.get(id=view.kwargs['pk']).lecture.course.is_instructor(
+            request.user)
