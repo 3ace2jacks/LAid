@@ -44,6 +44,9 @@ class Course(models.Model):
             return CourseMembership.objects.get(course=self, user=user).role
         return None
 
+    def is_instructor(self, user):
+        return self.get_role(user) == 'INSTRUCTOR'
+
 
 class CourseMembership(models.Model):
     """Define the roles of users in a course

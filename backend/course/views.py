@@ -2,12 +2,13 @@ from course.serializers import CourseSerializer, CourseMembershipSerializer, Lec
 from rest_framework import generics
 from course.models import Course, CourseMembership, Lecture
 from rest_framework.permissions import IsAuthenticated
+import course.permissions as p
 
 class UserCourseList(generics.ListCreateAPIView):
     """Return a list of all the courses the current user is a member of.
 
     Authentication is required"""
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     serializer_class = CourseSerializer
 
     def perform_create(self, serializer):
@@ -24,7 +25,7 @@ class AvailableCourseList(generics.ListAPIView):
     """Return a list of all the courses the current user is a member of.
 
     Authentication is required"""
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     serializer_class = CourseSerializer
 
 
@@ -36,7 +37,7 @@ class AvailableCourseList(generics.ListAPIView):
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     """Return the course information of the course with the id in the url."""
 
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated, p.IsCourseInstructor,)
 
 
 
@@ -47,7 +48,7 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
 class JoinCourse(generics.CreateAPIView):
     """Adds the request user as a student to the course. Course id is retreived from the url."""
 
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     serializer_class = CourseMembershipSerializer
 
     def perform_create(self, serializer):
@@ -56,7 +57,7 @@ class JoinCourse(generics.CreateAPIView):
 
 
 class CourseLectureList(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated, p.IsLectureInstructor)
 
     serializer_class = LectureSerializer
 
@@ -69,6 +70,6 @@ class CourseLectureList(generics.ListCreateAPIView):
 
 class LectureDetail(generics.RetrieveAPIView):
     """Return the course information of the course with the id in the url."""
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     queryset = Lecture.objects.all()
     serializer_class = LectureSerializer
