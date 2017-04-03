@@ -73,7 +73,7 @@ class VoteList(generics.CreateAPIView):
 
 
 class AnswerLiveQuestion(APIView):
-
+    permission_classes = (IsAuthenticated, p.IsLectureInstructor)
     def post(self, request, pk, format=None):
         lecture = LectureQuestion.objects.get(id=pk)
         lecture.answered = True
