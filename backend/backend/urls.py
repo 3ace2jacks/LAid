@@ -33,9 +33,9 @@ urlpatterns = [
     url(r'^courses/member/$', UserCourseList.as_view(), name="member_course_list"),
 
     url(r'^quiz/(?P<pk>[0-9]+)/result$', QuizResult.as_view(), name="quiz_result"),
-    url(r'^quiz/answer/question/', AnswerQuestion.as_view(), name="answer_question_quiz"),
+    url(r'^quiz/answer/question/$', AnswerQuestion.as_view(), name="answer_question_quiz"),
     url(r'^quiz/(?P<pk>[0-9]+)/$', QuizDetail.as_view(), name="quiz_detail"),
-    url(r'^quiz/', QuizCreate.as_view(), name="quiz_create"),
+    url(r'^quiz/$', QuizCreate.as_view(), name="quiz_create"),
 
     url(r'^lectures/(?P<pk>[0-9]+)/questions/$', QuestionList.as_view(), name='questionlist'),
     url(r'^lectures/(?P<pk>[0-9]+)/flow/count/(?P<tk>[0-9]+)$', FlowCount.as_view(),
