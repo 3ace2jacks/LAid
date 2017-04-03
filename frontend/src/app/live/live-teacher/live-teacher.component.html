@@ -1,19 +1,48 @@
-	<div style=" max-width: 1000px" align="left">
+<div class= "row">
+	<div style=" max-width: 1000px" class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-4">
+
 		<h4>Select duration of votes (default is 5 minutes)</h4>
 		<button class="btn btn-default" (click)="setMinutesAgo(2)">2 minutes</button>
 		<button class="btn btn-default" (click)="setMinutesAgo(5)">5 minutes</button>
 		<button class="btn btn-default" (click)="setMinutesAgo(10)">10 minutes</button>
 		<button class="btn btn-default" (click)="setMinutesAgo(15)">15 minutes</button>
 		<button class="btn btn-default" (click)="setMinutesAgo(30)">30 minutes</button>
-		<canvas baseChart width="10"
-		[datasets] = "barChartDataExample"
-		[labels] = "barChartLabels"
-		[options] = "barChartOptions"
-		[legend] = "barChartLegend"
-		[chartType] = "barChartType"
+		<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<canvas baseChart width="10"
+			[datasets] = "barChartDataExample"
+			[labels] = "barChartLabels"
+			[options] = "barChartOptions"
+			[legend] = "barChartLegend"
+			[chartType] = "barChartType"
 
-		></canvas>
+			></canvas>
 
+		</div>
 	</div>
-<div >
-</div>
+	</div>
+
+	<div *ngIf="questions">
+	  	<div class="course-row" *ngFor="let question of questions" [class]>
+	  		<div class="course-row" *ngIf="!question.answered">
+		  		<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}, answered: {{question.answered}}
+		  			<div>
+		  				<button class="btn btn-success" (click)="answered(question)">delete</button>
+		  			</div>
+		  		</div>
+	  		</div>
+	  	</div>
+	  	<br/>
+	  	#######################<br/>
+  		#<br/>
+  		#  These questions has been answered:<br/>
+  		#<br/>
+  		#######################<br/>
+  		<br/>
+	  	<div class="course-row" *ngFor="let question of questions" [class]>
+		  	<div class="course-row" *ngIf="question.answered">
+			  	<div class="course-row">{{question.question}}, upvotes: {{question.upvotes}}, downvotes: {{question.downvotes}}, answered: {{question.answered}}
+			  	</div>
+		  	</div>
+		</div>	
+  	</div>
+

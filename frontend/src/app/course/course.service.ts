@@ -50,7 +50,18 @@ export class CourseService {
             .catch(error => error.json());
     }
 
-    createCourse(course: Course) {
-        
+    createCourse(course: Course): Promise<void> {
+        return this.authHttp.post('/courses/member/', JSON.stringify(course))
+            .toPromise()
+            .then(response => response.json())
+            .catch(error => {return Promise.reject(error.json())});
+    }
+
+    createLecture(lecture: Lecture, courseID: number): Promise<void> {
+
+        return this.authHttp.post('/courses/' + courseID + '/lectures/', JSON.stringify(lecture))
+            .toPromise()
+            .then(response => response.json())
+            .catch(error => {return Promise.reject(error.json())});
     }
 }

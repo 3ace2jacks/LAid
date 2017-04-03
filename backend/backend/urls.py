@@ -18,7 +18,7 @@ from django.contrib import admin
 from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
 
 from quiz.views import QuizCreate, QuizDetail, AnswerQuestion, QuizResult
-from live.views import FlowList, FlowCount, QuestionList, VoteList
+from live.views import FlowList, FlowCount, QuestionList, VoteList, AnswerLiveQuestion
 
 
 urlpatterns = [
@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^lectures/(?P<pk>[0-9]+)/flow/$', FlowList.as_view(), name='flowlist'),
     url(r'^lectures/(?P<pk>[0-9]+)/$', LectureDetail.as_view(), name="lecture_detail"),
 
+    url(r'^questions/(?P<pk>[0-9]+)/answer/$', AnswerLiveQuestion.as_view(), name='live_question_answer'),
     url(r'^questions/(?P<pk>[0-9]+)/votes/$', VoteList.as_view(), name='vote'),
 
 ]

@@ -56,11 +56,11 @@
       <div class="modal-body">
 
 
-        <form>
+        <form [formGroup]="createLectureForm">
           <div class="form-group row">
             <div class="col-sm-12">
               <label for="title">Title</label>
-              <input type="text" class="form-control" id="title">
+              <input formControlName="title" type="text" class="form-control" id="title">
             </div>
 
           </div>
@@ -68,23 +68,23 @@
           <div class="form-group row">
             <div class="col-sm-12">
               <label for="start_time">Date</label>
-              <input type="date" class="form-control" id="start_time">
+              <input type="date" formControlName="date" class="form-control" id="start_time">
             </div>
           </div>
 
           <div class="form-group row">
             <div class="col-sm-6">
               <label for="end_time">Start time</label>
-              <input type="time" class="form-control" id="end_time">
+              <input formControlName="start_time" type="time" class="form-control" id="end_time">
             </div>
             <div class="col-sm-6">
               <label for="end_time">End time</label>
-              <input type="time" class="form-control" id="end_time">
+              <input type="time" formControlName="end_time" class="form-control" id="end_time">
             </div>
           </div>
           <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
-              <button (click)="createCourse()" type="submit" class="btn btn-primary">Create lecture</button>
+              <button (click)="createLecture()" type="submit" class="btn btn-primary">Create lecture</button>
             </div>
           </div>
         </form>

@@ -6,6 +6,8 @@ export class ButtonCount {
 export class Question {
 	id: number;
 	question: string;
-	upvote: number;
-	downvote: number;
+	upvotes: number;
+	downvotes: number;
+	has_voted: boolean;
+	answered: boolean;
 }

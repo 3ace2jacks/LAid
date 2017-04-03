@@ -25,6 +25,7 @@ class LectureQuestion(models.Model):
     lecture = models.ForeignKey(Lecture)
     time_stamp = models.DateTimeField(auto_now=True)
     question = models.TextField()
+    answered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.question
