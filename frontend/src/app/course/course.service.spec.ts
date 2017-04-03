@@ -10,7 +10,7 @@ describe('CourseService', () => {
     });
   });
 
-  it('should ...', inject([CourseService], (service: CourseService) => {
-    expect(service).toBeTruthy();
-  }));
+  // it('should ...', inject([CourseService], (service: CourseService) => {
+  //   expect(service).toBeTruthy();
+  // }));
 });

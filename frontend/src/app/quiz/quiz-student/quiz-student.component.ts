@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from '../quiz.service';
 import { Quiz, QuizAnswer, QuestionAnswer } from '../models';
-
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class QuizStudentComponent implements OnInit {
   error: string;
   private sub: any;
 
-  constructor(private quizService: QuizService, private route: ActivatedRoute) { }
+  constructor(private quizService: QuizService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.getQuiz();
@@ -57,7 +57,9 @@ export class QuizStudentComponent implements OnInit {
     console.log(this.answer);
     this.answer.answers.forEach((answer, index) => {
       this.quizService.answerQuestion(answer as QuestionAnswer)
-        .then(() => { })
+        .then(() => {
+          this.router.navigate(["/courses"]);
+        })
         .catch(error => this.error = error);
     })
   }

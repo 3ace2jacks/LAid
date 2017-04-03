@@ -10,7 +10,7 @@ describe('LiveService', () => {
     });
   });
 
-  it('should ...', inject([LiveService], (service: LiveService) => {
-    expect(service).toBeTruthy();
-  }));
+  // it('should ...', inject([LiveService], (service: LiveService) => {
+  //   expect(service).toBeTruthy();
+  // }));
 });
