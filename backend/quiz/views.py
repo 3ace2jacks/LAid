@@ -3,20 +3,27 @@ from rest_framework import generics
 from quiz.serializers import QuizSerializer, QuestionAnswerSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+import quiz.permissions as p
 
 
-class QuizCreate(generics.ListCreateAPIView):
+class QuizCreate(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated, p.IsInstructor)
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
 
 class QuizDetail(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated, p.IsMember)
+
     """Return the course information of the course with the id in the url."""
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
 
 class AnswerQuestion(generics.ListCreateAPIView):
+    # LAG NY!!
+    # permission_classes = (IsAuthenticated, p.IsMember)
     queryset = QuestionAnswer.objects.all()
     serializer_class = QuestionAnswerSerializer
 
@@ -25,7 +32,7 @@ class AnswerQuestion(generics.ListCreateAPIView):
 
 
 class QuizResult(APIView):
-
+    permission_classes = (IsAuthenticated, p.IsMember)
     def get(self, request, pk, format=None):
         quiz = Quiz.objects.get(id=pk)
         result = {
