@@ -25,6 +25,6 @@ class IsLectureInstructor(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == 'GET':
             return True
-        return Course.objects.get(id=view.kwargs['pk']).is_instructor(request.user)
+        return Course.objects.get(id=view.kwargs['pk']).get_role(request.user) == ''
 
     #

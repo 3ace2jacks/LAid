@@ -8,8 +8,13 @@ from django_filters import rest_framework as filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from datetime import datetime, timedelta
+from rest_framework.permissions import IsAuthenticated
+import live.permissions as p
+
 
 class FlowList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, p.IsStudentOrInstructorReadOnly)
+
     serializer_class = FlowSerializer
     filter_class = FlowFilter
     filter_backends = (filters.DjangoFilterBackend,)
@@ -25,6 +30,7 @@ class FlowList(generics.ListCreateAPIView):
 
 
 class FlowCount(APIView):
+    permission_classes = (IsAuthenticated, p.IsLectureInstructor)
 
     def get(self, request, pk, tk=0, format=None):
         if int(tk):
@@ -44,6 +50,8 @@ class FlowCount(APIView):
 
 
 class QuestionList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, p.IsMember)
+
     serializer_class = LectureQuestionSerializer
     def get_queryset(self):
         try:
@@ -57,6 +65,7 @@ class QuestionList(generics.ListCreateAPIView):
 
 
 class VoteList(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated, p.IsLectureMember)
     serializer_class = VoteSerializer
 
     def perform_create(self, serializer):
