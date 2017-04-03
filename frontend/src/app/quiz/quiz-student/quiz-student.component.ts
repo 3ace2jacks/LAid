@@ -55,11 +55,9 @@ export class QuizStudentComponent implements OnInit {
 
   answerQuiz() {
     console.log(this.answer);
-    this.answer.answers.forEach((answer, index) => {
-      this.quizService.answerQuestion(answer as QuestionAnswer)
-        .then(() => { })
-        .catch(error => this.error = error);
-    })
+    this.quizService.answerQuestion(this.answer as QuizAnswer)
+      .then(() => { })
+      .catch(error => this.error = error);
   }
 
   validQuiz() {
