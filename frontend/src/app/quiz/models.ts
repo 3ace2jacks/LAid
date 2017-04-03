@@ -75,6 +75,6 @@ export class QuestionResults {
 export class QuizResults {
     quizID: number;
     title: string;
-    questionResults: QuestionResults[];
+    questionsResults: QuestionResults[];
 
 }

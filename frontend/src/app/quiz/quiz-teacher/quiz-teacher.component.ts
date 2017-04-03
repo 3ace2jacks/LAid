@@ -41,6 +41,7 @@ export class QuizTeacherComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.quizService.getQuizResults(+params['id'])
         .then(quizResults => {
+          console.log(quizResults);
           this.quizResults = quizResults;
         })
         .catch(error => this.error = error);
@@ -64,6 +65,7 @@ export class QuizTeacherComponent implements OnInit {
       let data: number[] = [];
       let colors: string[] = [];
       this.selected.optionResults.forEach((option) => {
+        console.log(option);
         labels.push(option.text);
         data.push(option.answers);
         if (option.correct) {
