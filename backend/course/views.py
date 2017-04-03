@@ -4,6 +4,7 @@ from course.models import Course, CourseMembership, Lecture
 from rest_framework.permissions import IsAuthenticated
 import course.permissions as p
 
+
 class UserCourseList(generics.ListCreateAPIView):
     """Return a list of all the courses the current user is a member of.
 

@@ -1,6 +1,8 @@
 from rest_framework import permissions
 from quiz.models import Quiz
 from course.models import Lecture
+import json
+
 
 class IsInstructor(permissions.BasePermission):
     """
@@ -8,7 +10,7 @@ class IsInstructor(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        lecture_id = request.POST.get("lectureID")
+        lecture_id = request.data['lectureID']
         return Lecture.objects.get(id=lecture_id).course.get_role(request.user) == 'INSTRUCTOR'
 
 
@@ -28,5 +30,5 @@ class IsStudentInLecture(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        lecture_id = request.POST.get("lectureID")
-        return Lecture.objects.get(id=lecture_id).course.get_role(request.user) == 'INSTRUCTOR'
+        lecture_id = request.data['lectureID']
+        return Lecture.objects.get(id=int(lecture_id)).course.get_role(request.user) == 'STUDENT'

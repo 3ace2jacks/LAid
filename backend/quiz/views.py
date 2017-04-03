@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+
 from quiz.models import Quiz, QuestionAnswer, Question, Option
 from rest_framework import generics
 from quiz.serializers import QuizSerializer, QuestionAnswerSerializer
@@ -19,16 +21,6 @@ class QuizDetail(generics.RetrieveAPIView):
     """Return the course information of the course with the id in the url."""
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
-
-
-class AnswerQuestion(generics.ListCreateAPIView):
-    # LAG NY!!
-    # permission_classes = (IsAuthenticated, p.IsMember)
-    queryset = QuestionAnswer.objects.all()
-    serializer_class = QuestionAnswerSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
 
 class QuizResult(APIView):
@@ -57,3 +49,38 @@ class QuizResult(APIView):
             result['questionsResults'].append(que)
         return Response(result)
 
+
+class AnswerQuestion(generics.ListAPIView):
+    # LAG NY!!
+    permission_classes = (IsAuthenticated, p.IsMember)
+
+    # checks security
+    # if not quiz.get_role(user):
+    #     return HttpResponse('Unauthorized', status=401)
+    def post(self, request, *args, **kwargs):
+        quiz = Quiz.objects.get(id=self.kwargs['pk'])
+        answers = request.data['answers']
+        for ans in answers:
+            if not QuestionAnswer.objects.filter(question=Question.objects.get(id=ans['question']),
+                                          user=request.user):
+                return HttpResponse('Success', status=400)
+            if not Question.objects.get(id=ans['question']).quiz == quiz:
+                return HttpResponse('Success', status=400)
+            if not Option.objects.get(id=ans['choice']).question == Question.objects.get(id=ans[
+                'question']):
+                return HttpResponse('Success', status=400)
+            a = QuestionAnswer.objects.create(question=Question.objects.get(id=ans['question']),
+                                          choice=Option.objects.get(id=ans['choice']),
+                                          user=request.user)
+            a.save()
+
+        return HttpResponse('Success', status=201)
+    queryset = QuestionAnswer.objects.all()
+    serializer_class = QuestionAnswerSerializer
+    #
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
+
+
+def answerQuestion(request, pk):
+    pass

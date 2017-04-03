@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
 
+from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
 from quiz.views import QuizCreate, QuizDetail, AnswerQuestion, QuizResult
 from live.views import FlowList, FlowCount, QuestionList, VoteList, AnswerLiveQuestion
+from quiz.views import answerQuestion
 
 
 urlpatterns = [
@@ -33,7 +34,7 @@ urlpatterns = [
     url(r'^courses/member/$', UserCourseList.as_view(), name="member_course_list"),
 
     url(r'^quiz/(?P<pk>[0-9]+)/result$', QuizResult.as_view(), name="quiz_result"),
-    url(r'^quiz/answer/question/$', AnswerQuestion.as_view(), name="answer_question_quiz"),
+    url(r'^quiz/(?P<pk>[0-9]+)/answer/$', AnswerQuestion.as_view(), name="answer_question_quiz"),
     url(r'^quiz/(?P<pk>[0-9]+)/$', QuizDetail.as_view(), name="quiz_detail"),
     url(r'^quiz/$', QuizCreate.as_view(), name="quiz_create"),
 
@@ -47,5 +48,4 @@ urlpatterns = [
 
     url(r'^questions/(?P<pk>[0-9]+)/answer/$', AnswerLiveQuestion.as_view(), name='live_question_answer'),
     url(r'^questions/(?P<pk>[0-9]+)/votes/$', VoteList.as_view(), name='vote'),
-
 ]
