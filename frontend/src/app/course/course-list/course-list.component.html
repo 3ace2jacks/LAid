@@ -46,15 +46,15 @@
       <div class="modal-body">
 
 
-        <form>
+        <form [formGroup]="createCourseForm">
           <div class="form-group row">
             <div class="col-sm-6">
               <label for="inputEmail3">Course code</label>
-              <input type="text" class="form-control" id="inputEmail3" placeholder="Course code">
+              <input type="text" formControlName="code" class="form-control" id="inputEmail3" placeholder="Course code">
             </div>
             <div class="col-sm-6">
               <label for="inputPassword3">Course name</label>
-              <input type="text" class="form-control" id="inputPassword3" placeholder="Course name">
+              <input type="text" formControlName="name" class="form-control" id="inputPassword3" placeholder="Course name">
             </div>
           </div>
 
@@ -62,7 +62,7 @@
 
             <div class="col-sm-6">
               <label for="exampleSelect1">Year</label>
-              <select class="form-control" id="exampleSelect1">
+              <select class="form-control" formControlName="year" id="exampleSelect1">
                 <option>2017</option>
                 <option>2018</option>
                 <option>2019</option>
@@ -71,10 +71,10 @@
 
             <div class="col-sm-6">
               <label for="exampleSelect1">Term</label>
-              <select class="form-control" id="exampleSelect1">
-                <option>Fall</option>
-                <option>Spring</option>
-                <option>Summer</option>
+              <select class="form-control" formControlName="term" id="exampleSelect1">
+                <option value="fall">Fall</option>
+                <option value="spring">Spring</option>
+                <option value="summer">Summer</option>
                 </select>
             </div>
           </div>

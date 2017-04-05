@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from quiz.models import Quiz
+# from  import Quiz
 
 # The possible terms a course can be in
 # to distinguish courses with same name and course code
@@ -13,7 +13,6 @@ TERMS = (
 
 # The roles a user can have in a course
 ROLES = (('INSTRUCTOR', 'Instructor'), ('STUDENT', 'Instructor'))
-
 
 
 class Course(models.Model):
@@ -44,6 +43,9 @@ class Course(models.Model):
             return CourseMembership.objects.get(course=self, user=user).role
         return None
 
+    def is_instructor(self, user):
+        return self.get_role(user) == 'INSTRUCTOR'
+
 
 class CourseMembership(models.Model):
     """Define the roles of users in a course
@@ -56,7 +58,6 @@ class CourseMembership(models.Model):
     role = models.CharField(max_length=16, choices=ROLES)
 
 
-
 class Lecture(models.Model):
     """A lecture that is part of a course."""
     title = models.CharField(max_length=64)
@@ -64,8 +65,8 @@ class Lecture(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    pre_quiz = models.ForeignKey(Quiz, related_name='pre_quiz', null=True)
-    post_quiz = models.ForeignKey(Quiz, related_name='post_quiz', null=True)
+    pre_quiz = models.ForeignKey('quiz.Quiz', related_name='pre_quiz', null=True)
+    post_quiz = models.ForeignKey('quiz.Quiz', related_name='post_quiz', null=True)
 
     def __str__(self):
         return self.title

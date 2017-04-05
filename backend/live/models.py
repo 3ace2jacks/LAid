@@ -25,6 +25,7 @@ class LectureQuestion(models.Model):
     lecture = models.ForeignKey(Lecture)
     time_stamp = models.DateTimeField(auto_now=True)
     question = models.TextField()
+    answered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.question
@@ -34,7 +35,6 @@ class Vote(models.Model):
     '''Represent a students vote on a LectureQuestion'''
     user = models.ForeignKey(User)
     question = models.ForeignKey(LectureQuestion, related_name='votes')
-    lecture = models.ForeignKey(Lecture)
-    time_stamp = models.DateTimeField(auto_now=True)
+    time_stamp = models.DateTimeField(auto_now_add=True)
     vote = models.CharField(max_length=10, choices=VOTES)
 

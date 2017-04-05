@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item" [class.active]="selected==null" (click)="selectQuestion(null)">Quiz results</li>
-      <li *ngFor="let question of quizResults.questionResults" class="list-group-item" [class.active]="selected==question"
+      <li *ngFor="let question of quizResults.questionsResults" class="list-group-item" [class.active]="selected==question"
         (click)="selectQuestion(question)">{{question.question}}</li>
     </ul>
   </div>

@@ -1,11 +1,35 @@
-
 <h2 align="center">{{title}}</h2>
 
-	<div align= "center">
-		<button class = "btn btn-danger" (click)="fast()">To fast</button>
+<div align= "center">
+	<button class = "btn btn-danger" (click)="fast()">To fast</button>
+</div>
+<br/>
+<br/>
+<div align="center">
+	<button class="btn btn-success"  (click)="slow()">To slow</button>
+</div>
+<h2>Ask a question</h2>
+<form [formGroup]="questionForm" novalidate>
+	<div class="form-group">
+		<label class="center-block">Question:
+			<input class="form-control" formControlName="question">
+		</label>
 	</div>
-	<br/>
-	<br/>
-	<div align="center">
-		<button class="btn btn-success"  (click)="slow()">To slow</button>
-	</div>
+	<button class="btn btn-success"  (click)="submitQuestion()" type="submit" >submit</button>
+</form>
+<br/>
+<div *ngIf="questions">
+	<div style="max-width: 50%" *ngFor="let question of questions" [class]>
+		<div *ngIf="!question.answered">
+			<div class=" questionBox">
+				<div>{{question.question}}, upvotes: {{question.upvotes}}
+				</div>
+				
+
+				<div style="max-width:  " align="right">
+					<button class="btn btn-success" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>
+				</div>
+			</div>			
+		</div>
+	</div>	
+</div>

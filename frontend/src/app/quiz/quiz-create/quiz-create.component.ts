@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { QuizCreate, QuizCreateQuestion, QuizCreateOption } from '../models';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { QuizService } from '../quiz.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz-create',
@@ -28,7 +28,7 @@ export class QuizCreateComponent implements OnInit {
   quizForm: FormGroup;
   
 
-  constructor(private courseService: CourseService, private route: ActivatedRoute, private fb: FormBuilder, private quizService: QuizService) {
+  constructor(private courseService: CourseService, private route: ActivatedRoute, private fb: FormBuilder, private quizService: QuizService, private router: Router) {
   }
 
   newOption(question_idx: number) {
@@ -97,7 +97,9 @@ export class QuizCreateComponent implements OnInit {
 
   createQuiz() {
     this.quizService.createQuiz(this.quizForm.value)
-    .then(() => {})
+    .then(() => {
+      this.router.navigate(["/course", this.course.id, "teacher"]);
+    })
     .catch(error => this.error = error)
   }
 
