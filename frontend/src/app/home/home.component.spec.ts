@@ -25,4 +25,12 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display the title', () => {
+    let de = fixture.debugElement.query(By.css('h1'));
+    let el = de.nativeElement;
+    component.title = 'Title';
+    fixture.detectChanges();
+    expect(el.textContent).toContain('Title', 'page title');
+  });
 });
