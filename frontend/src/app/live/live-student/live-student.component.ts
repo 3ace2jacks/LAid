@@ -24,6 +24,7 @@ export class LiveStudentComponent implements OnInit {
   questions: Question[];
   voted: Boolean;
   feedback: Boolean;
+  questionAsked: Boolean;
 
   questionForm = new FormGroup ({
     question: new FormControl()
@@ -54,10 +55,6 @@ export class LiveStudentComponent implements OnInit {
       });
   }
 
-  resetTooFast() {
-    setTimeout(function(){this.tooFast=false},3000);
-  }
-
   getLecture(){
     this.sub = this.route.params.subscribe(params =>{
       this.courseService.getLecture(+params['id'])
@@ -77,6 +74,15 @@ export class LiveStudentComponent implements OnInit {
     this.questionForm.setValue({
       question: "",
     })
+    this.timeQuestion();
+  }
+
+  timeQuestion(){
+    this.questionAsked= true;
+    Observable.interval(60000).subscribe(x => {
+        this.questionAsked = false;
+      });
+
   }
 
   getQuestions(){

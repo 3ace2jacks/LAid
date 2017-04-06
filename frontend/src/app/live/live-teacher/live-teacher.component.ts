@@ -37,7 +37,6 @@ public barChartOptions:any = {
 		yAxes: [{
 			ticks: {
 				beginAtZero:true,
-				
 			}
 		}]
 	}

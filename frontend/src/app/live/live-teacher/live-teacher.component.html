@@ -23,7 +23,7 @@
 			<div *ngFor="let question of questions" [class]>
 				<div *ngIf="question.answered">
 					<div class="col-lg-12 panel panel-info" style="padding-left: 0; padding-right:0; ">
-					<div class="clearfix panel-body" >
+						<div class="clearfix panel-body" >
 							<p style="word-wrap: break-word; ">{{question.question}}</p>
 						</div>
 						<div class="clearfix panel-footer" style="">
@@ -54,7 +54,6 @@
 						<div>
 							<span style="float: left, top; font-size: 18px;">{{question.upvotes}} </span>
 						</div>
-
 					</div>
 				</div>
 				<br/>
