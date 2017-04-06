@@ -51,7 +51,7 @@ class QuizResult(APIView):
 
 
 class AnswerQuestion(generics.ListAPIView):
-    permission_classes = (IsAuthenticated, p.IsMember)
+    permission_classes = (IsAuthenticated, p.IsStudentInLecture)
 
     def post(self, request, *args, **kwargs):
         quiz = Quiz.objects.get(id=self.kwargs['pk'])

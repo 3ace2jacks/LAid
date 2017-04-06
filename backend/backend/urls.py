@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^courses/available/$', AvailableCourseList.as_view(), name="available_course_list"),
     url(r'^courses/member/$', UserCourseList.as_view(), name="member_course_list"),
 
-    url(r'^quiz/(?P<pk>[0-9]+)/result$', QuizResult.as_view(), name="quiz_result"),
+    url(r'^quiz/(?P<pk>[0-9]+)/result/$', QuizResult.as_view(), name="quiz_result"),
     url(r'^quiz/(?P<pk>[0-9]+)/answer/$', AnswerQuestion.as_view(), name="answer_question_quiz"),
     url(r'^quiz/(?P<pk>[0-9]+)/$', QuizDetail.as_view(), name="quiz_detail"),
     url(r'^quiz/$', QuizCreate.as_view(), name="quiz_create"),
