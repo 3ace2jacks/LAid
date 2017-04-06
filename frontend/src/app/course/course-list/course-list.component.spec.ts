@@ -27,6 +27,11 @@ describe('CourseListComponent', () => {
   let component: CourseListComponent;
   let fixture: ComponentFixture<CourseListComponent>;
   let courseServiceSpy;
+  let mockCourseService = class {
+    getOwnCourses() {
+      return Promise.resolve({id: 2, code: "s", name: "dw", year: "dd",  term: "s", role: "2s"})
+    }
+  }
 
   let mockRouter = {
     navigate: jasmine.createSpy('navigate')
@@ -45,7 +50,7 @@ describe('CourseListComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: mockRouter },
-        CourseService,
+        { provide: CourseService, useValue: mockCourseService},
         AuthHttpService,
         AuthService,
       ]
@@ -58,7 +63,7 @@ describe('CourseListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     courseService = fixture.debugElement.injector.get(CourseService);
-    courseServiceSpy = spyOn(courseService, 'getOwnCourses').and.returnValue(Promise.resolve())
+    courseServiceSpy = spyOn(courseService, 'getOwnCourses').and.returnValue(Promise.resolve([{}]))
   });
 
   it('should create', () => {
