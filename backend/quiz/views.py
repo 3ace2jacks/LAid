@@ -80,7 +80,3 @@ class AnswerQuestion(generics.ListAPIView):
     #
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
-
-
-def answerQuestion(request, pk):
-    pass

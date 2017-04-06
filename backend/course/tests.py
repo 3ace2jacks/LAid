@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from django.utils import timezone
 from course.models import Course, Lecture, CourseMembership
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -9,6 +8,11 @@ from course.views import UserCourseList
 from datetime import date, time
 
 
+'''To get the sets coverage for course run:
+coverage run --source='.' --include='course/*' --omit='*/__init__.py,*/admin.py,*/apps.py,*/migrations/*,*/tests.py' manage.py test course
+then:
+coverage report --include='course/*' --omit='*/__init__.py,*/admin.py,*/apps.py,*/migrations/*,*/tests.py'
+'''
 
 class CourseTestCase(TestCase):
     '''
@@ -35,8 +39,11 @@ class CourseTestCase(TestCase):
         """Course correct output get_role"""
         self.assertEqual(self.pu.get_role(self.user), 'STUDENT')
 
+
     def test_course_api(self):
-        """Create courses using REST api"""
+        """Create courses using REST api
+        Not technically required because of django-rest-framework"""
+
         datdat = {
             "code": "TDT4120",
             "name": "DatDat",
@@ -68,7 +75,6 @@ class CourseTestCase(TestCase):
 class LectureTestCase(TestCase):
     def setUp(self):
         dato = date(2017, 5, 5)
-        print(dato)
         tid = time()
         self.pu = Course.objects.create(id=1, code="TDT4140", name="Programvareutvikling",
                               year=2017, term='fall')
@@ -115,78 +121,71 @@ class UrlCoursesTestCase(TestCase):
         self.client.logout()
         self.user.delete()
 
-#
-#
-# class UrlLectureListCase(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-#         self.user = User.objects.create(username='user', email='laid@is.best',
-#                                         password="qwertyuiop")
-#
-#     def test_url_lectures(self):
-#         """URL input gives right HTTP response for '/courses/<int>/lectures/'"""
-#
-#         url = reverse('lectureList', args=[100])
-#         self.assertEqual(url, '/courses/100/lectures/')
-#
-#         response = self.client.get('/courses/100/lectures/')
-#         self.assertEqual(response.status_code, 403) # Should be 403?
-#
-#         self.client.login(username='user', password='qwertyuiop')
-#         response = self.client.get('/courses/100/lectures/')
-#         self.assertEqual(response.status_code, 200) # returns True, always..
-#
-#     def tearDown(self):
-#         self.client.logout()
-#         self.user.delete()
-#
-#
-#
-# class UrlCourseDeitalTest(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-#         self.user = User.objects.create_superuser(username='user', email='laid@is.best',
-#         password="qwertyuiop")
-#
-#     def test_url_coursedetail(self):
-#         """URL input gives right HTTP response for '/courses/<int>'"""
-#         url = reverse('courseDetail', args=[100])
-#         self.assertEqual(url, '/courses/100/')
-#
-#         response = self.client.post('/courses/100/')
-#         self.assertEqual(response.status_code, 403)
-#
-#         self.client.login(username='user', password='qwertyuiop')
-#         response = self.client.get('/courses/9090909091292/')
-#         self.assertEqual(response.status_code, 404)
-#
-#     def tearDown(self):
-#         self.client.logout()
-#         self.user.delete()
-#
-#
-#
-# class UrlCoursesAllTest(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-#         self.user = User.objects.create_superuser(username='user', email='laid@is.best',
-#                                                   password="qwertyuiop")
-#
-#     def test_url_coursesAll(self):
-#         """URL input gives right HTTP response for '/courses/all/'"""
-#         url = reverse('coursesAll')
-#         self.assertEqual(url, '/courses/all/')
-#
-#         response = self.client.get('/courses/all/')
-#         self.assertEqual(response.status_code, 403) # should be 403?
-#
-#         self.client.login(username='user', password='qwertyuiop')
-#         response = self.client.get('/courses/all/')
-#         self.assertEqual(response.status_code, 200)
-#
-#     def tearDown(self):
-#         self.client.logout()
-#         self.user.delete()
+
+class UrlLectureListCase(TestCase):
+    def setUp(self):
+        dato = date(2017, 5, 5)
+        tid = time()
+        self.client = Client()
+        self.user = User.objects.create(username='user', email='laid@is.best')
+        self.user.set_password('qwertyuiop')
+        self.user.save()
+        self.pu = Course.objects.create(id=1, code="TDT4140", name="Programvareutvikling",
+                                        year=2017, term='fall')
+        self.ad = Lecture.objects.create(id=2, title="Architectural Design",
+                                         date=dato, start_time=tid, end_time=tid, course=self.pu)
+
+    def test_url_lectures(self):
+        """URL input gives right HTTP response for '/courses/<int>/lectures/'"""
+
+        url = reverse('course_lecture_list', args=[100])
+        self.assertEqual(url, '/courses/100/lectures/')
+
+        response = self.client.get('/courses/1/lectures/')
+        self.assertEqual(response.status_code, 403)
+
+        self.client.login(username='user', password='qwertyuiop')
+        response = self.client.get('/courses/1/lectures/')
+        self.assertEqual(response.status_code, 403) # because not enrolled in class
+
+        CourseMembership.objects.create(course=self.pu, user=self.user, role="STUDENT")
+        response = self.client.get('/courses/1/lectures/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.client.logout()
+        self.user.delete()
+
+
+
+class UrlCourseDeitalTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_superuser(username='user', email='laid@is.best',
+                                                  password="qwertyuiop")
+        self.pu = Course.objects.create(id=1, code="TDT4140", name="Programvareutvikling",
+                                        year=2017, term='fall')
+
+    def test_url_coursedetail(self):
+        """URL input gives right HTTP response for '/courses/<int>'"""
+        url = reverse('course_detail', args=[1])
+        self.assertEqual(url, '/courses/1/')
+
+        response = self.client.post('/courses/100/')
+        self.assertEqual(response.status_code, 403)
+
+        self.client.login(username='user', password='qwertyuiop')
+        response = self.client.get('/courses/9090909091292/')
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.get('/courses/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.client.logout()
+        self.user.delete()
+
+
 #
 #
 # api test: http://www.django-rest-framework.org/api-guide/testing/

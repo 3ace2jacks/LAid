@@ -19,7 +19,7 @@ class IsLectureInstructor(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return Lecture.objects.get(id=view.kwargs['pk']).course.is_instructor(request.user)
+        return Lecture.objects.get(id=view.kwargs['pk']).course.get_role(request.user)
 
 
 class IsMember(permissions.BasePermission):
