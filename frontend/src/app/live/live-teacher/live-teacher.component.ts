@@ -17,7 +17,7 @@ export class LiveTeacherComponent implements OnInit {
 	constructor(private liveService: LiveService,
 		private route: ActivatedRoute,
 		private courseService: CourseService){}
-	
+
 	public buttonCount: ButtonCount = {to_fast: 0, to_slow: 0};
 	minutesAgo: number = 5;
 
@@ -37,7 +37,7 @@ public barChartOptions:any = {
 		yAxes: [{
 			ticks: {
 				beginAtZero:true,
-				max: 50
+				
 			}
 		}]
 	}

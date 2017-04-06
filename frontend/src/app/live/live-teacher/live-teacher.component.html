@@ -1,6 +1,4 @@
-
-<div style=" width: 60%" class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-4">
-
+<div class="col-lg-8">
 	<h4>Select duration of votes (default is 5 minutes)</h4>
 	<button class="btn btn-default" (click)="setMinutesAgo(2)">2 minutes</button>
 	<button class="btn btn-default" (click)="setMinutesAgo(5)">5 minutes</button>
@@ -15,20 +13,23 @@
 		[legend] = "barChartLegend"
 		[chartType] = "barChartType"
 		></canvas>
-
 	</div>
-	<div style="">
+
+
+
+	<div class="col-lg-6">
 		<h4>These questions has been answered</h4>
 		<div *ngIf="questions">
 			<div *ngFor="let question of questions" [class]>
 				<div *ngIf="question.answered">
-					<div class="questionBox col-xs-2 col-sm-4 col-md-6 col-lg-6 col-xl-10">
-						<p>{{question.question}}</p>
-
-						<div>
-							<span style="font-size: 22px;">{{question.upvotes}} </span>
-							votes
+					<div class="col-lg-12 panel panel-info" style="padding-left: 0; padding-right:0; ">
+					<div class="clearfix panel-body" >
+							<p style="word-wrap: break-word; ">{{question.question}}</p>
 						</div>
+						<div class="clearfix panel-footer" style="">
+							<span style="float: left, top; font-size: 18px;">{{question.upvotes}} </span>
+						</div>
+
 					</div>
 					<br/><br/>
 				</div>
@@ -37,25 +38,26 @@
 	</div>
 </div>
 <br/><br/><br/>
-<div style="display:inline; width: 39%">
+<div class="col-lg-4" style="align-content: left" >
+	<h4>Student questions by votes</h4>
 	<div *ngIf="questions">
 		<div *ngFor="let question of questions" [class]>
 			<div *ngIf="!question.answered">
-				<div class="questionBox col-xs-1 col-sm-1 col-md-4 col-lg-4 col-xl-6" >
-					<div class="col-lg-10">
+				<div class="col-lg-10 panel panel-info" style="padding-left: 0; padding-right:0; word-wrap: break-word;">
+					<div class="clearfix panel-body">
 						<p>{{question.question}}</p>
+					</div>
+					<div class="clearfix panel-footer" style="">
+						<div >
+							<button class="btn btn-success pull-right" (click)="answered(question)">Answered</button>
+						</div>
+						<div>
+							<span style="float: left, top; font-size: 18px;">{{question.upvotes}} </span>
+						</div>
 
 					</div>
-					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-2 col-xl-2" style=" text-align: center">
-						<span style="font-size: 22px;">{{question.upvotes}} </span>
-						votes
-					</div>
-					<div align="right" >
-						<button class="btn btn-success" (click)="answered(question)">delete</button>
-					</div>
 				</div>
-				
-				<br/><br/>
+				<br/>
 			</div>
 		</div>
 	</div>

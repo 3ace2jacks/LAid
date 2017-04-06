@@ -1,35 +1,38 @@
 <h2 align="center">{{title}}</h2>
 
 <div align= "center">
-	<button class = "btn btn-danger" (click)="fast()">To fast</button>
-</div>
-<br/>
-<br/>
-<div align="center">
-	<button class="btn btn-success"  (click)="slow()">To slow</button>
-</div>
-<h2>Ask a question</h2>
-<form [formGroup]="questionForm" novalidate>
-	<div class="form-group">
-		<label class="center-block">Question:
-			<input class="form-control" formControlName="question">
-		</label>
-	</div>
-	<button class="btn btn-success"  (click)="submitQuestion()" type="submit" >submit</button>
-</form>
-<br/>
-<div *ngIf="questions">
-	<div style="max-width: 50%" *ngFor="let question of questions" [class]>
-		<div *ngIf="!question.answered">
-			<div class=" questionBox">
-				<div>{{question.question}}, upvotes: {{question.upvotes}}
+	<div style="max-width: 70%">
+		<button class="feedButtonR" [disabled]="feedback" (click)="fast()">Too fast</button>
+		<br/>
+		<br/>
+			<button class = "feedButtonB" [disabled]="feedback" (click)="slow()">Too slow</button>
+		<h2>Ask a question</h2>
+		<form [formGroup]="questionForm" novalidate>
+			<div class="form-group">
+				<label class="center-block">Question:
+					<input class="form-control" formControlName="question">
+				</label>
+			</div>
+			<button class="btn btn-success"  (click)="submitQuestion()" type="submit" >submit</button>
+		</form>
+		<br/>
+		<div *ngIf="questions">
+			<div style="max-width: 50%" *ngFor="let question of questions" [class]>
+				<div *ngIf="!question.answered">
+					<div class="panel panel-info" align="left" style="padding-left: 0; padding-right:0">
+						<div class="clearfix panel-body" style="word-wrap: break-word;">
+							<p>{{question.question}}</p>
+						</div>
+						<div class="clearfix panel-footer">
+							<button class="btn btn-success pull-right" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>
+							<div>
+								<span style="float: left; font-size: 18px;">{{question.upvotes}} </span>
+							</div>
+						</div>
+					</div>
 				</div>
-				
-
-				<div style="max-width:  " align="right">
-					<button class="btn btn-success" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>
-				</div>
-			</div>			
+			</div>
 		</div>
-	</div>	
+	</div>
 </div>
+<!--<button class="btn btn-success" [disabled]="question.has_voted" (click)="upvote(question.id)" (click)="hasvoted(question)">upvote</button>	-->
