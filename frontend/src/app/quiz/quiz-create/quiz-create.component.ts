@@ -26,7 +26,7 @@ export class QuizCreateComponent implements OnInit {
   *
   */
   quizForm: FormGroup;
-  
+
 
   constructor(private courseService: CourseService, private route: ActivatedRoute, private fb: FormBuilder, private quizService: QuizService, private router: Router) {
   }

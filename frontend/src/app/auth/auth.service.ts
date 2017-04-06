@@ -28,9 +28,11 @@ export class AuthService {
     return this.username;
   }
 
+
   getToken() : string {
     return this.token;
   }
+
 
   register(username: string, email: string, password: string) : Promise<void> {
     let headers = new Headers();
@@ -69,6 +71,7 @@ export class AuthService {
       return Promise.reject(err);
     });
   }
+
 
   logout(): Promise<void> {
     let headers = new Headers();

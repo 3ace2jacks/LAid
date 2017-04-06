@@ -36,5 +36,4 @@ export class QuizService {
     .then(() => {})
     .catch(error => console.log(error.json()))
   }
-
 }

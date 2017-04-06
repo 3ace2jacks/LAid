@@ -28,6 +28,7 @@ export class LiveService {
       .then(response => response.json() as ButtonCount)
       .catch(error => console.log(error));
   }
+  
   submitQuestion(question: string, lectureID: number): Promise<void> {
     console.log(question, lectureID)
     return this.authHttp.post('/lectures/' + lectureID + '/questions/', JSON.stringify({ question: question }))
@@ -53,6 +54,4 @@ export class LiveService {
     .toPromise()
     .catch(error => console.log(error));
   }
-
-
 }
