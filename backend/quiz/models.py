@@ -16,7 +16,7 @@ class Quiz(models.Model):
         if Lecture.objects.filter(pre_quiz=self):
             lecture = Lecture.objects.get(pre_quiz=self)
             return lecture.course.get_role(user)
-        if Lecture.objects.filter(pos_quiz=self):
+        if Lecture.objects.filter(post_quiz=self):
             lecture = Lecture.objects.get(post_quiz=self)
             return lecture.course.get_role(user)
         return None
