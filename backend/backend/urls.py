@@ -19,7 +19,6 @@ from django.contrib import admin
 from course.views import UserCourseList, CourseDetail, AvailableCourseList, JoinCourse, CourseLectureList, LectureDetail
 from quiz.views import QuizCreate, QuizDetail, AnswerQuestion, QuizResult
 from live.views import FlowList, FlowCount, QuestionList, VoteList, AnswerLiveQuestion
-from quiz.views import answerQuestion
 
 
 urlpatterns = [
