@@ -24,7 +24,7 @@ export class QuizService {
   }
 
    getQuizResults(id: number): Promise<QuizResults> {
-    return this.authHttp.get('/quiz/' + id + '/result')
+    return this.authHttp.get('/quiz/' + id + '/result/')
     .toPromise()
     .then(response => response.json() as QuizResults)
     .catch(error => error);
