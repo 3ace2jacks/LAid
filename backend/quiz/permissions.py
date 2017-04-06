@@ -30,5 +30,5 @@ class IsStudentInLecture(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        lecture_id = request.data['lectureID']
+        lecture_id = request.data['quizID']
         return Lecture.objects.get(id=int(lecture_id)).course.get_role(request.user) == 'STUDENT'

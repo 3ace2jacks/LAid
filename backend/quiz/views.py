@@ -51,17 +51,13 @@ class QuizResult(APIView):
 
 
 class AnswerQuestion(generics.ListAPIView):
-    # LAG NY!!
-    permission_classes = (IsAuthenticated, p.IsMember)
+    permission_classes = (IsAuthenticated, p.IsStudentInLecture)
 
-    # checks security
-    # if not quiz.get_role(user):
-    #     return HttpResponse('Unauthorized', status=401)
     def post(self, request, *args, **kwargs):
         quiz = Quiz.objects.get(id=self.kwargs['pk'])
         answers = request.data['answers']
         for ans in answers:
-            if not QuestionAnswer.objects.filter(question=Question.objects.get(id=ans['question']),
+            if QuestionAnswer.objects.filter(question=Question.objects.get(id=ans['question']),
                                           user=request.user):
                 return HttpResponse('Success', status=400)
             if not Question.objects.get(id=ans['question']).quiz == quiz:
@@ -77,10 +73,3 @@ class AnswerQuestion(generics.ListAPIView):
         return HttpResponse('Success', status=201)
     queryset = QuestionAnswer.objects.all()
     serializer_class = QuestionAnswerSerializer
-    #
-    # def perform_create(self, serializer):
-    #     serializer.save(user=self.request.user)
-
-
-def answerQuestion(request, pk):
-    pass
