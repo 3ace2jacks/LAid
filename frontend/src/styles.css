@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+
+.feedButtonR {
+box-shadow: rgb(245, 151, 142) 9px 9px 9px 16px 0px inset; 
+background: linear-gradient(rgb(252, 109, 95) 5%, rgb(198, 45, 31) 100%) rgb(242, 69, 55); 
+border-radius: 6px; 
+border: 2px solid rgb(163, 80, 56);  
+color: rgb(255, 255, 255);
+font-family: Arial; 
+font-size: 28px; 
+font-weight: bold; 
+padding: 21px 60px; 
+text-decoration: none; 
+width: 250px;
+}
+
+.feedButtonB {	
+box-shadow: rgb(190, 226, 249) 9px 9px 9px 16px 0px inset;
+background: linear-gradient(rgb(99, 184, 238) 5%, rgb(26, 116, 214) 100%) rgb(99, 184, 238); 
+border-radius: 6px; 
+border: 2px solid rgb(56, 102, 163); 
+display: inline-block; 
+cursor: pointer; 
+color: rgb(20, 57, 106); 
+font-family: Arial; 
+font-size: 28px; 
+font-weight: bold; 
+padding: 21px 60px; 
+text-decoration: none; 
+width: 250px;
+}

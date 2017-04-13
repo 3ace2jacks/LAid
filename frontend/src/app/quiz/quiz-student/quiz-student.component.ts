@@ -31,7 +31,7 @@ export class QuizStudentComponent implements OnInit {
           this.generateQuestionAnswers();
         })
         .catch(error => this.error = error);
-    })
+    });
   }
 
   setChoice(questionID: number, choiceID: number) {
@@ -39,7 +39,7 @@ export class QuizStudentComponent implements OnInit {
       if (answer.question == questionID) {
         answer.choice = choiceID;
       }
-    })
+    });
     this.validQuiz();
   }
 
@@ -49,19 +49,17 @@ export class QuizStudentComponent implements OnInit {
       if (answer.question == questionID) {
         a = answer.choice;
       }
-    })
+    });
     return a;
   }
 
   answerQuiz() {
     console.log(this.answer);
-    this.answer.answers.forEach((answer, index) => {
-      this.quizService.answerQuestion(answer as QuestionAnswer)
-        .then(() => {
-          this.router.navigate(["/courses"]);
-        })
-        .catch(error => this.error = error);
-    })
+    this.quizService.answerQuestion(this.answer as QuizAnswer)
+      .then(() => {
+        this.router.navigate(["/courses"]);
+      })
+      .catch(error => this.error = error);
   }
 
   validQuiz() {
@@ -70,7 +68,7 @@ export class QuizStudentComponent implements OnInit {
       if (!answer.choice) {
         valid = false;
       }
-    })
+    });
     this.valid = valid;
   }
 
@@ -78,9 +76,9 @@ export class QuizStudentComponent implements OnInit {
     this.answer = {
       quizID: this.quiz.id,
       answers: [],
-    }
+    };
     this.quiz.questions.forEach((question) => {
       this.answer.answers.push({ question: question.id, choice: null });
-    })
+    });
   }
 }

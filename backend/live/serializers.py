@@ -28,6 +28,7 @@ class VoteSerializer(serializers.ModelSerializer):
     time_stamp = serializers.DateTimeField(read_only=True)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     question = serializers.CharField(read_only=True)
+
     class Meta:
         model = Vote
         fields = ('user', 'question', 'time_stamp', 'vote')
@@ -40,7 +41,7 @@ class LectureQuestionSerializer(serializers.ModelSerializer):
     upvotes = serializers.SerializerMethodField(read_only=True)
     downvotes = serializers.SerializerMethodField(read_only=True)
     has_voted = serializers.SerializerMethodField(read_only=True)
-
+    answered = serializers.BooleanField(read_only=True)
     class Meta:
         model = LectureQuestion
         fields = ('id', 'user', 'time_stamp', 'question', 'upvotes', 'downvotes', 'has_voted', 'answered')

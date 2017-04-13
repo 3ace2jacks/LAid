@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from course.models import Lecture
+
+
 
 class Quiz(models.Model):
     title = models.CharField(max_length=128)
@@ -8,6 +11,16 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_role(self, user):
+        if Lecture.objects.filter(pre_quiz=self):
+            lecture = Lecture.objects.get(pre_quiz=self)
+            return lecture.course.get_role(user)
+        if Lecture.objects.filter(post_quiz=self):
+            lecture = Lecture.objects.get(post_quiz=self)
+            return lecture.course.get_role(user)
+        return None
+
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, related_name="questions")

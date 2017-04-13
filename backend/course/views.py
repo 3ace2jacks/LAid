@@ -2,6 +2,8 @@ from course.serializers import CourseSerializer, CourseMembershipSerializer, Lec
 from rest_framework import generics
 from course.models import Course, CourseMembership, Lecture
 from rest_framework.permissions import IsAuthenticated
+import course.permissions as p
+
 
 class UserCourseList(generics.ListCreateAPIView):
     """Return a list of all the courses the current user is a member of.
@@ -33,10 +35,13 @@ class AvailableCourseList(generics.ListAPIView):
 
 
 
-class CourseDetail(generics.RetrieveAPIView):
+class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     """Return the course information of the course with the id in the url."""
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, p.IsCourseInstructor,)
+
+
+
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
@@ -53,7 +58,7 @@ class JoinCourse(generics.CreateAPIView):
 
 
 class CourseLectureList(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, p.IsLectureInstructor)
 
     serializer_class = LectureSerializer
 
@@ -66,5 +71,6 @@ class CourseLectureList(generics.ListCreateAPIView):
 
 class LectureDetail(generics.RetrieveAPIView):
     """Return the course information of the course with the id in the url."""
+    permission_classes = (IsAuthenticated,)
     queryset = Lecture.objects.all()
     serializer_class = LectureSerializer

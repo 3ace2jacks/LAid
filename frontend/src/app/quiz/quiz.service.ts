@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Quiz, Question, Option, OptionResults, QuestionResults, QuizResults, QuestionAnswer } from './models';
+import { Quiz, Question, Option, OptionResults, QuestionResults, QuizResults, QuizAnswer } from './models';
 import { AuthHttpService } from '../auth/auth-http.service';
 
 
@@ -24,14 +24,14 @@ export class QuizService {
   }
 
    getQuizResults(id: number): Promise<QuizResults> {
-    return this.authHttp.get('/quiz/' + id + '/result')
+    return this.authHttp.get('/quiz/' + id + '/result/')
     .toPromise()
     .then(response => response.json() as QuizResults)
     .catch(error => error);
   }
 
-  answerQuestion(answer: QuestionAnswer) : Promise<void> {
-    return this.authHttp.post('/quiz/answer/question/', answer)
+  answerQuestion(answer: QuizAnswer) : Promise<void> {
+    return this.authHttp.post('/quiz/' + answer.quizID + '/answer/', answer)
     .toPromise()
     .then(() => {})
     .catch(error => console.log(error.json()))
