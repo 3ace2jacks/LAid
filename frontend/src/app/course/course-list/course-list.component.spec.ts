@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -19,25 +19,21 @@ import { Router } from '@angular/router';
 
 const appRoutes: Routes = [
   { path: '', component: CourseListComponent },
-
-  // { path: '**', redirectTo: '' },
 ];
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
   let fixture: ComponentFixture<CourseListComponent>;
-  let courseServiceSpy;
-  let mockCourseService = class {
-    getOwnCourses() {
-      return Promise.resolve({id: 2, code: "s", name: "dw", year: "dd",  term: "s", role: "2s"})
-    }
-  }
+  let courses = [
+    { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'STUDENT' },
+    { id: 2, code: 'TDT4100', name: 'Object Oriented Programming', year: 2017, term: 'spring', role: 'INSTRUCTOR' }
+  ];
 
   let mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
 
-  let courseService:CourseService;
+  let courseService: CourseService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CourseListComponent],
@@ -50,7 +46,7 @@ describe('CourseListComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: mockRouter },
-        { provide: CourseService, useValue: mockCourseService},
+        CourseService,
         AuthHttpService,
         AuthService,
       ]
@@ -61,12 +57,42 @@ describe('CourseListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CourseListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     courseService = fixture.debugElement.injector.get(CourseService);
-    courseServiceSpy = spyOn(courseService, 'getOwnCourses').and.returnValue(Promise.resolve([{}]))
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
+  });
+
+  it('should get own courses', fakeAsync(() => {
+    let spy = spyOn(courseService, 'getOwnCourses')
+      .and.returnValue(Promise.resolve(courses));
+    component.getOwnCourses();
+    tick();
+    expect(component.courses).toBe(courses);
+  }));
+
+  it('should display own courses', fakeAsync(() => {
+    let spy = spyOn(courseService, 'getOwnCourses')
+      .and.returnValue(Promise.resolve(courses));
+    component.getOwnCourses();
+    tick();
+
+    fixture.detectChanges();
+    let de = fixture.debugElement.query(By.css('table'));
+    let el = de.nativeElement;
+    expect(el.textContent).toContain("Software Engineering", "Course title");
+    expect(el.textContent).toContain("TDT4140", "Course code");
+  }));
+
+  it('should display buttons', () => {
+    let de = fixture.debugElement.query(By.css('.createButton'));
+    let el = de.nativeElement;
+    expect(el.textContent).toContain("Create");
+
+    de = fixture.debugElement.query(By.css('.joinButton'));
+    el = de.nativeElement;
+    expect(el.textContent).toContain("Join");
   });
 });

@@ -57,7 +57,7 @@ export class QuizStudentComponent implements OnInit {
     console.log(this.answer);
     this.quizService.answerQuestion(this.answer as QuizAnswer)
       .then(() => {
-        this.router.navigate(["/courses"]);
+        this.router.navigate(['/courses']);
       })
       .catch(error => this.error = error);
   }
