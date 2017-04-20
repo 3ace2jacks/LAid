@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # from  import Quiz
 
-# The possible terms a course can be in
+# The possible terms a course can be
 # to distinguish courses with same name and course code
 TERMS = (
     # The first name is the actual name, the second the human readable version
@@ -16,7 +16,10 @@ ROLES = (('INSTRUCTOR', 'Instructor'), ('STUDENT', 'Instructor'))
 
 
 class Course(models.Model):
-    """A course is a continous set of lectures that last for some time"""
+    """
+    A course is a continuous set of lectures that last for some time
+    """
+
     # The course code, e.g. TDT4140
     code = models.CharField(max_length=16)
     # The course name, e.g. Software Engineering
@@ -35,8 +38,18 @@ class Course(models.Model):
         """
         Return the role of the given user in the course
 
-        :param user: The user instance to get the role of
-        :return: The role of the user. Can be None, "INSTUCTOR" or "STUDENT"
+        Parameters
+        ----------
+        user : Obj
+            The user enrolled in the course
+
+        Returns
+        -------
+        str
+            "INSTUCTOR" or "STUDENT"
+
+        None
+            if the user is not enrolled in the course
         """
 
         if CourseMembership.objects.filter(course=self, user=user).exists():
@@ -44,11 +57,26 @@ class Course(models.Model):
         return None
 
     def is_instructor(self, user):
+        """
+        Checks if user is instructor in the course
+
+        Parameters
+        ----------
+        user : Obj
+            The user enrolled in the course
+
+        Returns
+        -------
+        bool
+            True if user is instructor
+            False if user is not instructor or not enrolled in class
+        """
         return self.get_role(user) == 'INSTRUCTOR'
 
 
 class CourseMembership(models.Model):
-    """Define the roles of users in a course
+    """
+    Define the roles of users in a course
 
     Used as a many-to-many relationship between Course and User
     """
@@ -59,8 +87,11 @@ class CourseMembership(models.Model):
 
 
 class Lecture(models.Model):
-    """A lecture that is part of a course."""
+    """
+    A lecture that is part of a course.
+    """
     title = models.CharField(max_length=64)
+    # the course the lecture is part of, if the Course is deleted so is the lecture
     course = models.ForeignKey(Course, related_name='lectures', on_delete=models.CASCADE)
     date = models.DateField()
     start_time = models.TimeField()
