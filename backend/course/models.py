@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from  import Quiz
+
 
 # The possible terms a course can be
 # to distinguish courses with same name and course code

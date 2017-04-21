@@ -35,7 +35,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class CourseMembershipSerializer(serializers.ModelSerializer):
     """
-    Serializer for Courses
+    Serializer for CoursesMembership
     """
     class Meta:
         model = CourseMembership
@@ -44,7 +44,7 @@ class CourseMembershipSerializer(serializers.ModelSerializer):
 
 class LectureSerializer(serializers.ModelSerializer):
     """
-    Serializer for Courses
+    Serializer for Lecture
     """
     course = serializers.PrimaryKeyRelatedField(read_only=True)
     pre_quiz = serializers.PrimaryKeyRelatedField(read_only=True)
