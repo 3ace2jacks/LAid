@@ -8,58 +8,67 @@ from datetime import date, time
 import json
 
 
-'''To get the sets coverage for course run:
+"""
+To get the sets coverage for course run:
 coverage run --source='.' --include='live/*' --omit='*/__init__.py,*/admin.py,*/apps.py,
 */migrations/*,*/tests.py' manage.py test live
 then:
 coverage report --include='live/*' --omit='*/__init__.py,*/admin.py,*/apps.py,*/migrations/*,
 */tests.py'
-'''
+"""
+
 
 class ModelTestCase(TestCase):
-    '''
+    """
     Test the models
-    '''
+    """
     def setUp(self):
         self.user = User.objects.create_superuser(username='user',
                                                   email='laid@is.best', password="qwertyuiop")
         self.pu = Course.objects.create(id=1, code="TDT4140", name="Programvareutvikling",
-                              year=2017, term="fall")
+                                        year=2017, term="fall")
         dato = date(2017, 5, 5)
         tid = time()
         self.ad = Lecture.objects.create(id=1, title="Architectural Design",
                                          date=dato, start_time=tid, end_time=tid, course=self.pu)
 
     def test_lecture_flow(self):
-        """LectureFlow, create and correct output __str__"""
+        """
+        LectureFlow, create and correct output __str__
+        """
         l_flow = LectureFlow.objects.create(user=self.user, lecture=self.ad, flow='slow')
         self.assertEqual(l_flow.__str__(), '1 - slow')
 
     def test_lecture_question(self):
-        """LectureQuestion create and correct output __str__"""
+        """
+        LectureQuestion create and correct output __str__
+        """
         l_question = LectureQuestion.objects.create(user=self.user, lecture=self.ad,
-                                               question='question')
+                                                    question='question')
         self.assertEqual(l_question.__str__(), 'question')
 
     def test_lecture_vote(self):
-        """LectureQuestion create and correct output __str__"""
+        """
+        Create LectureQuestion
+        """
         l_question = LectureQuestion.objects.create(user=self.user, lecture=self.ad,
                                                     question='question')
-        l_vote = Vote.objects.create(user=self.user, vote='up',
-                                     question=l_question)
+        Vote.objects.create(user=self.user, vote='up', question=l_question)
         self.assertEqual(Vote.objects.count(), 1)
 
+
 class ViewTestCase(TestCase):
-    '''
+    """
     Test the views and permissions
-    '''
+    """
 
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_superuser(username='user',
                                                   email='laid@is.best', password="qwertyuiop")
         self.not_member = User.objects.create_superuser(username='user1',
-                                                  email='laid@is.best', password="qwertyuiop")
+                                                        email='laid@is.best',
+                                                        password="qwertyuiop")
         self.instructor = User.objects.create_superuser(username='user2',
                                                         email='laid@is.best',
                                                         password="qwertyuiop")
@@ -78,14 +87,16 @@ class ViewTestCase(TestCase):
         CourseMembership.objects.create(course=self.pu, user=self.instructor, role="INSTRUCTOR")
 
     def test_urls(self):
-        '''Tests right url is consistent for frontend'''
+        """
+        Tests right url is consistent for frontend
+        """
         url = reverse('flowlist', args=[1])
         self.assertEqual(url, '/lectures/1/flow/')
 
         url = reverse('questionlist', args=[1])
         self.assertEqual(url, '/lectures/1/questions/')
 
-        url = reverse('flowCount', args=[1,1])
+        url = reverse('flowCount', args=[1, 1])
         self.assertEqual(url, '/lectures/1/flow/count/1')
 
         url = reverse('lecture_detail', args=[1])
@@ -97,9 +108,10 @@ class ViewTestCase(TestCase):
         url = reverse('vote', args=[1])
         self.assertEqual(url, '/questions/1/votes/')
 
-
     def test_flow_list(self):
-        """Test security for FlowList"""
+        """
+        Test security for FlowList
+        """
 
         response = self.client.get('/lectures/1/flow/')
         self.assertEqual(response.status_code, 403)
@@ -113,7 +125,9 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_flow_count(self):
-        """Test security for FlowCount"""
+        """
+        Test security for FlowCount
+        """
 
         response = self.client.get('/lectures/1/flow/count/')
         self.assertEqual(response.status_code, 403)
@@ -127,7 +141,9 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_question_list(self):
-        """Test security for QuestionList"""
+        """
+        Test security for QuestionList
+        """
 
         response = self.client.get('/lectures/1/questions/')
         self.assertEqual(response.status_code, 403)
@@ -141,7 +157,9 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_vote(self):
-        """Test security for VoteList"""
+        """
+        Test security for VoteList
+        """
 
         response = self.client.get('/questions/1/votes/')
         self.assertEqual(response.status_code, 403)
@@ -159,7 +177,9 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_question(self):
-        """Test security for AnswearliveQuestion"""
+        """
+        Test security for AnswearliveQuestion
+        """
 
         response = self.client.get('/questions/1/answer/')
         self.assertEqual(response.status_code, 403)
@@ -176,7 +196,6 @@ class ViewTestCase(TestCase):
         self.client.login(username='user1', password='qwertyuiop')
         response = self.client.get('/questions/1/answer/')
         self.assertEqual(response.status_code, 403)
-
 
     def tearDown(self):
         self.client.logout()
