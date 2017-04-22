@@ -1,0 +1,11 @@
+.container{
+	background-image: url("../assets/img/background.png");
+	background-repeat:no-repeat;
+	background-size: 100%;
+	margin: 0px;
+	margin-top: -5%;
+	margin-left: -1px;
+    height: 99.5%;
+    width: 100%;
+
+}
