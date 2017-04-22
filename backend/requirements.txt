@@ -1,0 +1,13 @@
+# pip install -r /path/to/requirements.txt
+
+Django==1.10.5
+django-allauth==0.30.0
+django-cors-headers==2.0.2
+django-filter==1.0.1
+django-rest-auth==0.9.0
+djangorestframework==3.5.3
+djangorestframework-jwt==1.9.0
+Markdown==2.6.8
+oauthlib==2.0.1
+requests==2.13.0
+requests-oauthlib==0.7.0
