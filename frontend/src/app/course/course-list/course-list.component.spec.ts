@@ -6,7 +6,7 @@ import { DebugElement } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { AlertModule } from 'ng2-bootstrap';
 
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { ModalModule } from 'ng2-bootstrap/modal';
 
@@ -17,9 +17,6 @@ import { CourseListComponent } from './course-list.component';
 import { CourseService } from '../course.service';
 import { Router } from '@angular/router';
 
-const appRoutes: Routes = [
-  { path: '', component: CourseListComponent },
-];
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
