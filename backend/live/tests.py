@@ -90,13 +90,13 @@ class ViewTestCase(TestCase):
         """
         Tests right url is consistent for frontend
         """
-        url = reverse('flowlist', args=[1])
+        url = reverse('flow_list', args=[1])
         self.assertEqual(url, '/lectures/1/flow/')
 
-        url = reverse('questionlist', args=[1])
+        url = reverse('question_list', args=[1])
         self.assertEqual(url, '/lectures/1/questions/')
 
-        url = reverse('flowCount', args=[1, 1])
+        url = reverse('flow_count', args=[1, 1])
         self.assertEqual(url, '/lectures/1/flow/count/1')
 
         url = reverse('lecture_detail', args=[1])

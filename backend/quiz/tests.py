@@ -10,8 +10,7 @@ import json
 
 """
 To get the sets coverage for course run:
-coverage run --source='.' --include='quiz/*' --omit='*/__init__.py,*/admin.py,*/apps.py,
-*/migrations/*,*/tests.py' manage.py test quiz
+coverage run --source='.' --include='quiz/*' --omit='*/__init__.py,*/admin.py,*/apps.py,*/migrations/*,*/tests.py' manage.py test quiz
 then:
 coverage report --include='quiz/*' --omit='*/__init__.py,*/admin.py,*/apps.py,*/migrations/*,
 */tests.py'
