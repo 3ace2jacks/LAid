@@ -1,4 +1,7 @@
-
+body, html {
+	margin: 0px;
+	height: 100%;
+}
 .feedButtonR {
 box-shadow: rgb(245, 151, 142) 9px 9px 9px 16px 0px inset; 
 background: linear-gradient(rgb(252, 109, 95) 5%, rgb(198, 45, 31) 100%) rgb(242, 69, 55); 
