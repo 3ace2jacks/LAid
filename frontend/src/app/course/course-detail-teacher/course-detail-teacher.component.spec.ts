@@ -31,7 +31,10 @@ describe('CourseDetailTeacherComponent', () => {
   let mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
-  let course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'STUDENT' };
+  let course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'INSTRUCTOR' };
+  let lectures = [
+    { id: 1, course: 1, title: "Introduction", date: "2017-03-31", start_time: "14:15:00", end_time: "16:00:00", pre_quiz: 12, post_quiz: 13 },
+  ]
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -56,8 +59,12 @@ describe('CourseDetailTeacherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CourseDetailTeacherComponent);
     component = fixture.componentInstance;
-
     courseService = fixture.debugElement.injector.get(CourseService);
+
+    let get_course_spy = spyOn(courseService, 'getCourse')
+      .and.returnValue(Promise.resolve(course));
+    let get_lectures_spy = spyOn(courseService, 'getLectures')
+      .and.returnValue(Promise.resolve(lectures));
   });
 
   it('should create', () => {
@@ -65,10 +72,52 @@ describe('CourseDetailTeacherComponent', () => {
   });
 
   it('should get course', fakeAsync(() => {
-    let spy = spyOn(courseService, 'getCourse')
-      .and.returnValue(Promise.resolve(course));
-    component.getCourse();
+    component.ngOnInit();
     tick();
     expect(component.course).toBe(course);
   }));
+
+  it('should get lectures', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    expect(component.lectures).toBe(lectures);
+  }));
+
+  it('should display lectures', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    fixture.detectChanges();
+    let de = fixture.debugElement.query(By.css('table'));
+    let el = de.nativeElement;
+    expect(el.textContent).toContain("Introduction", "Lecture title");
+  }));
+
+  it('should display new-lecture button', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    fixture.detectChanges();
+    let de = fixture.debugElement.query(By.css('.btn'));
+    let el = de.nativeElement;
+    expect(el.textContent).toContain("New", "Lecture title");
+  }));
+
+  it('should display course title', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    fixture.detectChanges();
+    let de = fixture.debugElement.query(By.css('h1'));
+    let el = de.nativeElement;
+    expect(el.textContent).toContain("Software Engineering", "Lecture title");
+  }));
+
+  it('should deny access', () => {
+    component.course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'INSTRUCTOR' };
+    expect(component.hasAccess()).toBeTruthy();
+    component.course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'STUDENT' };
+    expect(component.hasAccess()).toBeFalsy();
+    component.course = null;
+    expect(component.hasAccess()).toBeFalsy();
+  });
+  
+
 });
