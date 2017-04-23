@@ -126,5 +126,4 @@ export class LiveStudentComponent implements OnInit {
   hasvoted(q: Question){
     q.has_voted = true;
   }
-
 }

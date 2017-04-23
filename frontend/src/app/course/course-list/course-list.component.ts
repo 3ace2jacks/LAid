@@ -47,21 +47,28 @@ export class CourseListComponent implements OnInit {
         }
     }
 
+
     joinCourse(course: Course) {
         this.courseService.join(course.id)
         .then(() => {
-            location.reload();
+            this.router.navigate(['course', course.id, 'student']);
         })
         .catch(error => this.error = error)
         
     }
 
+    /**
+     * Use the course serivice to retrieve the coureses the current user is a member of.
+     */
     getOwnCourses() {
         this.courseService.getOwnCourses()
             .then(courses => this.courses = courses)
             .catch(error => this.error = error);
     }
 
+    /**
+     * Use the course serivice to retrieve the coureses the current user can join.
+     */
     getAvailableCourses() {
         this.courseService.getAvailableCourses()
             .then(courses => this.available_courses = courses)
