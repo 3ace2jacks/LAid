@@ -82,7 +82,6 @@ export class LiveStudentComponent implements OnInit {
     Observable.interval(60000).subscribe(x => {
         this.questionAsked = false;
       });
-
   }
 
   getQuestions(){

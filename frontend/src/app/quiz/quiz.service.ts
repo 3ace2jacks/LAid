@@ -34,6 +34,6 @@ export class QuizService {
     return this.authHttp.post('/quiz/' + answer.quizID + '/answer/', answer)
     .toPromise()
     .then(() => {})
-    .catch(error => console.log(error.json()))
+    .catch(error => console.log(error.json()));
   }
 }

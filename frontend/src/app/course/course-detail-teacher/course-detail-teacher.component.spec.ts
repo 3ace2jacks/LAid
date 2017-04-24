@@ -32,6 +32,7 @@ describe('CourseDetailTeacherComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
   let course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'INSTRUCTOR' };
+  let course_student = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'STUDENT' };
   let lectures = [
     { id: 1, course: 1, title: "Introduction", date: "2017-03-31", start_time: "14:15:00", end_time: "16:00:00", pre_quiz: 12, post_quiz: 13 },
   ]
@@ -111,13 +112,11 @@ describe('CourseDetailTeacherComponent', () => {
   }));
 
   it('should deny access', () => {
-    component.course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'INSTRUCTOR' };
+    component.course = course;
     expect(component.hasAccess()).toBeTruthy();
-    component.course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'STUDENT' };
+    component.course = course_student;
     expect(component.hasAccess()).toBeFalsy();
     component.course = null;
     expect(component.hasAccess()).toBeFalsy();
   });
-  
-
 });
