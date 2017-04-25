@@ -3,6 +3,10 @@ import { QuizService } from '../quiz.service';
 import { QuizResults, QuestionResults } from '../models';
 import { ActivatedRoute } from '@angular/router';
 
+/**
+ * This component displays the results for the quiz. That is a chart of the
+ * number of answers for each option in each question.
+ */
 @Component({
   selector: 'app-quiz-teacher',
   templateUrl: './quiz-teacher.component.html',
@@ -17,37 +21,53 @@ export class QuizTeacherComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels: string[] = ["This is the first option of the question for realz", "This is for realz the second option of this question"];
+  public barChartLabels: string[] = [];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = false;
-  public barChartColors = [{ backgroundColor: ["#e84351", "#434a54", "#3ebf9b", "#4d86dc", "#f3af37"] }];
+  public barChartColors = [{ backgroundColor: [] }];
   public barChartData: any[] = [
-    { data: [65, 59, 0] },
+    { data: [] },
   ];
 
-
+  // The results for every option in the quiz.
   quizResults: QuizResults;
+  
+  // The currently selected question. Will show graph for this question.
   selected: QuestionResults;
   error: string;
+
+  /**
+   * A subscriber for listening to URL changes.
+   */
   private sub: any;
 
   constructor(private quizService: QuizService, private route: ActivatedRoute) { }
 
+  /**
+   * Called on initialization.
+   */
   ngOnInit() {
     this.getQuizResults();
   }
 
+  /**
+   * Retrieve the quiz results. The URL is retrieved from the URL.
+   * This includes the number of votes for each option.
+   */
   getQuizResults() {
     this.sub = this.route.params.subscribe(params => {
       this.quizService.getQuizResults(+params['id'])
         .then(quizResults => {
-          console.log(quizResults);
           this.quizResults = quizResults;
         })
         .catch(error => this.error = error);
     });
   }
 
+  /**
+   * Selects a new question, and updates the chart with the number of answers.
+   * @param question - The question to show results for.
+   */
   selectQuestion(question: QuestionResults) {
     this.selected = null;
 
@@ -59,13 +79,15 @@ export class QuizTeacherComponent implements OnInit {
 
   }
 
+  /**
+   * Update the chart with the currently selected question.
+   */
   updateChartData() {
     if (this.selected) {
       let labels: string[] = [];
       let data: number[] = [];
       let colors: string[] = [];
       this.selected.optionResults.forEach((option) => {
-        console.log(option);
         labels.push(option.text);
         data.push(option.answers);
         if (option.correct) {

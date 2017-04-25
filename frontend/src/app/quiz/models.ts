@@ -1,3 +1,6 @@
+/*
+ * Models for representing the a quiz.
+ */
 export class Quiz {
     id: number;
     title: string;

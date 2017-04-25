@@ -6,3 +6,7 @@
 .active:hover {
     background-color: #337ab7 !important;
 }
+
+.correct {
+    background-color: green;
+}

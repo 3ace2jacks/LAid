@@ -47,7 +47,10 @@ export class CourseListComponent implements OnInit {
         }
     }
 
-
+    /**
+     * The current user joins the course.
+     * @param course - A Course instance that should be joined.
+     */
     joinCourse(course: Course) {
         this.courseService.join(course.id)
         .then(() => {
