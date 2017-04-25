@@ -1,4 +1,14 @@
+/**
+ * These are the local settings. This file should be copied to local-settings.ts
+ * after cloning the repository. 
+ */
+
+// The domain for the backend server
 export const apiDomain = "api.laid.cool";
+// The port of the backend
 export const  apiPort = "8000";
+// The protocol used, http or https
 export const protocol = "http";
+
+// The domain for the backend
 export const apiUrl = protocol + "://" + apiDomain + ":" + apiPort;

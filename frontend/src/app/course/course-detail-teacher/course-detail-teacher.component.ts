@@ -18,7 +18,7 @@ export class CourseDetailTeacherComponent implements OnInit {
     private sub: any;
 
 
-    @ViewChild('createLectureModal') public createLectureModal:ModalDirective;
+    @ViewChild('createLectureModal') public createLectureModal: ModalDirective;
     createLectureForm = new FormGroup({
         title: new FormControl(),
         date: new FormControl(),
@@ -33,27 +33,40 @@ export class CourseDetailTeacherComponent implements OnInit {
         this.getLectures();
     }
 
+    /**
+     * Returns true if the current user has access to this page.
+     */
     hasAccess() {
         return this.course && this.course.role == "INSTRUCTOR";
     }
 
+    /**
+     * Get the course instance. The course-io is retrieved from the url.
+     */
     getCourse() {
         // Updates the current course if the url is changed
         this.sub = this.route.params.subscribe(params => {
             this.courseService.getCourse(+params['id'])
                 .then(course => this.course = course)
                 .catch(error => this.error = error);
-        })
+        });
     }
 
+    /**
+     * Get the lectures that are connected to the current course.
+     */
     getLectures() {
         this.sub = this.route.params.subscribe(params => {
             this.courseService.getLectures(+params['id'])
                 .then(lectures => this.lectures = lectures)
                 .catch(error => this.error = error);
-        })
+        });
     }
 
+    /**
+     * Create a new lecture through the course service.
+     * Data is retrieved from the createLectureForm form.
+     */
     createLecture() {
         this.courseService.createLecture(this.createLectureForm.value as Lecture, this.course.id)
             .then(() => {
