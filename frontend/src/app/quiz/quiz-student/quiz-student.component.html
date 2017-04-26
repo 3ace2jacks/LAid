@@ -1,0 +1,35 @@
+<div *ngIf="quiz" class="container">
+  <h1>{{quiz.title}}</h1>
+  <p>{{quiz.description}}</p>
+  <div *ngIf="!quiz.finished">
+    <div *ngIf="!quiz.answered">
+
+      <div *ngFor="let question of quiz.questions" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{question.question}}</h3>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li *ngFor="let option of question.options" (click)="setChoice(question.id, option.id)" [class.active]="option.id==getChoice(question.id)"
+              class="list-group-item option">{{option.text}}</li>
+          </ul>
+
+        </div>
+      </div>
+      <button (click)="answerQuiz()" type="submit" class="btn btn-primary" [disabled]="!valid">Send answers</button>
+    </div>
+    <div *ngIf="quiz.answered || quiz.finished">
+      <div *ngFor="let question of quiz.questions" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{question.question}}</h3>
+        </div>
+        <div class="panel-body">
+          <p>{{question.answer_description}}</p>
+          <ul class="list-group">
+            <li *ngFor="let option of question.options" [class.correct]="option.correct" class="list-group-item option">{{option.text}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

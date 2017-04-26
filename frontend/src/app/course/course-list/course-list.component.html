@@ -1,0 +1,130 @@
+<div class="container">
+  <alert *ngIf="error" type="danger">
+    {{error}}
+  </alert>
+
+  <h1>Your courses</h1>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <button (click)="createCourseModal.show()" type="button" class="btn btn-primary createButton">Create a course</button>
+      <button (click)="joinCourseModal.show()" type="button" class="btn btn-primary joinButton">Join a course</button>
+    </div>
+  </div>
+
+
+  <table *ngIf="courses && courses != 0" class="table table-responsive table-striped">
+    <tr>
+      <th>Course code</th>
+      <th>Course name</th>
+      <th>Year</th>
+      <th>Term</th>
+      <th>Role</th>
+    </tr>
+    <tr (click)="goToCourse(course)" class="course-row" *ngFor="let course of courses" [class]>
+      <td>{{course.code}}</td>
+      <td>{{course.name}}</td>
+      <td>{{course.year}}</td>
+      <td>{{course.term}}</td>
+      <td *ngIf="course.role == 'INSTRUCTOR'">Instructor</td>
+      <td *ngIf="course.role != 'INSTRUCTOR'">Student</td>
+    </tr>
+
+  </table>
+  <p *ngIf="courses == 0">You are not signed up for any courses.</p>
+</div>
+<div bsModal #createCourseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Create a new course</h4>
+        <button type="button" class="close pull-right" (click)="createCourseModal.hide()" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="createCourseForm">
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="inputEmail3">Course code</label>
+              <input type="text" formControlName="code" class="form-control" id="inputEmail3" placeholder="Course code">
+            </div>
+            <div class="col-sm-6">
+              <label for="inputPassword3">Course name</label>
+              <input type="text" formControlName="name" class="form-control" id="inputPassword3" placeholder="Course name">
+            </div>
+          </div>
+
+          <div class="form-group row">
+
+            <div class="col-sm-6">
+              <label for="exampleSelect1">Year</label>
+              <select class="form-control" formControlName="year" id="exampleSelect1">
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="exampleSelect1">Term</label>
+              <select class="form-control" formControlName="term" id="exampleSelect1">
+                <option value="fall">Fall</option>
+                <option value="spring">Spring</option>
+                <option value="summer">Summer</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+              <button (click)="createCourse()" type="submit" class="btn btn-primary">Create course</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div bsModal #joinCourseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Join course</h4>
+        <button type="button" class="close pull-right" (click)="joinCourseModal.hide()" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+      </div>
+      <div class="modal-body">
+
+        <table *ngIf="courses || courses != 0" class="table table-responsive table-striped">
+          <tr>
+            <th>Course code</th>
+            <th>Course name</th>
+            <th>Year</th>
+            <th>Term</th>
+            <th>Join</th>
+          </tr>
+          <tr *ngFor="let course of available_courses" [class]>
+            <td>{{course.code}}</td>
+            <td>{{course.name}}</td>
+            <td>{{course.year}}</td>
+            <td>{{course.term}}</td>
+            <td><button (click)="joinCourse(course)" type="button" class="btn btn-primary">Join</button></td>
+          </tr>
+
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

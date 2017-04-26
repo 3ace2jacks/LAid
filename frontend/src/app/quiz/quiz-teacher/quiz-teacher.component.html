@@ -1,0 +1,16 @@
+<div *ngIf="quizResults" class="container">
+  <h1>{{quizResults.title}}</h1>
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item" [class.active]="selected==null" (click)="selectQuestion(null)">Quiz results</li>
+      <li *ngFor="let question of quizResults.questionsResults" class="list-group-item" [class.active]="selected==question"
+        (click)="selectQuestion(question)">{{question.question}}</li>
+    </ul>
+  </div>
+  <div *ngIf="selected">
+    <div style="display: block" class="col-md-12">
+      <canvas baseChart [colors]="barChartColors" [datasets]="barChartData" [labels]="barChartLabels" [colors]="barChartColors" [options]="barChartOptions"
+        [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+    </div>
+  </div>
+</div>

@@ -1,19 +1,14 @@
 import { Component } from '@angular/core';
-import { HomeComponent } from './auth/home/index';
-import { User } from './auth/_models/index';
-import { UserService } from './auth/_services/index';
-import { AuthenticationService } from './auth/_services/index';
 
+/**
+ * This is the main component of the app, and will only display the navigation and
+ * current route.
+ */
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'Courses';
-    user = 'edvard';
-    users: User[] = [];
-
-    ngOnInit() {
-        // get users from secure api end point
-    }
+  
 }

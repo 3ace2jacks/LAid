@@ -1,0 +1,12 @@
+.option:hover {
+    background-color: #424242;
+    color: #fff;
+    cursor: pointer;
+}
+.active:hover {
+    background-color: #337ab7 !important;
+}
+
+.correct {
+    background-color: green;
+}
