@@ -29,7 +29,7 @@ export class AuthService {
    * @returns true if a user is signed in, false othervise
    */
   public isLoggedIn(): boolean {
-    return this.token != null;
+    return this.token != null && this.token != undefined;
   }
 
   /**
@@ -52,7 +52,7 @@ export class AuthService {
   /**
    * Create the headers for requests with the correct content type.
    */
-  private createHeaders(): Headers {
+  createHeaders(): Headers {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return headers;
@@ -95,7 +95,7 @@ export class AuthService {
    * @param username 
    * @param password 
    */
-  public login(username: string, password: string): Promise<void> {
+  public login(username: string, password: string): Promise<any> {
     let headers = this.createHeaders();
     return this.http.post(apiUrl + "/auth/login/", JSON.stringify({ username: username, password: password }), { headers })
       .toPromise()
@@ -113,7 +113,7 @@ export class AuthService {
         return Promise.reject(err);
       });
   }
-
+ 
   /**
    * Sign out of the system. Delete the local user token.
    */

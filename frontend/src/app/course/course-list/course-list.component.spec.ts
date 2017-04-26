@@ -55,6 +55,10 @@ describe('CourseListComponent', () => {
     fixture = TestBed.createComponent(CourseListComponent);
     component = fixture.componentInstance;
     courseService = fixture.debugElement.injector.get(CourseService);
+    let own_spy = spyOn(courseService, 'getOwnCourses')
+      .and.returnValue(Promise.resolve(courses));
+    let available_spy = spyOn(courseService, 'getAvailableCourses')
+      .and.returnValue(Promise.resolve(courses));
   });
 
   it('should create', () => {
@@ -63,16 +67,12 @@ describe('CourseListComponent', () => {
   });
 
   it('should get own courses', fakeAsync(() => {
-    let spy = spyOn(courseService, 'getOwnCourses')
-      .and.returnValue(Promise.resolve(courses));
     component.getOwnCourses();
     tick();
     expect(component.courses).toBe(courses);
   }));
 
   it('should display own courses', fakeAsync(() => {
-    let spy = spyOn(courseService, 'getOwnCourses')
-      .and.returnValue(Promise.resolve(courses));
     component.getOwnCourses();
     tick();
 

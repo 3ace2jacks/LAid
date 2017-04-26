@@ -33,8 +33,9 @@ describe('CourseDetailTeacherComponent', () => {
   };
   let course = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'INSTRUCTOR' };
   let course_student = { id: 1, code: 'TDT4140', name: 'Software Engineering', year: 2017, term: 'spring', role: 'STUDENT' };
+  let lecture = { id: 1, course: 1, title: "Introduction", date: "2017-03-31", start_time: "14:15:00", end_time: "16:00:00", pre_quiz: 12, post_quiz: 13 }
   let lectures = [
-    { id: 1, course: 1, title: "Introduction", date: "2017-03-31", start_time: "14:15:00", end_time: "16:00:00", pre_quiz: 12, post_quiz: 13 },
+    lecture,
   ]
 
   beforeEach(async(() => {
@@ -65,6 +66,8 @@ describe('CourseDetailTeacherComponent', () => {
     let get_course_spy = spyOn(courseService, 'getCourse')
       .and.returnValue(Promise.resolve(course));
     let get_lectures_spy = spyOn(courseService, 'getLectures')
+      .and.returnValue(Promise.resolve(lectures));
+    let get_lecture_spy = spyOn(courseService, 'getLecture')
       .and.returnValue(Promise.resolve(lectures));
   });
 

@@ -1,11 +1,13 @@
 /* tslint:disable:no-unused-variable */
-import { HttpModule, XHRBackend } from '@angular/http';
+import { HttpModule, XHRBackend, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { QuizService } from './quiz.service';
 
 import { AuthService } from '../auth/auth.service';
 import { AuthHttpService } from '../auth/auth-http.service';
+
+
 
 describe('QuizService', () => {
   beforeEach(() => {
@@ -18,8 +20,8 @@ describe('QuizService', () => {
     });
   });
 
-  it('should ...', inject([QuizService], (service: QuizService) => {
-    expect(service).toBeTruthy();
-  }));
+  // it('should ...', inject([QuizService, MockBackend], (service, backend) => {
+  //   expect(service).toBeTruthy();
+  // }));
 
 });

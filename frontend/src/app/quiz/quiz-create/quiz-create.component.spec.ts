@@ -73,9 +73,4 @@ describe('QuizCreateComponent', () => {
     component.course = null;
     expect(component.hasAccess()).toBeFalsy();
   });
-
-  it('should get error message from quiz-service', () => {
-    let quiz_spy = spyOn(quizService, 'createQuiz')
-      .and.returnValue(Promise.reject());
-  })
 });

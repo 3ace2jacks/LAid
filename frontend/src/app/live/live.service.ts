@@ -16,10 +16,10 @@ export class LiveService {
    * @param value - "slow" or "fast"
    * @param lectureID - The lecture id to submit evaluation to.
    */
-  evaluate(value: string, lectureID: number): Promise<void> {
+  evaluate(value: string, lectureID: number): Promise<any> {
     return this.authHttp.post('/lectures/' + lectureID + '/flow/', JSON.stringify({ flow: value }))
       .toPromise()
-      .then(response => console.log(response))
+      .then((response) => response.json())
       .catch(error => console.log(error));
   }
 
