@@ -10,5 +10,5 @@ During lecture the students can ask questions in real-time, and notify the lectu
 
 After the lectures the lecturer can create a quiz that the students can take to repeat the content, and the lecturer can see what the students learned. 
 
-## Building the application
+## Running the application
 The application consists of two separate applications, a front-end and a back-end. How to build the application is found in the README of each of the frontend and backend. 
