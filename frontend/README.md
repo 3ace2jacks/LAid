@@ -1,7 +1,7 @@
 # Frontend
 To run this project, you will need to have [Node](https://nodejs.org/en/) installed. We have used version 7, but we think versions 6.9 and above will work. You will also need the node package manager, this is probably included with the installer for Node.
 
-To run this application you will need to install angular-cli. Installed by running `npm install -g anuglar-cli`. The newest version (@angular/cli) will not work with the configuration in this project.
+To run this application you will need to install angular-cli. Installed by running `npm install -g angular-cli`. The newest version (@angular/cli) will not work with the configuration in this project.
 
 To install the dependencies you must navigate to the frontend directory and run the command `npm install`.
 
