@@ -1,4 +1,7 @@
 # LAid - Lecture Aid
+
+A running version of this application can be found at [laid.cool](http://laid.cool).
+
 ## Introduction
 This is the project of group 93 in TDT4140 Software Engineering at NTNU 2017.
 
