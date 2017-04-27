@@ -12,3 +12,5 @@ You will have to migrate the database. The default database is a SQLite database
 To run the development server use the command `python manage.py runserver`. This will by default host the application on a lightweight web server located at `localhost:8000`. 
 
 Beware that this server is not intended for end-users to use, but as a tool for the front-end application to use. It is therefore diffcult to navigate, you need the exact urls to get some information from it.
+
+A running example of this can be found at api.laid.cool:8000.
