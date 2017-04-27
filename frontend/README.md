@@ -5,6 +5,8 @@ To run this application you will need to install angular-cli. Installed by runni
 
 To install the dependencies you must navigate to the frontend directory and run the command `npm install`.
 
+You will need to copy the `src/app/local-settings.ts.example` to `local-settings.ts`, and change the settings for your backend. The default setting uses our running backend at api.laid.cool:8000. 
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
 
 ## Development server
